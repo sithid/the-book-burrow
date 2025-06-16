@@ -4,4 +4,4 @@ The Book Burrow is a responsive website that allows the user to search for books
 
 # Current Phase : Planning
 
-![Wireframes](./docs/all-wireframes.png)
+![Wireframes](./docs/wireframes.png)
