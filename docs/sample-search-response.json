@@ -1,0 +1,694 @@
+{
+    "kind": "books#volumes",
+    "totalItems": 1000000,
+    "items": [
+        {
+            "kind": "books#volume",
+            "id": "wrOQLV6xB-wC",
+            "etag": "A9+8tb76uX8",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/wrOQLV6xB-wC",
+            "volumeInfo": {
+                "title": "Harry Potter and the Sorcerer's Stone",
+                "authors": [
+                    "J.K. Rowling"
+                ],
+                "publisher": "Pottermore Publishing",
+                "publishedDate": "2015-12-08",
+                "description": "Turning the envelope over, his hand trembling, Harry saw a purple wax seal bearing a coat of arms; a lion, an eagle, a badger and a snake surrounding a large letter 'H'. Harry Potter has never even heard of Hogwarts when the letters start dropping on the doormat at number four, Privet Drive. Addressed in green ink on yellowish parchment with a purple seal, they are swiftly confiscated by his grisly aunt and uncle. Then, on Harry's eleventh birthday, a great beetle-eyed giant of a man called Rubeus Hagrid bursts in with some astonishing news: Harry Potter is a wizard, and he has a place at Hogwarts School of Witchcraft and Wizardry. An incredible adventure is about to begin! Having become classics of our time, the Harry Potter eBooks never fail to bring comfort and escapism. With their message of hope, belonging and the enduring power of truth and love, the story of the Boy Who Lived continues to delight generations of new readers.",
+                "industryIdentifiers": [
+                    {
+                        "type": "ISBN_13",
+                        "identifier": "9781781100486"
+                    },
+                    {
+                        "type": "ISBN_10",
+                        "identifier": "1781100489"
+                    }
+                ],
+                "readingModes": {
+                    "text": true,
+                    "image": true
+                },
+                "pageCount": 312,
+                "printType": "BOOK",
+                "categories": [
+                    "Juvenile Fiction"
+                ],
+                "averageRating": 4.5,
+                "ratingsCount": 330,
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": true,
+                "contentVersion": "3.40.38.0.preview.3",
+                "panelizationSummary": {
+                    "containsEpubBubbles": false,
+                    "containsImageBubbles": false
+                },
+                "imageLinks": {
+                    "smallThumbnail": "http://books.google.com/books/content?id=wrOQLV6xB-wC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+                    "thumbnail": "http://books.google.com/books/content?id=wrOQLV6xB-wC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+                },
+                "language": "en",
+                "previewLink": "http://books.google.com/books?id=wrOQLV6xB-wC&printsec=frontcover&dq=intitle:harry+potter+and+the+sorcerers+stone&hl=&cd=1&source=gbs_api",
+                "infoLink": "https://play.google.com/store/books/details?id=wrOQLV6xB-wC&source=gbs_api",
+                "canonicalVolumeLink": "https://play.google.com/store/books/details?id=wrOQLV6xB-wC"
+            },
+            "saleInfo": {
+                "country": "US",
+                "saleability": "FOR_SALE",
+                "isEbook": true,
+                "listPrice": {
+                    "amount": 11.99,
+                    "currencyCode": "USD"
+                },
+                "retailPrice": {
+                    "amount": 11.99,
+                    "currencyCode": "USD"
+                },
+                "buyLink": "https://play.google.com/store/books/details?id=wrOQLV6xB-wC&rdid=book-wrOQLV6xB-wC&rdot=1&source=gbs_api",
+                "offers": [
+                    {
+                        "finskyOfferType": 1,
+                        "listPrice": {
+                            "amountInMicros": 11990000,
+                            "currencyCode": "USD"
+                        },
+                        "retailPrice": {
+                            "amountInMicros": 11990000,
+                            "currencyCode": "USD"
+                        },
+                        "giftable": true
+                    }
+                ]
+            },
+            "accessInfo": {
+                "country": "US",
+                "viewability": "PARTIAL",
+                "embeddable": true,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED",
+                "epub": {
+                    "isAvailable": true,
+                    "acsTokenLink": "http://books.google.com/books/download/Harry_Potter_and_the_Sorcerer_s_Stone-sample-epub.acsm?id=wrOQLV6xB-wC&format=epub&output=acs4_fulfillment_token&dl_type=sample&source=gbs_api"
+                },
+                "pdf": {
+                    "isAvailable": true,
+                    "acsTokenLink": "http://books.google.com/books/download/Harry_Potter_and_the_Sorcerer_s_Stone-sample-pdf.acsm?id=wrOQLV6xB-wC&format=pdf&output=acs4_fulfillment_token&dl_type=sample&source=gbs_api"
+                },
+                "webReaderLink": "http://play.google.com/books/reader?id=wrOQLV6xB-wC&hl=&source=gbs_api",
+                "accessViewStatus": "SAMPLE",
+                "quoteSharingAllowed": false
+            },
+            "searchInfo": {
+                "textSnippet": "With their message of hope, belonging and the enduring power of truth and love, the story of the Boy Who Lived continues to delight generations of new readers."
+            }
+        },
+        {
+            "kind": "books#volume",
+            "id": "Qu-JQgAACAAJ",
+            "etag": "p3gVEUqfqGM",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/Qu-JQgAACAAJ",
+            "volumeInfo": {
+                "title": "Harry Potter and the Philosopher's Stone",
+                "authors": [
+                    "J. K. Rowling"
+                ],
+                "publisher": "Bloomsbury UK",
+                "publishedDate": "2001",
+                "description": "Harry Potter is an ordinary boy who lives in a cupboard under the stairs at his Aunt Petunia and Uncle Vernon's house, which he thinks is normal for someone like him who's parents have been killed in a 'car crash'. He is bullied by them and his fat, spoilt cousin Dudley, and lives a very unremarkable life with only the odd hiccup (like his hair growing back overnight!) to cause him much to think about. That is until an owl turns up with a letter addressed to Harry and all hell breaks loose! He is literally rescued by a world where nothing is as it seems and magic lessons are the order of the day. Read and find out how Harry discovers his true heritage at Hogwarts School of Wizardry and Witchcraft, the reason behind his parents mysterious death, who is out to kill him, and how he uncovers the most amazing secret of all time, the fabled Philosopher's Stone! All this and muggles too. Now, what are they?",
+                "industryIdentifiers": [
+                    {
+                        "type": "ISBN_10",
+                        "identifier": "0747558191"
+                    },
+                    {
+                        "type": "ISBN_13",
+                        "identifier": "9780747558194"
+                    }
+                ],
+                "readingModes": {
+                    "text": false,
+                    "image": false
+                },
+                "pageCount": 223,
+                "printType": "BOOK",
+                "categories": [
+                    "Children's stories"
+                ],
+                "averageRating": 5,
+                "ratingsCount": 4,
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": false,
+                "contentVersion": "preview-1.0.0",
+                "imageLinks": {
+                    "smallThumbnail": "http://books.google.com/books/content?id=Qu-JQgAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+                    "thumbnail": "http://books.google.com/books/content?id=Qu-JQgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+                },
+                "language": "en",
+                "previewLink": "http://books.google.com/books?id=Qu-JQgAACAAJ&dq=intitle:harry+potter+and+the+sorcerers+stone&hl=&cd=2&source=gbs_api",
+                "infoLink": "http://books.google.com/books?id=Qu-JQgAACAAJ&dq=intitle:harry+potter+and+the+sorcerers+stone&hl=&source=gbs_api",
+                "canonicalVolumeLink": "https://books.google.com/books/about/Harry_Potter_and_the_Philosopher_s_Stone.html?hl=&id=Qu-JQgAACAAJ"
+            },
+            "saleInfo": {
+                "country": "US",
+                "saleability": "NOT_FOR_SALE",
+                "isEbook": false
+            },
+            "accessInfo": {
+                "country": "US",
+                "viewability": "NO_PAGES",
+                "embeddable": false,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED",
+                "epub": {
+                    "isAvailable": false
+                },
+                "pdf": {
+                    "isAvailable": false
+                },
+                "webReaderLink": "http://play.google.com/books/reader?id=Qu-JQgAACAAJ&hl=&source=gbs_api",
+                "accessViewStatus": "NONE",
+                "quoteSharingAllowed": false
+            },
+            "searchInfo": {
+                "textSnippet": "Harry Potter thinks he is an ordinary boy until he is rescued by an owl, taken to Hogwarts School of Witchcraft and Wizardry, learns to play Quidditch and does battle in a deadly duel. The Reason: HARRY POTTER IS A WIZARD!"
+            }
+        },
+        {
+            "kind": "books#volume",
+            "id": "gzk2MQAACAAJ",
+            "etag": "ISl24cKXopM",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/gzk2MQAACAAJ",
+            "volumeInfo": {
+                "title": "Harry Potter and the Philosopher's Stone",
+                "authors": [
+                    "Joanne Kathleen Rowling"
+                ],
+                "publishedDate": "2001-02-06",
+                "description": "The Greek translation of the first Harry Potter book, Harry Potter and the Philosopher's Stone, in which Harry Potter, a normal eleven-year-old boy, discovers that he is a wizard. Long ago, Harry's parents were killed in a battle with the evil Lord Voldemort. When we first meet Harry, he is living miserably with his repulsive and nonmagical (or Muggle) Aunt Petunia and Uncle Vernon Dursley, and their even more revolting son, Dudley. Following a bizarre but hilarious chain of events, Harry finds himself at Hogwarts School of Witchcraft and Wizardry with an outrageous cast of characters, including super smart Hermione Granger, vile Draco Malfoy, sinister Professor Snape, and wise Headmaster Albus Dumbledore. Adventures galore ensue.",
+                "industryIdentifiers": [
+                    {
+                        "type": "ISBN_10",
+                        "identifier": "0563533366"
+                    },
+                    {
+                        "type": "ISBN_13",
+                        "identifier": "9780563533368"
+                    }
+                ],
+                "readingModes": {
+                    "text": false,
+                    "image": false
+                },
+                "pageCount": 332,
+                "printType": "BOOK",
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": false,
+                "contentVersion": "preview-1.0.0",
+                "panelizationSummary": {
+                    "containsEpubBubbles": false,
+                    "containsImageBubbles": false
+                },
+                "imageLinks": {
+                    "smallThumbnail": "http://books.google.com/books/content?id=gzk2MQAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+                    "thumbnail": "http://books.google.com/books/content?id=gzk2MQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+                },
+                "language": "en",
+                "previewLink": "http://books.google.com/books?id=gzk2MQAACAAJ&dq=intitle:harry+potter+and+the+sorcerers+stone&hl=&cd=3&source=gbs_api",
+                "infoLink": "http://books.google.com/books?id=gzk2MQAACAAJ&dq=intitle:harry+potter+and+the+sorcerers+stone&hl=&source=gbs_api",
+                "canonicalVolumeLink": "https://books.google.com/books/about/Harry_Potter_and_the_Philosopher_s_Stone.html?hl=&id=gzk2MQAACAAJ"
+            },
+            "saleInfo": {
+                "country": "US",
+                "saleability": "NOT_FOR_SALE",
+                "isEbook": false
+            },
+            "accessInfo": {
+                "country": "US",
+                "viewability": "NO_PAGES",
+                "embeddable": false,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED",
+                "epub": {
+                    "isAvailable": false
+                },
+                "pdf": {
+                    "isAvailable": false
+                },
+                "webReaderLink": "http://play.google.com/books/reader?id=gzk2MQAACAAJ&hl=&source=gbs_api",
+                "accessViewStatus": "NONE",
+                "quoteSharingAllowed": false
+            },
+            "searchInfo": {
+                "textSnippet": "The Greek translation of the first Harry Potter book, Harry Potter and the Philosopher&#39;s Stone, in which Harry Potter, a normal eleven-year-old boy, discovers that he is a wizard."
+            }
+        },
+        {
+            "kind": "books#volume",
+            "id": "NqiQEAAAQBAJ",
+            "etag": "jcW36K6XdPE",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/NqiQEAAAQBAJ",
+            "volumeInfo": {
+                "title": "Harry Potter y la piedra filosofal / Harry Potter and the Sorcerer's Stone",
+                "authors": [
+                    "J.K. Rowling"
+                ],
+                "publisher": "National Geographic Books",
+                "publishedDate": "2020-06-23",
+                "description": "Harry Potter y la piedra filosofal es el primer volumen de la ya clásica serie de novelas fantásticas de la autora británica J.K. Rowling. «Con las manos temblorosas, Harry le dio la vuelta al sobre y vio un sello de lacre púrpura con un escudo de armas: un león, un águila, un tejón y una serpiente, que rodeaban una gran letra H.» Harry Potter nunca ha oído hablar de Hogwarts hasta que empiezan a caer cartas en el felpudo del número 4 de Privet Drive. Llevan la dirección escrita con tinta verde en un sobre de pergamino amarillento con un sello de lacre púrpura, y sus horripilantes tíos se apresuran a confiscarlas. Más tarde, el día que Harry cumple once años, Rubeus Hagrid, un hombre gigantesco cuyos ojos brillan como escarabajos negros, irrumpe con una noticia extraordinaria: Harry Potter es un mago, y le han concedido una plaza en el Colegio Hogwarts de Magia y Hechicería. ¡Está a punto de comenzar una aventura increíble! ENGLISH DESCRIPTION Harry Potter and the Sorcerer's Stone is the first volume of British author J.K. Rowling’s now classic series of fantasy novels. \"With trembling hands, Harry turned over the envelope and saw a purple wax seal with a coat of arms: a lion, an eagle, a badger, and a snake, all surrounding a large letter H.\" Harry Potter has never heard of Hogwarts before, until letters start falling at the doorstep of 4 Privet Drive. The address is written in green ink on a yellowed parchment envelope with a purple wax seal stamped on it, and his repugnant aunt and uncle rush to remove and hide them. Later, on Harry's eleventh birthday, Rubeus Hagrid, a gigantic man whose eyes sparkle like black beetles, shows up with extraordinary news: Harry Potter is a wizard, and he has been awarded a place at Hogwarts School of Witchcraft and Wizardry. An incredible adventure is about to begin!",
+                "industryIdentifiers": [
+                    {
+                        "type": "ISBN_13",
+                        "identifier": "9781644732076"
+                    },
+                    {
+                        "type": "ISBN_10",
+                        "identifier": "1644732076"
+                    }
+                ],
+                "readingModes": {
+                    "text": true,
+                    "image": false
+                },
+                "pageCount": 0,
+                "printType": "BOOK",
+                "categories": [
+                    "Juvenile Fiction"
+                ],
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": false,
+                "contentVersion": "preview-1.0.0",
+                "panelizationSummary": {
+                    "containsEpubBubbles": false,
+                    "containsImageBubbles": false
+                },
+                "imageLinks": {
+                    "smallThumbnail": "http://books.google.com/books/content?id=NqiQEAAAQBAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+                    "thumbnail": "http://books.google.com/books/content?id=NqiQEAAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+                },
+                "language": "es",
+                "previewLink": "http://books.google.com/books?id=NqiQEAAAQBAJ&dq=intitle:harry+potter+and+the+sorcerers+stone&hl=&cd=4&source=gbs_api",
+                "infoLink": "http://books.google.com/books?id=NqiQEAAAQBAJ&dq=intitle:harry+potter+and+the+sorcerers+stone&hl=&source=gbs_api",
+                "canonicalVolumeLink": "https://books.google.com/books/about/Harry_Potter_y_la_piedra_filosofal_Harry.html?hl=&id=NqiQEAAAQBAJ"
+            },
+            "saleInfo": {
+                "country": "US",
+                "saleability": "NOT_FOR_SALE",
+                "isEbook": false
+            },
+            "accessInfo": {
+                "country": "US",
+                "viewability": "NO_PAGES",
+                "embeddable": false,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED",
+                "epub": {
+                    "isAvailable": false
+                },
+                "pdf": {
+                    "isAvailable": false
+                },
+                "webReaderLink": "http://play.google.com/books/reader?id=NqiQEAAAQBAJ&hl=&source=gbs_api",
+                "accessViewStatus": "NONE",
+                "quoteSharingAllowed": false
+            },
+            "searchInfo": {
+                "textSnippet": "ENGLISH DESCRIPTION Harry Potter and the Sorcerer&#39;s Stone is the first volume of British author J.K. Rowling’s now classic series of fantasy novels."
+            }
+        },
+        {
+            "kind": "books#volume",
+            "id": "hNcWPQAACAAJ",
+            "etag": "7M4cMR9qd68",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/hNcWPQAACAAJ",
+            "volumeInfo": {
+                "title": "Harry Potter Y la Piedra",
+                "authors": [
+                    "J. K. Rowling"
+                ],
+                "publisher": "Turtleback",
+                "publishedDate": "1999-04-01",
+                "description": "A beautifully bound edition of the first book in the best-selling Harry Potter series -- As a fixture on the New York Times Bestseller List. Happy Potter and The Sorcerer's Stone has quickly become a modern-day classic. -- With its embossed leather cover, and gold foil stamping, this classic, timeless edition will appeal to Harry Potter fans and adult collectors. -- Features an original, never-before-seen sketch of Harry by J. K. Rowling",
+                "industryIdentifiers": [
+                    {
+                        "type": "ISBN_10",
+                        "identifier": "0606172335"
+                    },
+                    {
+                        "type": "ISBN_13",
+                        "identifier": "9780606172332"
+                    }
+                ],
+                "readingModes": {
+                    "text": false,
+                    "image": false
+                },
+                "printType": "BOOK",
+                "categories": [
+                    "Juvenile Fiction"
+                ],
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": false,
+                "contentVersion": "preview-1.0.0",
+                "language": "en",
+                "previewLink": "http://books.google.com/books?id=hNcWPQAACAAJ&dq=intitle:harry+potter+and+the+sorcerers+stone&hl=&cd=5&source=gbs_api",
+                "infoLink": "http://books.google.com/books?id=hNcWPQAACAAJ&dq=intitle:harry+potter+and+the+sorcerers+stone&hl=&source=gbs_api",
+                "canonicalVolumeLink": "https://books.google.com/books/about/Harry_Potter_Y_la_Piedra.html?hl=&id=hNcWPQAACAAJ"
+            },
+            "saleInfo": {
+                "country": "US",
+                "saleability": "NOT_FOR_SALE",
+                "isEbook": false
+            },
+            "accessInfo": {
+                "country": "US",
+                "viewability": "NO_PAGES",
+                "embeddable": false,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED",
+                "epub": {
+                    "isAvailable": false
+                },
+                "pdf": {
+                    "isAvailable": false
+                },
+                "webReaderLink": "http://play.google.com/books/reader?id=hNcWPQAACAAJ&hl=&source=gbs_api",
+                "accessViewStatus": "NONE",
+                "quoteSharingAllowed": false
+            },
+            "searchInfo": {
+                "textSnippet": "For use in schools and libraries only. Rescued from the outrageous neglect of his aunt and uncle, a young boy with a great destiny proves his worth while attending Hogwarts School of Witchcraft and Wizardry."
+            }
+        },
+        {
+            "kind": "books#volume",
+            "id": "dqrVzgEACAAJ",
+            "etag": "zPjcT62efwU",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/dqrVzgEACAAJ",
+            "volumeInfo": {
+                "title": "Harry Potter and the Sorcerer's Stone",
+                "authors": [
+                    "J. K. Rowling"
+                ],
+                "publisher": "Arthur A. Levine Books",
+                "publishedDate": "1998",
+                "description": "Rescued from the outrageous neglect of his aunt and uncle, a young boy with a great destiny proves his worth while attending Hogwarts School for Wizards and Witches.",
+                "industryIdentifiers": [
+                    {
+                        "type": "ISBN_10",
+                        "identifier": "0545790352"
+                    },
+                    {
+                        "type": "ISBN_13",
+                        "identifier": "9780545790352"
+                    }
+                ],
+                "readingModes": {
+                    "text": false,
+                    "image": false
+                },
+                "pageCount": 309,
+                "printType": "BOOK",
+                "categories": [
+                    "Children's stories, English"
+                ],
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": false,
+                "contentVersion": "preview-1.0.0",
+                "panelizationSummary": {
+                    "containsEpubBubbles": false,
+                    "containsImageBubbles": false
+                },
+                "imageLinks": {
+                    "smallThumbnail": "http://books.google.com/books/content?id=dqrVzgEACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+                    "thumbnail": "http://books.google.com/books/content?id=dqrVzgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+                },
+                "language": "en",
+                "previewLink": "http://books.google.com/books?id=dqrVzgEACAAJ&dq=intitle:harry+potter+and+the+sorcerers+stone&hl=&cd=6&source=gbs_api",
+                "infoLink": "http://books.google.com/books?id=dqrVzgEACAAJ&dq=intitle:harry+potter+and+the+sorcerers+stone&hl=&source=gbs_api",
+                "canonicalVolumeLink": "https://books.google.com/books/about/Harry_Potter_and_the_Sorcerer_s_Stone.html?hl=&id=dqrVzgEACAAJ"
+            },
+            "saleInfo": {
+                "country": "US",
+                "saleability": "NOT_FOR_SALE",
+                "isEbook": false
+            },
+            "accessInfo": {
+                "country": "US",
+                "viewability": "NO_PAGES",
+                "embeddable": false,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED",
+                "epub": {
+                    "isAvailable": false
+                },
+                "pdf": {
+                    "isAvailable": false
+                },
+                "webReaderLink": "http://play.google.com/books/reader?id=dqrVzgEACAAJ&hl=&source=gbs_api",
+                "accessViewStatus": "NONE",
+                "quoteSharingAllowed": false
+            },
+            "searchInfo": {
+                "textSnippet": "Rescued from the outrageous neglect of his aunt and uncle, a young boy with a great destiny proves his worth while attending Hogwarts School for Wizards and Witches."
+            }
+        },
+        {
+            "kind": "books#volume",
+            "id": "2ABCzwEACAAJ",
+            "etag": "Ql4Ua7calns",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/2ABCzwEACAAJ",
+            "volumeInfo": {
+                "title": "Harry Potter and the Sorcerer's Stone",
+                "authors": [
+                    "Harry Potter"
+                ],
+                "industryIdentifiers": [
+                    {
+                        "type": "OTHER",
+                        "identifier": "OCLC:1326461697"
+                    }
+                ],
+                "readingModes": {
+                    "text": false,
+                    "image": false
+                },
+                "pageCount": 312,
+                "printType": "BOOK",
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": false,
+                "contentVersion": "preview-1.0.0",
+                "panelizationSummary": {
+                    "containsEpubBubbles": false,
+                    "containsImageBubbles": false
+                },
+                "language": "en",
+                "previewLink": "http://books.google.com/books?id=2ABCzwEACAAJ&dq=intitle:harry+potter+and+the+sorcerers+stone&hl=&cd=7&source=gbs_api",
+                "infoLink": "http://books.google.com/books?id=2ABCzwEACAAJ&dq=intitle:harry+potter+and+the+sorcerers+stone&hl=&source=gbs_api",
+                "canonicalVolumeLink": "https://books.google.com/books/about/Harry_Potter_and_the_Sorcerer_s_Stone.html?hl=&id=2ABCzwEACAAJ"
+            },
+            "saleInfo": {
+                "country": "US",
+                "saleability": "NOT_FOR_SALE",
+                "isEbook": false
+            },
+            "accessInfo": {
+                "country": "US",
+                "viewability": "NO_PAGES",
+                "embeddable": false,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED",
+                "epub": {
+                    "isAvailable": false
+                },
+                "pdf": {
+                    "isAvailable": false
+                },
+                "webReaderLink": "http://play.google.com/books/reader?id=2ABCzwEACAAJ&hl=&source=gbs_api",
+                "accessViewStatus": "NONE",
+                "quoteSharingAllowed": false
+            }
+        },
+        {
+            "kind": "books#volume",
+            "id": "T8R-zwEACAAJ",
+            "etag": "n0sUhLNcsiM",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/T8R-zwEACAAJ",
+            "volumeInfo": {
+                "title": "Harry Potter and the Sorcerer's Stone",
+                "subtitle": "Book 1",
+                "authors": [
+                    "J. K. Rowling"
+                ],
+                "publishedDate": "2022",
+                "description": "Rescued from the outrageous negelct of his aunt and uncle, a young boy with a great destiny proves his worth while attending the Hogwarts School for Wizards and Witches.",
+                "industryIdentifiers": [
+                    {
+                        "type": "OTHER",
+                        "identifier": "OCLC:1347436037"
+                    }
+                ],
+                "readingModes": {
+                    "text": false,
+                    "image": false
+                },
+                "pageCount": 0,
+                "printType": "BOOK",
+                "categories": [
+                    "England"
+                ],
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": false,
+                "contentVersion": "preview-1.0.0",
+                "panelizationSummary": {
+                    "containsEpubBubbles": false,
+                    "containsImageBubbles": false
+                },
+                "language": "en",
+                "previewLink": "http://books.google.com/books?id=T8R-zwEACAAJ&dq=intitle:harry+potter+and+the+sorcerers+stone&hl=&cd=8&source=gbs_api",
+                "infoLink": "http://books.google.com/books?id=T8R-zwEACAAJ&dq=intitle:harry+potter+and+the+sorcerers+stone&hl=&source=gbs_api",
+                "canonicalVolumeLink": "https://books.google.com/books/about/Harry_Potter_and_the_Sorcerer_s_Stone.html?hl=&id=T8R-zwEACAAJ"
+            },
+            "saleInfo": {
+                "country": "US",
+                "saleability": "NOT_FOR_SALE",
+                "isEbook": false
+            },
+            "accessInfo": {
+                "country": "US",
+                "viewability": "NO_PAGES",
+                "embeddable": false,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED",
+                "epub": {
+                    "isAvailable": false
+                },
+                "pdf": {
+                    "isAvailable": false
+                },
+                "webReaderLink": "http://play.google.com/books/reader?id=T8R-zwEACAAJ&hl=&source=gbs_api",
+                "accessViewStatus": "NONE",
+                "quoteSharingAllowed": false
+            },
+            "searchInfo": {
+                "textSnippet": "Rescued from the outrageous negelct of his aunt and uncle, a young boy with a great destiny proves his worth while attending the Hogwarts School for Wizards and Witches."
+            }
+        },
+        {
+            "kind": "books#volume",
+            "id": "SGMmrgEACAAJ",
+            "etag": "0/ThZpf1m9s",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/SGMmrgEACAAJ",
+            "volumeInfo": {
+                "title": "Harry Potter and the Sorcerer's Stone",
+                "authors": [
+                    "EA Games"
+                ],
+                "publishedDate": "2005",
+                "industryIdentifiers": [
+                    {
+                        "type": "OTHER",
+                        "identifier": "OCLC:898985151"
+                    }
+                ],
+                "readingModes": {
+                    "text": false,
+                    "image": false
+                },
+                "printType": "BOOK",
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": false,
+                "contentVersion": "preview-1.0.0",
+                "language": "en",
+                "previewLink": "http://books.google.com/books?id=SGMmrgEACAAJ&dq=intitle:harry+potter+and+the+sorcerers+stone&hl=&cd=9&source=gbs_api",
+                "infoLink": "http://books.google.com/books?id=SGMmrgEACAAJ&dq=intitle:harry+potter+and+the+sorcerers+stone&hl=&source=gbs_api",
+                "canonicalVolumeLink": "https://books.google.com/books/about/Harry_Potter_and_the_Sorcerer_s_Stone.html?hl=&id=SGMmrgEACAAJ"
+            },
+            "saleInfo": {
+                "country": "US",
+                "saleability": "NOT_FOR_SALE",
+                "isEbook": false
+            },
+            "accessInfo": {
+                "country": "US",
+                "viewability": "NO_PAGES",
+                "embeddable": false,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED",
+                "epub": {
+                    "isAvailable": false
+                },
+                "pdf": {
+                    "isAvailable": false
+                },
+                "webReaderLink": "http://play.google.com/books/reader?id=SGMmrgEACAAJ&hl=&source=gbs_api",
+                "accessViewStatus": "NONE",
+                "quoteSharingAllowed": false
+            }
+        },
+        {
+            "kind": "books#volume",
+            "id": "iPTOPQAACAAJ",
+            "etag": "6Y/+m4ea5P8",
+            "selfLink": "https://www.googleapis.com/books/v1/volumes/iPTOPQAACAAJ",
+            "volumeInfo": {
+                "title": "Harry Potter and the Sorcerer's Stone",
+                "subtitle": "Postcard Book",
+                "authors": [
+                    "Scholastic, Inc. Staff"
+                ],
+                "publisher": "Scholastic",
+                "publishedDate": "2001-09-01",
+                "industryIdentifiers": [
+                    {
+                        "type": "ISBN_10",
+                        "identifier": "0439288568"
+                    },
+                    {
+                        "type": "ISBN_13",
+                        "identifier": "9780439288569"
+                    }
+                ],
+                "readingModes": {
+                    "text": false,
+                    "image": false
+                },
+                "pageCount": 64,
+                "printType": "BOOK",
+                "averageRating": 4.5,
+                "ratingsCount": 46,
+                "maturityRating": "NOT_MATURE",
+                "allowAnonLogging": false,
+                "contentVersion": "preview-1.0.0",
+                "imageLinks": {
+                    "smallThumbnail": "http://books.google.com/books/content?id=iPTOPQAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api",
+                    "thumbnail": "http://books.google.com/books/content?id=iPTOPQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+                },
+                "language": "en",
+                "previewLink": "http://books.google.com/books?id=iPTOPQAACAAJ&dq=intitle:harry+potter+and+the+sorcerers+stone&hl=&cd=10&source=gbs_api",
+                "infoLink": "http://books.google.com/books?id=iPTOPQAACAAJ&dq=intitle:harry+potter+and+the+sorcerers+stone&hl=&source=gbs_api",
+                "canonicalVolumeLink": "https://books.google.com/books/about/Harry_Potter_and_the_Sorcerer_s_Stone.html?hl=&id=iPTOPQAACAAJ"
+            },
+            "saleInfo": {
+                "country": "US",
+                "saleability": "NOT_FOR_SALE",
+                "isEbook": false
+            },
+            "accessInfo": {
+                "country": "US",
+                "viewability": "NO_PAGES",
+                "embeddable": false,
+                "publicDomain": false,
+                "textToSpeechPermission": "ALLOWED",
+                "epub": {
+                    "isAvailable": false
+                },
+                "pdf": {
+                    "isAvailable": false
+                },
+                "webReaderLink": "http://play.google.com/books/reader?id=iPTOPQAACAAJ&hl=&source=gbs_api",
+                "accessViewStatus": "NONE",
+                "quoteSharingAllowed": false
+            }
+        }
+    ]
+}
