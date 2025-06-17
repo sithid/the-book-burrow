@@ -4,4 +4,8 @@ The Book Burrow is a responsive website that allows the user to search for books
 
 # Current Phase : Planning
 
-![Wireframes](./docs/wireframes.png)
+Landing page wireframes for small, medium, and large screens is done.  Still need to make wireframes for bookshelf page and book details for when the user is on mobile instead of desktop.
+
+Vue 3 project created and cleaned up (removed default project).
+![Wireframes](./docs/wireframes/wireframes.png)
+
