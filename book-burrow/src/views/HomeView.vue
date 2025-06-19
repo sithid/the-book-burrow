@@ -12,6 +12,8 @@
 
 <style scoped>
   .counter-container {
+    width: 100%;
+    height: 800px;
     justify-content: center;
     text-align: center;
   }

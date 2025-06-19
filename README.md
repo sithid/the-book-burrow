@@ -7,5 +7,8 @@ The Book Burrow is a responsive website that allows the user to search for books
 Landing page wireframes for small, medium, and large screens is done.  Still need to make wireframes for bookshelf page and book details for when the user is on mobile instead of desktop.
 
 Vue 3 project created and cleaned up (removed default project).
-![Wireframes](./docs/wireframes/wireframes.png)
+
+Various wireframes created for different views and components.  Wireframes are located in the `./docs` folder.
+
+![Wireframes](./docs/wireframes/all-wireframes.png)
 
