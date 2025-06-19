@@ -1,25 +1,17 @@
 <template>
-  <div class="counter-container">
-    <h1>Count: {{ counterStore.count }}</h1>
-    <button @click="counterStore.increment()">Increment</button>
+  <div class="container">
+    <SearchComponent></SearchComponent>
   </div>
 </template>
 
 <script setup>
-  import { useCounterStore } from '../stores/counter.js';
-  const counterStore = useCounterStore();
+import SearchComponent from '../components/SearchComponent.vue';
 </script>
 
 <style scoped>
-  .counter-container {
-    width: 100%;
-    height: 800px;
-    justify-content: center;
-    text-align: center;
-  }
-
-  .counter-container button {
-    max-width: 100px;
-    max-height: 50px;
-  }
+.container {
+  justify-content: center;
+  text-align: center;
+  background-color: coral;
+}
 </style>
