@@ -26,7 +26,7 @@
       </div>
       <div class="read-container">
         <h1>Bookshelf</h1>
-        <p>Read</p>
+        <p>Have Read</p>
       </div>
     </div>
   </div>
