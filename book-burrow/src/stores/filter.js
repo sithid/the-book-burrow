@@ -10,7 +10,6 @@ export const useFilterStore = defineStore('filter', () => {
 
   const toggleFilterPanel = computed(() => {
     filterPanelOpen.value = !filterPanelOpen.value;
-    console.log( "filterPanelActive toggled: " + filterPanelOpen.value );
   });
 
   return {

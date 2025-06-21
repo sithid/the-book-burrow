@@ -3,7 +3,7 @@
     <h1>The Book Burrow</h1>
     <nav class="nav-menu">
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">Bookshelf</RouterLink>
+      <RouterLink to="/bookshelf">Bookshelf</RouterLink>
       <RouterLink to="/about">About</RouterLink>
       <button @click="preferencesBtnOnClick" class="preferences-button">
         <i class="fa fa-user" aria-hidden="true"></i>
@@ -20,23 +20,39 @@
 
 <script setup>
 import { RouterLink, RouterView } from 'vue-router';
+import { ref, onMounted, onBeforeUnmount } from "vue";
+
 import { useFilterStore } from '@/stores/filter';
+import { useScreenStore } from '@/stores/screen';
 
 const filterStore = useFilterStore();
+const screen = useScreenStore();
 
 function preferencesBtnOnClick() {
   console.log("Preferences button clicked!");
 }
+
+onMounted(() => {
+  screen.updateScreenDimensions()
+  window.addEventListener("resize", screen.updateScreenDimensions);
+});
+
+onBeforeUnmount(() => {
+  screen.updateScreenDimensions()
+  window.removeEventListener("resize", screen.updateScreenDimensions);
+});
+
 </script>
 
 <style scoped>
+.content-panel {
+}
 .header {
   display: flex;
   flex-direction: column;
-  margin: 0 0;
+  justify-content: space-evenly;
   width: 100%;
-  background-color: lightblue;
-  border-bottom: 2px solid black;
+  background-color: coral;
 }
 
 h1 {
@@ -48,18 +64,21 @@ h1 {
   flex-direction: row;
   font-size: 1.5rem;
   gap: 15px;
-  justify-content: center;
+  justify-content: space-around;
 }
 
-.preferences-button,
-.filter-button {
-  max-width: 100px;
-  max-height: 50px;
+.preferences-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-position: center;
+  background-size: cover;
+  margin-bottom: 20px;
 }
 
 .filter-options-panel {
   position: fixed;
-  top: 165px;
+  top: 166px;
   width: 280px;
   height: 100%;
   background-color: #f0f0f0;
@@ -84,15 +103,6 @@ h1 {
     font-size: 1.5rem;
     justify-content: right;
     gap: 35px;
-  }
-  
-  .preferences-button {
-    margin-left: 0;
-  }
-
-  .filter-button {
-    margin-left: 50px;
-    margin-right: 0;
   }
 
   .filter-options-panel {
