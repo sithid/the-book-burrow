@@ -1,7 +1,9 @@
 <template>
   <div class="book-card-mini">
-    <p id="book-title">{{ props.item.volumeInfo.title}}</p>
-    <img :src="`${getThumbnail(props.item)}`"/>
+    <p id="book-card-title">{{ props.item.volumeInfo.title}}</p>
+    <div class="book-card-details">
+      <img :src="`${getThumbnail(props.item)}`"/>
+    </div>
   </div>
 </template>
 
@@ -12,7 +14,6 @@ const props = defineProps({
   item: {
     type: Object,
     required: true,
-
   }
 });
 
@@ -25,17 +26,13 @@ function getThumbnail(item) {
 .book-card-mini {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  background-size: cover;
-  background-position: center;
-  padding-left: 10px;
 }
 
 .book-card-mini img {
   width: 25%;
 }
 
-#book-title {
+#book-card-title {
   font-size: .8rem;
   text-align: left;
   overflow: wrap;
@@ -49,8 +46,8 @@ function getThumbnail(item) {
     padding-right: 10px;
   }
 
-  .book-card-mini img {
-    width: 10%;
+  .book-card-details img {
+    width: 25%;
   }
 }
 </style>

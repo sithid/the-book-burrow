@@ -12,7 +12,7 @@
   </div>
   <div class="content-panel">
     <div v-if="filterStore.isPanelOpen" class="filter-options-panel">
-      <h1>testing all this stuff to see what works and what doesnt this is just temp text bleh bleh bleh</h1>
+      <p>testing all this stuff to see what works and what doesnt this is just temp text bleh bleh bleh</p>
     </div>
     <RouterView />
   </div>
@@ -45,8 +45,6 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-.content-panel {
-}
 .header {
   display: flex;
   flex-direction: column;
@@ -57,6 +55,7 @@ onBeforeUnmount(() => {
 
 h1 {
   text-align: center;
+  text-wrap: nowrap;
 }
 
 .nav-menu {
@@ -78,10 +77,12 @@ h1 {
 
 .filter-options-panel {
   position: fixed;
-  top: 166px;
+  top: 185px;
+  left: 10px;
   width: 280px;
   height: 100%;
-  background-color: #f0f0f0;
+  background-color: white;
+  border: 1px solid black;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
   padding: 20px;
   z-index: 10;
@@ -99,14 +100,16 @@ h1 {
     margin: 0 0;
   }
 
-  .nav-menu {
-    font-size: 1.5rem;
+  .nav-menu a{
+    font-size: .8rem;
     justify-content: right;
+    align-content: center;
     gap: 35px;
   }
 
   .filter-options-panel {
-    top: 135px;
+    top: 180px;
+    left: 10px;
   }
 }
 </style>

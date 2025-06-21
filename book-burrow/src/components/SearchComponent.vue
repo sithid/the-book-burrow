@@ -98,7 +98,7 @@ onMounted(() => {
 .search-input {
   width: 100%;
   height: 30px;
-  border: 2px solid black;
+  border: 1px solid black;
   font-size: 0.9rem;
   margin: 10px;
   padding: 10px;
@@ -115,37 +115,41 @@ onMounted(() => {
 .results-container {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  gap: 10px;
+  justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .result-cards {
   display: flex;
   flex-direction: column;
+  border: 1px solid black;
 }
 
 .to-read-container,
 .read-container {
   display: none;
   flex-direction: column;
-  background-color: red;
-  border: 2px solid black;
+  border: 1px solid black;
+  width: 600px;
 }
 
 .to-read-container h1,
 .to-read-container p,
 .read-container h1,
 .read-container p {
-  padding: 0;
-  margin: 0;
-  border: 2px solid black;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid black;
 }
 
 @media (min-width: 768px) {
   .search-container {
-    padding: 0px 10px 0px 10px;
+    padding: 0 10px 0 10px;
   }
+}
 
+@media (min-width: 1024px) {
   .to-read-container,
   .read-container {
     display: flex;
