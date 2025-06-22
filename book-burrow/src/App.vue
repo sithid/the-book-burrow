@@ -51,7 +51,7 @@ onBeforeUnmount(() => {
   flex-direction: column;
   justify-content: space-evenly;
   width: 100%;
-  background-color: var( --color-header-banner );
+  background-color: var( --color-light-primary );
 }
 
 h1 {

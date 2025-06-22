@@ -1,8 +1,9 @@
 :root {
-  --color-header-banner: coral;
-  --color-primary: red;
-  --color-secondary: blue;
-  --color-tertiary: green;
+  --color-light-primary: Coral;
+  --color-light-secondary: CadetBlue;
+  --color-dark-primary: DimGray;
+  --color-dark-secondary: LightGray;
+
 }
 * {
     font-family: 'Times New Roman', Times, serif;
@@ -14,7 +15,7 @@ body {
   margin: 0;
   padding: 0;
   min-width: 360px;
-  background-color: cadetblue;
+  background-color: var( --color-light-secondary );
 }
 
 @media (min-width: 768px) {

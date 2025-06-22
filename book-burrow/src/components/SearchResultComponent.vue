@@ -2,7 +2,7 @@
   <section class="book-card-mini">
     <p id="book-card-title">{{ props.item.volumeInfo.title }}</p>
     <div class="book-card-details">
-      <img :src="`${getThumbnail()}`" />
+      <img :src="`${getThumbnail(props.item)}`" />
       <section class="book-info">
         <p class="info-text">
           <span id="author">
@@ -30,9 +30,9 @@ const props = defineProps({
   },
 });
 
-function getThumbnail() {
-  if( props.item.volumeInfo.imageLinks && props.item.volumeInfo.imageLinks.thumbnail )
-    return props.item.volumeInfo.imageLinks.thumbnail;
+function getThumbnail( item ) {
+  if( item.volumeInfo.imageLinks && props.item.volumeInfo.imageLinks.thumbnail )
+    return item.volumeInfo.imageLinks.thumbnail;
   else {
     return "./assets/thumbnail-missing.jpg";
   }
