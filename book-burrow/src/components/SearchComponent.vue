@@ -117,20 +117,20 @@ onMounted(() => {
   flex-direction: row;
   justify-content: space-between;
   padding-left: 10px;
-  padding-right: 10px;
+  padding-right: 10px;  
 }
 
 .result-cards {
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
+  width: 100%;
+  gap: 10px;
 }
 
 .to-read-container,
 .read-container {
   display: none;
   flex-direction: column;
-  border: 1px solid black;
   width: 600px;
 }
 

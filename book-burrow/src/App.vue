@@ -83,7 +83,6 @@ h1 {
   height: 100%;
   background-color: white;
   border: 1px solid black;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
   padding: 20px;
   z-index: 10;
 }
