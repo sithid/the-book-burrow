@@ -3,6 +3,7 @@
     <h1>The Book Burrow</h1>
     <nav class="nav-menu">
       <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/search">Search</RouterLink>
       <RouterLink to="/bookshelf">Bookshelf</RouterLink>
       <RouterLink to="/about">About</RouterLink>
       <button @click="preferencesBtnOnClick" class="preferences-button">
@@ -50,7 +51,7 @@ onBeforeUnmount(() => {
   flex-direction: column;
   justify-content: space-evenly;
   width: 100%;
-  background-color: coral;
+  background-color: var( --color-header-banner );
 }
 
 h1 {
@@ -77,7 +78,7 @@ h1 {
 
 .filter-options-panel {
   position: fixed;
-  top: 185px;
+  top: 195px;
   left: 10px;
   width: 280px;
   height: 100%;
@@ -107,7 +108,7 @@ h1 {
   }
 
   .filter-options-panel {
-    top: 180px;
+    top: 182px;
     left: 10px;
   }
 }

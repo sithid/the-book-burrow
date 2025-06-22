@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import BookshelfView from '@/views/BookshelfView.vue'
+import SearchView from '../views/SearchView.vue'
+import BookshelfView from '../views/BookshelfView.vue'
 import AboutView from '../views/AboutView.vue'
 
 const router = createRouter({
@@ -12,6 +13,11 @@ const router = createRouter({
       component: HomeView,
     },
     {
+      path: '/search',
+      name: 'search',
+      component: SearchView,
+    },
+    {
       path: '/bookshelf',
       name: 'bookshelf',
       component: BookshelfView,
@@ -20,7 +26,7 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: AboutView,
-    },
+    }
   ],
 })
 

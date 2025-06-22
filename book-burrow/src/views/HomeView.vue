@@ -1,21 +1,15 @@
 <template>
-  <div>
-    <SearchComponent></SearchComponent>
+  <div class="home">
+    <h1>Welcome!</h1>
   </div>
 </template>
 
-<script setup>
-import SearchComponent from "../components/SearchComponent.vue";
-
-</script>
-
-<style scoped>
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  margin: 0 0;
-  background-color: coral;
-}
+<style>
+  @media (min-width: 768) {
+    .home {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+  }
 </style>

@@ -8,6 +8,7 @@
         id="search-input"
         type="text"
         v-model="searchKeywords"
+        @keyup.enter="searchBtnOnClick"
         class="search-input"
       />
       <button @click="searchBtnOnClick" class="search-button">
@@ -33,7 +34,7 @@
 </template>
 
 <script setup>
-import { BOOKS_API } from "../../config.js";
+import { config } from "../../config.js";
 import { ref, onMounted } from "vue";
 import { useFilterStore } from "@/stores/filter";
 import { useSearchStore } from "@/stores/search";
@@ -47,13 +48,13 @@ const searchKeywords = ref("potter");
 async function queryApi(params) {
   const keywords = new URLSearchParams();
   keywords.append("q", params);
-  keywords.append("maxResults", BOOKS_API.MAX_RESULTS);
+  keywords.append("maxResults", config.MAX_RESULTS);
 
   const requestHeaders = new Headers();
   requestHeaders.append("Content-Type", "application/json");
-  requestHeaders.append("key", BOOKS_API.API_TOKEN);
+  requestHeaders.append("key", config.API_TOKEN);
 
-  const url = `${BOOKS_API.API_URL}?${keywords}`;
+  const url = `${config.API_URL}?${keywords}`;
 
   const options = {
     method: "GET",
@@ -115,9 +116,9 @@ onMounted(() => {
 .results-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   padding-left: 10px;
-  padding-right: 10px;  
+  padding-right: 10px;
+  gap: 10px;
 }
 
 .result-cards {
@@ -132,6 +133,7 @@ onMounted(() => {
   display: none;
   flex-direction: column;
   width: 600px;
+  background-color: white;
 }
 
 .to-read-container h1,

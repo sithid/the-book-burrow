@@ -1,86 +1,115 @@
 <template>
-  <div class="book-card-mini">
-    <p id="book-card-title">{{ props.item.volumeInfo.title}}</p>
+  <section class="book-card-mini">
+    <p id="book-card-title">{{ props.item.volumeInfo.title }}</p>
     <div class="book-card-details">
-      <img :src="`${getThumbnail(props.item)}`"/>
+      <img :src="`${getThumbnail()}`" />
       <section class="book-info">
         <p class="info-text">
           <span id="author">
-            {{ props.item.volumeInfo.authors[0] }}
+            {{ getAuthors() }}
           </span>
           <span id="publish-year">
-            {{ formatDate() }}
+            {{ getPublishedDate() }}
           </span>
         </p>
         <article class="info-text">
           <span id="description">
-            {{ props.item.volumeInfo.description }}
+            {{ getDescription() }}
           </span>
         </article>
       </section>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
-
 const props = defineProps({
   item: {
     type: Object,
     required: true,
-  }
+  },
 });
 
-function getThumbnail(item) {
-  return item.volumeInfo.imageLinks.thumbnail;
+function getThumbnail() {
+  if( props.item.volumeInfo.imageLinks && props.item.volumeInfo.imageLinks.thumbnail )
+    return props.item.volumeInfo.imageLinks.thumbnail;
+  else {
+    return "./assets/thumbnail-missing.jpg";
+  }
 }
 
-function formatDate() {
-  return parseDate(props.item.volumeInfo.publishedDate);
+function getAuthors() {
+  if( props.item.volumeInfo.authors ) {
+    let authors = '';
+
+    for( let key in props.item.volumeInfo.authors ) {
+      authors += `[${props.item.volumeInfo.authors[key]}] `;
+    }
+
+    return authors;
+  } else {
+    return 'Unknown';
+  }
 }
 
-function parseDate( date ) {
-  const text = date.split('-');
-
-  const year = text[0];
-  const month = getMonth(Number(text[1]));
-  
-  const formatted = `${month} ${year}`;
-
-  console.log(formatDate);
-  return formatted;
+function getDescription() {
+  if( props.item.volumeInfo.description ) {
+    return props.item.volumeInfo.description;
+  }
+  else {
+    return 'No description availabile.'
+  }
 }
 
-function getMonth( month ) {
-  let monthString = '';
+function getPublishedDate() {
+  const text = props.item.volumeInfo.publishedDate.split("-");
+
+  if( !text ) {
+    return 'Unknown';
+  }
+  else if (text.length != 3) {
+    return text[0];
+  } else {
+    const year = text[0];
+    const month = getMonth(Number(text[1]));
+
+    const formatted = `${month}, ${year}`;
+    return formatted;
+  }
+}
+
+function getMonth(month) {
+  let monthString = "";
 
   const months = [
-    'January',
-    'Febuary',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
+    "January",
+    "Febuary",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
-  return months[month-1];
+  if (months[month - 1]) {
+    return months[month - 1];
+  } else {
+    return "Unknown";
+  }
 }
-
 </script>
 
 <style scoped>
 .book-card-mini {
   display: flex;
   flex-direction: column;
-  border: 2px solid black;
   padding: 10px;
+  background-color: white;
 }
 
 .book-card-mini img {
@@ -89,17 +118,16 @@ function getMonth( month ) {
 }
 
 #book-card-title {
-  font-size: .8rem;
+  font-size: 0.8rem;
   text-align: left;
-  overflow: wrap;
   font-variant: small-caps;
-  border-bottom: 1px solid rgba(0, 0, 0, .3);
   align-self: center;
 }
 
 .book-card-details {
   display: flex;
   flex-direction: column;
+  gap: 15px;
 }
 
 .book-info {
@@ -109,7 +137,7 @@ function getMonth( month ) {
 }
 
 .info-text {
-  font-size: .5rem;
+  font-size: 0.5rem;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -139,13 +167,20 @@ function getMonth( month ) {
   .book-card-details {
     display: flex;
     flex-direction: row;
+    gap: 0;
   }
 
-  .book-card-details img {
-    width: 25%;
+  #book-card-title {
+    font-size: 0.5rem;
+    text-align: left;
+  }
+
+  #description {
+    text-align: justify;
+    padding-left: 10px;
+    font-size: 0.5rem;
   }
 }
-
 
 @media (min-width: 1024px) {
   #author,
