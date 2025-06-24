@@ -48,7 +48,7 @@ function getAuthors() {
 
     return authors;
   } else {
-    return 'Unknown';
+    return 'Unknown Authors';
   }
 }
 
@@ -62,12 +62,14 @@ function getDescription() {
 }
 
 function getPublishedDate() {
+  if( !props.item.volumeInfo.publishedDate )
+    return 'Unknown Publish Date';
+
   const text = props.item.volumeInfo.publishedDate.split("-");
 
   if( !text ) {
-    return 'Unknown';
-  }
-  else if (text.length != 3) {
+    return 'Unknown Publish Date';
+  } else if (text.length != 3) {
     return text[0];
   } else {
     const year = text[0];
@@ -78,28 +80,26 @@ function getPublishedDate() {
   }
 }
 
+const months = [
+  "January",
+  "Febuary",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 function getMonth(month) {
   let monthString = "";
 
-  const months = [
-    "January",
-    "Febuary",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
   if (months[month - 1]) {
     return months[month - 1];
-  } else {
-    return "Unknown";
   }
 }
 </script>

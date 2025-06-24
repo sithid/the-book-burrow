@@ -15,6 +15,9 @@
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
     </div>
+    <div>
+      <FilterPanelComponent></FilterPanelComponent>
+    </div>
     <div class="results-container">
       <div class="to-read-container">
         <h1>Bookshelf</h1>
@@ -39,11 +42,12 @@ import { ref, onMounted } from "vue";
 import { useFilterStore } from "@/stores/filter";
 import { useSearchStore } from "@/stores/search";
 import SearchResultComponent from "../components/SearchResultComponent.vue";
+import FilterPanelComponent from "../components/FilterPanelComponent.vue";
 
 const filter = useFilterStore();
 const search = useSearchStore();
 
-const searchKeywords = ref("potter");
+const searchKeywords = ref(search.keywords);
 
 async function queryApi(params) {
   const keywords = new URLSearchParams();
@@ -71,19 +75,24 @@ async function queryApi(params) {
   }
 }
 
-async function searchBtnOnClick() {
-  await queryApi(searchKeywords.value);
+const searchBtnOnClick = async () => {
+  search.keywords = searchKeywords.value;
+  await queryApi(search.keywords);
 }
 
-onMounted(() => {
-  queryApi(searchKeywords.value);
+onMounted( async ()  => {
+  console.log("SearchComponent mounted.");
+  await queryApi(search.keywords);
 });
+
 </script>
 
 <style scoped>
 .search-component {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
 .search-container {

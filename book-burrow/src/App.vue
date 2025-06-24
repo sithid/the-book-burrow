@@ -12,16 +12,13 @@
     </nav>
   </div>
   <div class="content-panel">
-    <div v-if="filterStore.isPanelOpen" class="filter-options-panel">
-      <p>testing all this stuff to see what works and what doesnt this is just temp text bleh bleh bleh</p>
-    </div>
     <RouterView />
   </div>
 </template>
 
 <script setup>
 import { RouterLink, RouterView } from 'vue-router';
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { onMounted, onBeforeUnmount } from "vue";
 
 import { useFilterStore } from '@/stores/filter';
 import { useScreenStore } from '@/stores/screen';
@@ -76,18 +73,6 @@ h1 {
   margin-bottom: 20px;
 }
 
-.filter-options-panel {
-  position: fixed;
-  top: 195px;
-  left: 10px;
-  width: 280px;
-  height: 100%;
-  background-color: white;
-  border: 1px solid black;
-  padding: 20px;
-  z-index: 10;
-}
-
 @media (min-width: 768px) {
   .header {
     flex-direction: row;
@@ -105,11 +90,6 @@ h1 {
     justify-content: right;
     align-content: center;
     gap: 35px;
-  }
-
-  .filter-options-panel {
-    top: 182px;
-    left: 10px;
   }
 }
 </style>
