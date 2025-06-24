@@ -31,7 +31,7 @@ const props = defineProps({
 });
 
 function getThumbnail( item ) {
-  if( item.volumeInfo.imageLinks && props.item.volumeInfo.imageLinks.thumbnail )
+  if( item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.thumbnail )
     return item.volumeInfo.imageLinks.thumbnail;
   else {
     return "./assets/thumbnail-missing.jpg";

@@ -21,7 +21,7 @@
         <p>To Be Read</p>
       </div>
       <div class="result-cards">
-        <div v-for="item of search.getItems().value">
+        <div v-for="item of search.items.value">
           <SearchResultComponent :item="item"></SearchResultComponent>
         </div>
       </div>
@@ -73,7 +73,6 @@ async function queryApi(params) {
 
 async function searchBtnOnClick() {
   await queryApi(searchKeywords.value);
-  console.log(search.items.value);
 }
 
 onMounted(() => {
