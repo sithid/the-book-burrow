@@ -14,6 +14,9 @@
   <div class="content-panel">
     <RouterView />
   </div>
+  <div class="footer">
+    <p>&copy; 2025 The Book Burrow. All rights reserved.</p>
+  </div>
 </template>
 
 <script setup>
@@ -48,7 +51,15 @@ onBeforeUnmount(() => {
   flex-direction: column;
   justify-content: space-evenly;
   width: 100%;
-  background-color: var( --color-light-primary );
+  color: var(--color-text);
+  background-color: var( --color-header-banner );
+}
+
+.footer {
+  background-color: var( --color-secondary );
+  color: #fff;
+  text-align: center;
+  padding: 10px;
 }
 
 h1 {
@@ -90,6 +101,7 @@ h1 {
     justify-content: right;
     align-content: center;
     gap: 35px;
+    color: white;
   }
 }
 </style>

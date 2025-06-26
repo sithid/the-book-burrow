@@ -109,7 +109,8 @@ function getMonth(month) {
   display: flex;
   flex-direction: column;
   padding: 10px;
-  background-color: white;
+  color: white;
+  background-color: var(--color-secondary);
 }
 
 .book-card-mini img {

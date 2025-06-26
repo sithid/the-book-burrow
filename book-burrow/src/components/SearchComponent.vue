@@ -93,6 +93,7 @@ onMounted( async ()  => {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  background-color: var( --color-primary );
 }
 
 .search-container {
@@ -141,7 +142,7 @@ onMounted( async ()  => {
   display: none;
   flex-direction: column;
   width: 600px;
-  background-color: white;
+  background-color: var(--color-secondary);
 }
 
 .to-read-container h1,
@@ -151,6 +152,7 @@ onMounted( async ()  => {
   padding: 10px;
   margin: 10px;
   border: 1px solid black;
+  background-color: #fff;
 }
 
 @media (min-width: 768px) {

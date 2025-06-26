@@ -1,8 +1,8 @@
 :root {
-  --color-light-primary: Coral;
-  --color-light-secondary: CadetBlue;
-  --color-dark-primary: DimGray;
-  --color-dark-secondary: LightGray;
+  --color-header-banner: #1153b1;
+  --color-primary: #1a2738;
+  --color-secondary: grey;
+  --color-text: #fff;
 
 }
 * {
@@ -15,7 +15,8 @@ body {
   margin: 0;
   padding: 0;
   min-width: 360px;
-  background-color: var( --color-light-secondary );
+  background-color: var(--color-primary );
+  color: var( --color-text );
 }
 
 @media (min-width: 768px) {

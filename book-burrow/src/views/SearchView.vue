@@ -15,5 +15,7 @@ import SearchComponent from "../components/SearchComponent.vue";
   justify-content: center;
   text-align: center;
   margin: 0 0;
+  color: black;
+  background-color: var( --color-components );
 }
 </style>
