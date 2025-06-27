@@ -26,80 +26,78 @@
 const props = defineProps({
   item: {
     type: Object,
-    required: true,
-  },
-});
+    required: true
+  }
+})
 
-function getThumbnail( item ) {
-  if( item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.thumbnail )
-    return item.volumeInfo.imageLinks.thumbnail;
+function getThumbnail(item) {
+  if (item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.thumbnail)
+    return item.volumeInfo.imageLinks.thumbnail
   else {
-    return "./assets/thumbnail-missing.jpg";
+    return './assets/thumbnail-missing.jpg'
   }
 }
 
 function getAuthors() {
-  if( props.item.volumeInfo.authors ) {
-    let authors = '';
+  if (props.item.volumeInfo.authors) {
+    let authors = ''
 
-    for( let key in props.item.volumeInfo.authors ) {
-      authors += `[${props.item.volumeInfo.authors[key]}] `;
+    for (let key in props.item.volumeInfo.authors) {
+      authors += `[${props.item.volumeInfo.authors[key]}] `
     }
 
-    return authors;
+    return authors
   } else {
-    return 'Unknown Authors';
+    return 'Unknown Authors'
   }
 }
 
 function getDescription() {
-  if( props.item.volumeInfo.description ) {
-    return props.item.volumeInfo.description;
-  }
-  else {
+  if (props.item.volumeInfo.description) {
+    return props.item.volumeInfo.description
+  } else {
     return 'No description availabile.'
   }
 }
 
 function getPublishedDate() {
-  if( !props.item.volumeInfo.publishedDate )
-    return 'Unknown Publish Date';
+  if (!props.item.volumeInfo.publishedDate) return 'Unknown Publish Date'
 
-  const text = props.item.volumeInfo.publishedDate.split("-");
+  const text = props.item.volumeInfo.publishedDate.split('-')
 
-  if( !text ) {
-    return 'Unknown Publish Date';
+  if (!text) {
+    return 'Unknown Publish Date'
   } else if (text.length != 3) {
-    return text[0];
+    return text[0]
   } else {
-    const year = text[0];
-    const month = getMonth(Number(text[1]));
+    const year = text[0]
+    const month = getMonth(Number(text[1]))
 
-    const formatted = `${month}, ${year}`;
-    return formatted;
+    const formatted = `${month}, ${year}`
+    return formatted
   }
 }
 
 const months = [
-  "January",
-  "Febuary",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+  'January',
+  'Febuary',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+]
 
 function getMonth(month) {
-  let monthString = "";
+  let monthString = ''
 
   if (months[month - 1]) {
-    return months[month - 1];
+    return months[month - 1]
   }
 }
 </script>
@@ -184,6 +182,7 @@ function getMonth(month) {
 }
 
 @media (min-width: 1024px) {
+
   #author,
   #publish-year {
     padding-left: 10px;

@@ -4,13 +4,8 @@
       <button @click="filter.toggleFilterPanel" class="filter-button">
         <i class="fa fa-filter" aria-hidden="true"></i>
       </button>
-      <input
-        id="search-input"
-        type="text"
-        v-model="searchKeywords"
-        @keyup.enter="searchBtnOnClick"
-        class="search-input"
-      />
+      <input id="search-input" type="text" v-model="searchKeywords" @keyup.enter="searchBtnOnClick"
+        class="search-input" />
       <button @click="searchBtnOnClick" class="search-button">
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
@@ -80,7 +75,7 @@ const searchBtnOnClick = async () => {
   await queryApi(search.keywords);
 }
 
-onMounted( async ()  => {
+onMounted(async () => {
   console.log("SearchComponent mounted.");
   await queryApi(search.keywords);
 });
@@ -93,7 +88,7 @@ onMounted( async ()  => {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  background-color: var( --color-primary );
+  background-color: var(--color-primary);
 }
 
 .search-container {
@@ -142,7 +137,7 @@ onMounted( async ()  => {
   display: none;
   flex-direction: column;
   width: 600px;
-  background-color: var(--color-secondary);
+  background-color: var(--color-components);
 }
 
 .to-read-container h1,
@@ -162,6 +157,7 @@ onMounted( async ()  => {
 }
 
 @media (min-width: 1024px) {
+
   .to-read-container,
   .read-container {
     display: flex;

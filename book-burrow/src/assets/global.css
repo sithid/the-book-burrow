@@ -5,9 +5,10 @@
   --color-text: #fff;
 
 }
+
 * {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 20px;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 20px;
 }
 
 body {
@@ -15,8 +16,8 @@ body {
   margin: 0;
   padding: 0;
   min-width: 360px;
-  background-color: var(--color-primary );
-  color: var( --color-text );
+  background-color: var(--color-primary);
+  color: var(--color-text);
 }
 
 @media (min-width: 768px) {

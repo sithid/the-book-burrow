@@ -4,13 +4,8 @@
       <button @click="filter.toggleFilterPanel" class="filter-button">
         <i class="fa fa-filter" aria-hidden="true"></i>
       </button>
-      <input
-        id="search-input"
-        type="text"
-        v-model="searchKeywords"
-        @keyup.enter="searchBtnOnClick"
-        class="search-input"
-      />
+      <input id="search-input" type="text" v-model="searchKeywords" @keyup.enter="searchBtnOnClick"
+        class="search-input" />
       <button @click="searchBtnOnClick" class="search-button">
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
