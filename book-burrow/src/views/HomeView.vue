@@ -14,6 +14,6 @@ import MinimalSearchComponent from "../components/MinimalSearchComponent.vue";
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  background-color: var( --color-primary );
+  background-color: var(--color-offset);
 }
 </style>

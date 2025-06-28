@@ -114,6 +114,8 @@ function getMonth(month) {
 .book-card-mini img {
   width: 75%;
   align-self: center;
+  max-width: 200px;
+  max-height: 250px;
 }
 
 #book-card-title {

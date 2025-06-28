@@ -83,40 +83,6 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.search-component {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  background-color: var(--color-primary);
-}
-
-.search-container {
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  padding: 10px;
-  margin-top: 10px;
-  gap: 10px;
-}
-
-.search-input {
-  width: 100%;
-  height: 30px;
-  border: 1px solid black;
-  font-size: 0.9rem;
-  margin: 10px;
-  padding: 10px;
-}
-
-.search-button,
-.filter-button {
-  margin: 10px auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 .results-container {
   display: flex;
   flex-direction: row;
@@ -137,7 +103,7 @@ onMounted(async () => {
   display: none;
   flex-direction: column;
   width: 600px;
-  background-color: var(--color-components);
+  background-color: var(--color-primary);
 }
 
 .to-read-container h1,

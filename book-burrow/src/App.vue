@@ -52,11 +52,11 @@ onBeforeUnmount(() => {
   justify-content: space-evenly;
   width: 100%;
   color: var(--color-text);
-  background-color: var( --color-header-banner );
+  background-color: var(--color-primary);
 }
 
 .footer {
-  background-color: var( --color-secondary );
+  background-color: var(--color-offset);
   color: #fff;
   text-align: center;
   padding: 10px;
@@ -87,16 +87,16 @@ h1 {
 @media (min-width: 768px) {
   .header {
     flex-direction: row;
-    justify-content:  space-around;
+    justify-content: space-around;
     align-items: center;
     padding: 20px 20px;
   }
-  
+
   h1 {
     margin: 0 0;
   }
 
-  .nav-menu a{
+  .nav-menu a {
     font-size: .8rem;
     justify-content: right;
     align-content: center;

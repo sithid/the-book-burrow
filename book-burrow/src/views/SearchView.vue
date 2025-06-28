@@ -16,6 +16,6 @@ import SearchComponent from "../components/SearchComponent.vue";
   text-align: center;
   margin: 0 0;
   color: black;
-  background-color: var( --color-components );
+  background-color: var(--color-offset);
 }
 </style>

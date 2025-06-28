@@ -37,37 +37,6 @@ const searchBtnOnClick = () => {
 </script>
 
 <style scoped>
-.search-component {
-  display: flex;
-  flex-direction: column;
-}
-
-.search-container {
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  padding: 10px;
-  margin-top: 10px;
-  gap: 10px;
-}
-
-.search-input {
-  width: 100%;
-  height: 30px;
-  border: 1px solid black;
-  font-size: 0.9rem;
-  margin: 10px;
-  padding: 10px;
-}
-
-.search-button,
-.filter-button {
-  margin: 10px auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 @media (min-width: 768px) {
   .search-container {
     padding: 0 10px 0 10px;
