@@ -116,12 +116,6 @@ onMounted(async () => {
   background-color: #fff;
 }
 
-@media (min-width: 768px) {
-  .search-container {
-    padding: 0 10px 0 10px;
-  }
-}
-
 @media (min-width: 1024px) {
 
   .to-read-container,

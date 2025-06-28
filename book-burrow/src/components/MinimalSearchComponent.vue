@@ -35,11 +35,3 @@ const searchBtnOnClick = () => {
   router.push("/search");
 };
 </script>
-
-<style scoped>
-@media (min-width: 768px) {
-  .search-container {
-    padding: 0 10px 0 10px;
-  }
-}
-</style>
