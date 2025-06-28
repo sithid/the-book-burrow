@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <h1>Welcome</h1>
     <MinimalSearchComponent></MinimalSearchComponent>
   </div>
 </template>
