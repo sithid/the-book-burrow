@@ -1,5 +1,5 @@
 :root {
-  --color-primary: #1153b1;
+  --color-primary: #800000;
   --color-secondary: grey;
   --color-offset: #1a2738;
   --color-text: #fff;
@@ -10,23 +10,30 @@
   font-size: 20px;
 }
 
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  min-width: 360px;
+  color: var(--color-text);
+  background-color: var(--color-offset);
+}
+
 .search-component {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   background-color: var(--color-offset);
 }
 
 .search-container {
-  width: 95%;
+  width: 100%;
   height: 50px;
   display: flex;
   justify-content: center;
   flex-direction: row;
-  margin-top: 10px;
-  border-radius: 20px;
   background-color: var(--color-secondary);
 }
 
@@ -52,17 +59,15 @@
 .filter-button,
 .search-button,
 .preferences-button {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease-in-out;
 }
 
 .filter-button:hover,
 .search-button:hover,
 .preferences-button:hover {
-  background-color: white;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(0, 0, 0, 0.15);
+  background-color: green;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 0, 0, 0.15);
   transform: translateY(-2px);
 }
 
@@ -71,18 +76,9 @@
     0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
-body {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  min-width: 360px;
-  color: var(--color-text);
-  background-color: var(--color-offset);
-}
-
-@media (min-width: 768px){
+@media (min-width: 768px) {
   * {
-    font-size: 36px;
+    font-size: 28px;
   }
 
   .search-container {

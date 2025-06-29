@@ -7,7 +7,7 @@
       <RouterLink to="/bookshelf">Bookshelf</RouterLink>
       <RouterLink to="/about">About</RouterLink>
       <button @click="preferencesBtnOnClick" class="preferences-button">
-        <i class="fa fa-user" aria-hidden="true"></i>
+        <i class="fa fa-bars" aria-hidden="true"></i>
       </button>
     </nav>
   </div>
@@ -20,29 +20,28 @@
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from 'vue-router';
-import { onMounted, onBeforeUnmount } from "vue";
+import { RouterLink, RouterView } from 'vue-router'
+import { onMounted, onBeforeUnmount } from 'vue'
 
-import { useFilterStore } from '@/stores/filter';
-import { useScreenStore } from '@/stores/screen';
+import { useFilterStore } from '@/stores/filter'
+import { useScreenStore } from '@/stores/screen'
 
-const filterStore = useFilterStore();
-const screen = useScreenStore();
+const filterStore = useFilterStore()
+const screen = useScreenStore()
 
 function preferencesBtnOnClick() {
-  console.log("Preferences button clicked!");
+  console.log('Preferences button clicked!')
 }
 
 onMounted(() => {
   screen.updateScreenDimensions()
-  window.addEventListener("resize", screen.updateScreenDimensions);
-});
+  window.addEventListener('resize', screen.updateScreenDimensions)
+})
 
 onBeforeUnmount(() => {
   screen.updateScreenDimensions()
-  window.removeEventListener("resize", screen.updateScreenDimensions);
-});
-
+  window.removeEventListener('resize', screen.updateScreenDimensions)
+})
 </script>
 
 <style scoped>
@@ -53,6 +52,8 @@ onBeforeUnmount(() => {
   width: 100%;
   color: var(--color-text);
   background-color: var(--color-primary);
+  margin-bottom: 5px;
+  padding-bottom: 5px;
 }
 
 .footer {
@@ -75,13 +76,11 @@ h1 {
   justify-content: space-around;
 }
 
-.preferences-button {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-position: center;
-  background-size: cover;
-  margin-bottom: 20px;
+.nav-menu a {
+  font-size: 1rem;
+  justify-content: right;
+  align-content: center;
+  color: white;
 }
 
 @media (min-width: 768px) {
@@ -97,10 +96,9 @@ h1 {
   }
 
   .nav-menu a {
-    font-size: .8rem;
+    font-size: 0.8rem;
     justify-content: right;
     align-content: center;
-    gap: 35px;
     color: white;
   }
 }

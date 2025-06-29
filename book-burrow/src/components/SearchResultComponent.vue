@@ -108,7 +108,7 @@ function getMonth(month) {
   flex-direction: column;
   padding: 10px;
   color: white;
-  border-radius: 20px;
+
   background-color: var(--color-secondary);
 }
 
@@ -139,7 +139,6 @@ function getMonth(month) {
 }
 
 .info-text {
-  font-size: 0.5rem;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -156,7 +155,7 @@ function getMonth(month) {
 #description {
   padding-left: 10px;
   padding-right: 10px;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
   text-align: justify;
 }
 
@@ -177,25 +176,16 @@ function getMonth(month) {
     text-align: left;
   }
 
-  #description {
-    text-align: justify;
-    padding-left: 10px;
-    font-size: 0.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-
   #author,
   #publish-year {
     padding-left: 10px;
-    font-size: 0.4rem;
+    font-size: .8rem;
   }
 
   #description {
     text-align: justify;
     padding-left: 10px;
-    font-size: 0.3rem;
+    font-size: 0.6rem;
   }
 }
 </style>

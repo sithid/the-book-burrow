@@ -10,9 +10,12 @@ import MinimalSearchComponent from "../components/MinimalSearchComponent.vue";
 
 <style scoped>
 .home {
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin: 0 0;
+  color: black;
   background-color: var(--color-offset);
 }
 </style>

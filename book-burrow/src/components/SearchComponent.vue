@@ -10,9 +10,7 @@
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
     </div>
-    <div>
-      <FilterPanelComponent></FilterPanelComponent>
-    </div>
+    <FilterPanelComponent></FilterPanelComponent>
     <div class="results-container">
       <div class="to-read-container">
         <h1>Bookshelf</h1>
@@ -86,8 +84,6 @@ onMounted(async () => {
 .results-container {
   display: flex;
   flex-direction: row;
-  padding-left: 10px;
-  padding-right: 10px;
   gap: 10px;
 }
 

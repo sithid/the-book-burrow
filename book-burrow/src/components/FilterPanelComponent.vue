@@ -1,9 +1,10 @@
 <template>
   <div v-if="filter.isPanelOpen" class="filter-options-panel">
-    <ul class="pref-list">
+    <p>Advanced Search Filter</p>
+    <ul class="filter-list">
       <li>
-        <input id="dark-mode" type="checkbox" name="darkmode" />
-        <label for="dark-mode" name="dark-mode">Dark Mode</label>
+        <input id="genre" type="checkbox" name="genre" />
+        <label for="genre" name="genre">By Genre</label>
       </li>
     </ul>
   </div>
@@ -20,28 +21,18 @@ const filter = useFilterStore();
 .filter-options-panel {
   box-sizing: border-box;
   position: relative;
-  top: 0px;
-  left: 10px;
-  width: 95%;
-  height: 100vh;
+  width: 100%;
+  justify-content: center;
   background-color: var(--color-secondary);
-  border: 1px solid black;
   z-index: 10;
 }
 
-.pref-list {
+.filter-list {
   display: flex;
+  flex-direction: row;
   justify-content: left;
   list-style-type: none;
   text-align: left;
   color: black;
-}
-
-@media (min-width: 768px) {
-  .filter-options-panel {
-    left: 11px;
-    width: 98%;
-    height: 50vh;
-  }
 }
 </style>
