@@ -29,7 +29,7 @@
 }
 
 .about p a:hover {
-  font-size: 1rem;
+  font-weight: bolder;
   color: var(--color-primary);
 }
 </style>

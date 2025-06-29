@@ -6,12 +6,12 @@
 }
 
 * {
+  box-sizing: border-box;
   font-family: 'Times New Roman', Times, serif;
   font-size: 20px;
 }
 
 body {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
   min-width: 360px;
@@ -20,7 +20,6 @@ body {
 }
 
 .search-component {
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;

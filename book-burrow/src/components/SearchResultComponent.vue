@@ -107,8 +107,7 @@ function getMonth(month) {
   display: flex;
   flex-direction: column;
   padding: 10px;
-  color: white;
-
+  color: var(black);
   background-color: var(--color-secondary);
 }
 

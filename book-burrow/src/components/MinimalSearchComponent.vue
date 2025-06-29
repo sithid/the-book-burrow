@@ -6,7 +6,7 @@
       </button>
       <input id="search-input" type="text" v-model="searchKeywords" @keyup.enter="searchBtnOnClick"
         class="search-input" />
-      <button @click="searchBtnOnClick" class="search-button">
+      <button v-if="!filter.isPanelOpen" @click="searchBtnOnClick" class="search-button">
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
     </div>

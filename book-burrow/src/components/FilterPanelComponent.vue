@@ -1,12 +1,25 @@
 <template>
   <div v-if="filter.isPanelOpen" class="filter-options-panel">
-    <p>Advanced Search Filter</p>
-    <ul class="filter-list">
-      <li>
-        <input id="genre" type="checkbox" name="genre" />
-        <label for="genre" name="genre">By Genre</label>
-      </li>
-    </ul>
+    <form id="advanced-search-form">
+      <h3>Advanced Search Options</h3>
+      <span
+        ><label for="book-title">Title: </label>
+        <input
+          id="book-title"
+          name="title"
+          type="text"
+          placeholder="Enter book title here..."
+        />
+
+        <label for="book-title">Author: </label>
+        <input
+          id="book-title"
+          name="title"
+          type="text"
+          placeholder="Enter book title here..."
+        />
+      </span>
+    </form>
   </div>
 </template>
 
@@ -14,25 +27,22 @@
 import { useFilterStore } from "@/stores/filter";
 
 const filter = useFilterStore();
-
 </script>
 
 <style scoped>
 .filter-options-panel {
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   position: relative;
-  width: 100%;
-  justify-content: center;
   background-color: var(--color-secondary);
-  z-index: 10;
+  text-align: left;
+  width: 100%;
+  padding: 10px;
 }
 
-.filter-list {
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  list-style-type: none;
-  text-align: left;
-  color: black;
+#advanced-search-form h3 {
+  text-align: center;
+  margin: 10px;
+  padding-left: 10px;
 }
 </style>

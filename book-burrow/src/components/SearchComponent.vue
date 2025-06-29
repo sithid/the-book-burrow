@@ -6,7 +6,7 @@
       </button>
       <input id="search-input" type="text" v-model="searchKeywords" @keyup.enter="searchBtnOnClick"
         class="search-input" />
-      <button @click="searchBtnOnClick" class="search-button">
+      <button v-if="!filter.isPanelOpen" @click="searchBtnOnClick" class="search-button">
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
     </div>
@@ -43,6 +43,7 @@ const search = useSearchStore();
 const searchKeywords = ref(search.keywords);
 
 async function queryApi(params) {
+
   const keywords = new URLSearchParams();
   keywords.append("q", params);
   keywords.append("maxResults", config.MAX_RESULTS);
@@ -52,7 +53,7 @@ async function queryApi(params) {
   requestHeaders.append("key", config.API_TOKEN);
 
   const url = `${config.API_URL}?${keywords}`;
-
+  console.log(url);
   const options = {
     method: "GET",
     headers: requestHeaders,
