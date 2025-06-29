@@ -4,8 +4,8 @@
       <button @click="filter.toggleFilterPanel" class="filter-button">
         <i class="fa fa-filter" aria-hidden="true"></i>
       </button>
-      <input id="search-input" type="text" v-model="searchKeywords" @keyup.enter="searchBtnOnClick"
-        class="search-input" />
+      <input id="search-input" type="text" v-model="basicQuery" @keyup.enter="searchBtnOnClick"
+        class="search-input" required />
       <button v-if="!filter.isPanelOpen" @click="searchBtnOnClick" class="search-button">
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
@@ -40,7 +40,14 @@ import FilterPanelComponent from "../components/FilterPanelComponent.vue";
 const filter = useFilterStore();
 const search = useSearchStore();
 
-const searchKeywords = ref(search.keywords);
+const basicQuery = ref(search.basicQuery);
+
+async function queryApiAdvanced() {
+  const keywords = new URLSearchParams();
+  keywords.append("q", params);
+  keywords.append("maxResults", config.MAX_RESULTS);
+
+}
 
 async function queryApi(params) {
 
@@ -53,7 +60,7 @@ async function queryApi(params) {
   requestHeaders.append("key", config.API_TOKEN);
 
   const url = `${config.API_URL}?${keywords}`;
-  console.log(url);
+
   const options = {
     method: "GET",
     headers: requestHeaders,
@@ -70,13 +77,12 @@ async function queryApi(params) {
 }
 
 const searchBtnOnClick = async () => {
-  search.keywords = searchKeywords.value;
+  search.keywords = basicQuery.value;
   await queryApi(search.keywords);
 }
 
 onMounted(async () => {
-  console.log("SearchComponent mounted.");
-  await queryApi(search.keywords);
+  await queryApi(search.basicQuery);
 });
 
 </script>

@@ -1,12 +1,27 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 export const useSearchStore = defineStore('search', () => {
   const items = ref({});
-  const keywords = ref('top 10');
+  
+  const basicQuery = ref('recommended');
+  const advancedQuery = ref('recommended');
+
+  const title = ref('');
+  const author = ref('');
+  const publisher = ref('');
+  const published = ref('');
+  const genre = ref('');
+
 
   return {
     items,
-    keywords,
+    basicQuery,
+    advancedQuery,
+    title,
+    author,
+    publisher,
+    published,
+    genre
   }
 });

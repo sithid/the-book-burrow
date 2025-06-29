@@ -4,8 +4,8 @@
       <button @click="filter.toggleFilterPanel" class="filter-button">
         <i class="fa fa-filter" aria-hidden="true"></i>
       </button>
-      <input id="search-input" type="text" v-model="searchKeywords" @keyup.enter="searchBtnOnClick"
-        class="search-input" />
+      <input id="search-input" type="text" v-model="basicQuery" @keyup.enter="searchBtnOnClick" class="search-input"
+        required />
       <button v-if="!filter.isPanelOpen" @click="searchBtnOnClick" class="search-button">
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
@@ -25,11 +25,11 @@ import { useSearchStore } from "@/stores/search";
 const filter = useFilterStore();
 const search = useSearchStore();
 
-const searchKeywords = ref(search.keywords);
+const basicQuery = ref(search.basicQuery);
 const router = useRouter();
 
 const searchBtnOnClick = () => {
-  search.keywords = searchKeywords.value;
+  search.basicQuery = basicQuery.value;
   router.push("/search");
 };
 </script>
