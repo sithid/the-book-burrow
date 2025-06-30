@@ -1,12 +1,9 @@
 <template>
   <div class="search-component">
     <div class="search-container">
-      <button @click="filter.toggleFilterPanel" class="filter-button">
-        <i class="fa fa-filter" aria-hidden="true"></i>
-      </button>
-      <input id="search-input" type="text" v-model="basicQuery" @keyup.enter="searchBtnOnClick" class="search-input"
+      <input id="search-input" type="text" v-model="search.basicQuery" @keyup.enter="searchBtnOnClick" class="search-input"
         required />
-      <button v-if="!filter.isPanelOpen" @click="searchBtnOnClick" class="search-button">
+      <button @click="searchBtnOnClick" class="search-button">
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
     </div>
@@ -25,11 +22,14 @@ import { useSearchStore } from "@/stores/search";
 const filter = useFilterStore();
 const search = useSearchStore();
 
-const basicQuery = ref(search.basicQuery);
 const router = useRouter();
 
-const searchBtnOnClick = () => {
-  search.basicQuery = basicQuery.value;
+async function searchBtnOnClick() {
+  if (search.basicQuery != '')
+    await search.queryApiBasic(search.basicQuery, 10);
+  else
+    await search.queryApiBasic("subject:popular", 10)
+
   router.push("/search");
 };
 </script>

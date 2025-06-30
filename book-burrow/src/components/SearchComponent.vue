@@ -4,7 +4,7 @@
       <button @click="filter.toggleFilterPanel" class="filter-button">
         <i class="fa fa-filter" aria-hidden="true"></i>
       </button>
-      <input id="search-input" type="text" v-model="basicQuery" @keyup.enter="searchBtnOnClick"
+      <input id="search-input" type="text" v-model="search.basicQuery" @keyup.enter="searchBtnOnClick"
         class="search-input" required />
       <button v-if="!filter.isPanelOpen" @click="searchBtnOnClick" class="search-button">
         <i class="fa fa-search" aria-hidden="true"></i>
@@ -40,49 +40,17 @@ import FilterPanelComponent from "../components/FilterPanelComponent.vue";
 const filter = useFilterStore();
 const search = useSearchStore();
 
-const basicQuery = ref(search.basicQuery);
-
-async function queryApiAdvanced() {
-  const keywords = new URLSearchParams();
-  keywords.append("q", params);
-  keywords.append("maxResults", config.MAX_RESULTS);
-
-}
-
-async function queryApi(params) {
-
-  const keywords = new URLSearchParams();
-  keywords.append("q", params);
-  keywords.append("maxResults", config.MAX_RESULTS);
-
-  const requestHeaders = new Headers();
-  requestHeaders.append("Content-Type", "application/json");
-  requestHeaders.append("key", config.API_TOKEN);
-
-  const url = `${config.API_URL}?${keywords}`;
-
-  const options = {
-    method: "GET",
-    headers: requestHeaders,
-  };
-
-  const response = await fetch(url, options);
-
-  if (response.ok) {
-    const data = await response.json();
-    search.items.value = data.items;
-
-    return data;
-  }
-}
-
 const searchBtnOnClick = async () => {
-  search.keywords = basicQuery.value;
-  await queryApi(search.keywords);
+  await search.queryApiBasic(search.basicQuery, 10);
 }
 
 onMounted(async () => {
-  await queryApi(search.basicQuery);
+  if (search.basicQuery != '')
+    await search.queryApiBasic(search.basicQuery, 10);
+  else {
+    search.basicQuery = "popular";
+    await search.queryApiBasic(search.basicQuery, 10)
+  }
 });
 
 </script>
