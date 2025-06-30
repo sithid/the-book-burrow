@@ -6,15 +6,18 @@ export const useSearchStore = defineStore('search', () => {
   const items = ref({});
   
   const basicQuery = ref('');
+  const allWords = ref('');
+  const exactWords = ref('');
+  const withoutTheseWords = ref('');
+  const atleastOneWord = ref('');
 
   const title = ref('');
   const author = ref('');
   const publisher = ref('');
   const published = ref('');
-  const genre = ref('');
+  const subject = ref('');
 
   function formatAdvancedQuery() {
-
     let keywords = new URLSearchParams();
 
     if (title.value != '')
@@ -26,8 +29,8 @@ export const useSearchStore = defineStore('search', () => {
     if (publisher.value != '')
       keywords.append("inpublisher", publisher.value);
 
-    if (genre.value != '')
-      keywords.append("subject", genre.value);
+    if (subject.value != '')
+      keywords.append("subject", subject.value);
     
     if (published.value != '')
       keywords.append("inpublished", published.value);
@@ -89,15 +92,19 @@ export const useSearchStore = defineStore('search', () => {
   }
 
   return {
-    items,
-    basicQuery,
-    title,
-    author,
-    publisher,
-    published,
-    genre,
-    formatAdvancedQuery,
-    queryApiBasic,
-    queryApiAdvanced
+    items, // search result item data
+    basicQuery, // search across a wide range of fields within the book's metadata
+    allWords, // search across a wide range of fields that includes all of the words
+    exactWords, // includes this exact phrase
+    atleastOneWord, // includes atleast one of the words in this input "volumes?q=harry+OR+potter+OR+sorcerers+OR+stone"
+    withoutTheseWords, // does not include these words ex: volumes?q=-harry+-potter
+    title, // includes these words in the title
+    author, // includes these words in the author
+    publisher, // includes these words in the publisher
+    published, // includes this date in the published field
+    subject, // includes these words in the subject
+    formatAdvancedQuery, // format an advanced query string to send to the end point
+    queryApiBasic, // perform a generic search across a wide trange of fields.
+    queryApiAdvanced // perform a targetted search for specific metadata fields for a precise search.
   }
 });
