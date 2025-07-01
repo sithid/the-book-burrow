@@ -5,19 +5,23 @@ import { config } from "../../config.js";
 export const useSearchStore = defineStore('search', () => {
   const items = ref({});
   
+  // Simple search, querys google api for any book with any field that 
+  // matches this search string.  ?q={term+term+term...}
   const basicQuery = ref('');
-  const allWords = ref('');
-  const exactWords = ref('');
-  const withoutTheseWords = ref('');
+
+  // Advanced search. https://www.googleapis.com/books/v1/volumes?q=<string>
+  const allWords = ref(''); // ./books/v1/volumes?q=term+term+term
+  const exactWords = ref(''); // ./books/v1/volumes?q="test+test+test"
+  const withoutTheseWords = ref(''); // ./books/v1/volumes?q=test+OR+test+OR+test
   const atleastOneWord = ref('');
 
-  const title = ref('');
-  const author = ref('');
-  const publisher = ref('');
-  const published = ref('');
-  const subject = ref('');
+  const title = ref('');  // inTitle:title
+  const author = ref(''); // inAuthor:author
+  const publisher = ref(''); // inPublisher:publisher
+  const published = ref(''); // inPublished:published
+  const subject = ref(''); // subject:subject
 
-  function formatAdvancedQuery() {
+  function formatFilterByOptions() {
     let keywords = new URLSearchParams();
 
     if (title.value != '')
@@ -43,7 +47,7 @@ export const useSearchStore = defineStore('search', () => {
   }
 
   async function queryApiAdvanced( maxResults = config.MAX_RESULTS) {
-    const terms = this.formatAdvancedQuery();
+    const terms = this.formatFilterByOptions();
     const url = `${config.API_URL}?q=${terms}&maxResults=${maxResults}`;
 
     const requestHeaders = new Headers();
@@ -103,7 +107,7 @@ export const useSearchStore = defineStore('search', () => {
     publisher, // includes these words in the publisher
     published, // includes this date in the published field
     subject, // includes these words in the subject
-    formatAdvancedQuery, // format an advanced query string to send to the end point
+    formatFilterByOptions, // format an advanced query string to send to the end point
     queryApiBasic, // perform a generic search across a wide trange of fields.
     queryApiAdvanced // perform a targetted search for specific metadata fields for a precise search.
   }

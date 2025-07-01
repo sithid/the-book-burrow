@@ -4,13 +4,15 @@
       <button @click="filter.toggleFilterPanel" class="filter-button">
         <i class="fa fa-filter" aria-hidden="true"></i>
       </button>
-      <input id="search-input" type="text" v-model="search.basicQuery" @keyup.enter="searchBtnOnClick"
+      <input id="search-input" type="text" v-model="search.basicQuery" @keyup.enter="onSearch"
         class="search-input" required />
-      <button v-if="!filter.isPanelOpen" @click="searchBtnOnClick" class="search-button">
+      <button v-if="!filter.isPanelOpen" @click="onSearch" class="search-button">
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
     </div>
-    <FilterPanelComponent></FilterPanelComponent>
+    <div class="filter-options-panel">
+      <FilterPanelComponent></FilterPanelComponent>
+    </div>
     <div class="results-container">
       <div class="to-read-container">
         <h1>Bookshelf</h1>
@@ -40,8 +42,9 @@ import FilterPanelComponent from "../components/FilterPanelComponent.vue";
 const filter = useFilterStore();
 const search = useSearchStore();
 
-const searchBtnOnClick = async () => {
-  await search.queryApiBasic(search.basicQuery, 10);
+const onSearch = async () => {
+  if( !filter.isPanelOpen )
+    await search.queryApiBasic(search.basicQuery, 10);
 }
 
 onMounted(async () => {
@@ -56,6 +59,13 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.filter-options-panel {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  background-color: var(--color-secondary);
+}
+
 .results-container {
   display: flex;
   flex-direction: row;
@@ -88,7 +98,6 @@ onMounted(async () => {
 }
 
 @media (min-width: 1024px) {
-
   .to-read-container,
   .read-container {
     display: flex;

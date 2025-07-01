@@ -119,10 +119,11 @@ function getMonth(month) {
 }
 
 #book-card-title {
-  font-size: 0.8rem;
+  font-size: 1rem;
   text-align: left;
-  font-variant: small-caps;
+  font-weight: bold;
   align-self: center;
+  color: var(--color-offset);
 }
 
 .book-card-details {
@@ -130,6 +131,7 @@ function getMonth(month) {
   flex-direction: column;
   gap: 15px;
 }
+
 
 .book-info {
   display: flex;
@@ -148,7 +150,6 @@ function getMonth(month) {
 #publish-year {
   padding-left: 10px;
   font-size: 0.8rem;
-  font-weight: bold;
 }
 
 #description {
@@ -171,7 +172,7 @@ function getMonth(month) {
   }
 
   #book-card-title {
-    font-size: 0.5rem;
+    font-size: .9rem;
     text-align: left;
   }
 
@@ -184,7 +185,7 @@ function getMonth(month) {
   #description {
     text-align: justify;
     padding-left: 10px;
-    font-size: 0.6rem;
+    font-size: 0.7rem;
   }
 }
 </style>
