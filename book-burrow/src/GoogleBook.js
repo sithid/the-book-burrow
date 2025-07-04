@@ -80,8 +80,7 @@ export class GoogleBook {
       const year = text[0];
       const month = this.getMonth(Number(text[1]));
 
-      const formatted = `${month}, ${year}`;
-      return formatted;
+      return `${month}, ${year}`;
     }
   }
 
@@ -109,6 +108,9 @@ export class GoogleBook {
   }
 
   debugPrintBook() {
+    const pad = 20;
+    const bufMax = 80;
+
     let output = this.title + '\n\r';
     output += "\n\rDebug Book: properties\n\r";
 
@@ -116,27 +118,28 @@ export class GoogleBook {
       let key = `${attr}`;
       let val = `${this[key]}`;
 
-      if (key === "description" && val.length > 80)
-        val = val.slice(0, 80) + "...";
+      if (key === "description" && val.length > bufMax)
+        val = val.slice(0, bufMax) + "...";
 
-      output += "\t" + key.padEnd(24, " ") + `= ${val}\n\r`;
+      output += "\t" + key.padEnd(pad, " ") + `= ${val}\n\r`;
     }
 
     output += "\n\rDebug Book: functions\n\r";
 
-    output += "\tfmtAuthors".padEnd(24, " ") + " = " + this.fmtAuthors() + "\n\r";
     output +=
-      "\tfmtPublishedDate".padEnd(24, " ") +
+      "\tfmtAuthors".padEnd(pad, " ") + " = " + this.fmtAuthors() + "\n\r";
+    output +=
+      "\tfmtPublishedDate".padEnd(pad, " ") +
       " = " +
       this.fmtPublishedDate() +
       "\n\r";
     output +=
-      "\tfmtDescription".padEnd(24, " ") +
+      "\tfmtDescription".padEnd(pad, " ") +
       " = " +
-      this.fmtDescription().slice(0, 80) +
+      this.fmtDescription().slice(0, bufMax) + "..." +
       "\n\r";
     output +=
-      "\tfmtThumbnail".padEnd(24, " ") + " = " + this.fmtThumbnail() + "\n\r";
+      "\tfmtThumbnail".padEnd(pad, " ") + " = " + this.fmtThumbnail() + "\n\r";
 
     console.log(output);
     console.log("\n\r\n\r\n\r");
