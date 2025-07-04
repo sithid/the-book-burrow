@@ -1,3 +1,13 @@
+import { config } from "./config.js";
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * We could carry around the entire object that is returned from the google books api, but
+ * there are up to 40 results, all containing data for fields were not using and I don't think
+ * we really need to pass all that around to each result container.
+ *
+ * Instead, we will build a book based on the google response object returned from our api query
+ * to the google books api but we will only use properties we care about, the rest will be lost.
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 export class GoogleBook {
   constructor(gBook) {
     this.id = gBook.id; // string
@@ -19,14 +29,14 @@ export class GoogleBook {
     this.infoLink = gBook.volumeInfo.infoLink; // string
     this.canonicalVolumeLink = gBook.volumeInfo.canonicalVolumeLink; // string
     this.saleInfo = gBook.volumeInfo.saleInfo; // { saleability, listPrice { amount, currencyCode } } :: { string, { number, string } }
+
+    if (config.DEBUG) this.debugPrintBook();
   }
 
   fmtAuthors() {
     let fmtAuthors = "";
 
-    if (!this.authors) {
-      return "Unknown Authors";
-    }
+    if (!this.authors) return "Unknown Authors";
 
     for (let key in this.authors) {
       fmtAuthors += `[${this.authors[key]}] `;
@@ -35,10 +45,72 @@ export class GoogleBook {
     return fmtAuthors;
   }
 
-  debugPrintBook() {
-    console.log("Debug Book: attrs");
+  fmtDescription() {
+    if (this.description) {
+      return this.description;
+    } else {
+      return "No description availabile.";
+    }
+  }
 
-    let output = "";
+  fmtThumbnail() {
+    if (this.imageLinks != undefined) {
+      if (this.imageLinks.thumbnail != undefined) {
+        return this.imageLinks.thumbnail;
+      } else if (this.imageLinks.smallThumbnail != undefined) {
+        return this.imageLinks.smallThumbnail;
+      } else {
+        return `https://place-hold.it/200x250?text="thumbnail%20missing"&fontsize=16`;
+      }
+    } else {
+      return `https://place-hold.it/200x250?text=thumbnail%20missing&fontsize=16`;
+    }
+  }
+
+  fmtPublishedDate() {
+    if (!this.publishedDate) return "Unknown Publish Date";
+
+    const text = this.publishedDate.split("-");
+
+    if (!text) {
+      return "Unknown Publish Date";
+    } else if (text.length != 3) {
+      return text[0];
+    } else {
+      const year = text[0];
+      const month = this.getMonth(Number(text[1]));
+
+      const formatted = `${month}, ${year}`;
+      return formatted;
+    }
+  }
+
+  getMonth(month) {
+    const months = [
+      "January",
+      "Febuary",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    let monthString = "";
+
+    if (months[month - 1]) {
+      return months[month - 1];
+    }
+  }
+
+  debugPrintBook() {
+    let output = this.title + '\n\r';
+    output += "\n\rDebug Book: properties\n\r";
 
     for (const attr in this) {
       let key = `${attr}`;
@@ -47,12 +119,26 @@ export class GoogleBook {
       if (key === "description" && val.length > 80)
         val = val.slice(0, 80) + "...";
 
-      output += key.padEnd(24, " ") + `= ${val}\n\r`;
+      output += "\t" + key.padEnd(24, " ") + `= ${val}\n\r`;
     }
 
-    console.log(output + "\n\r");
+    output += "\n\rDebug Book: functions\n\r";
 
-    console.log("Debug Book: fn");
-    console.log("fmtAuthors: " + this.fmtAuthors());
+    output += "\tfmtAuthors".padEnd(24, " ") + " = " + this.fmtAuthors() + "\n\r";
+    output +=
+      "\tfmtPublishedDate".padEnd(24, " ") +
+      " = " +
+      this.fmtPublishedDate() +
+      "\n\r";
+    output +=
+      "\tfmtDescription".padEnd(24, " ") +
+      " = " +
+      this.fmtDescription().slice(0, 80) +
+      "\n\r";
+    output +=
+      "\tfmtThumbnail".padEnd(24, " ") + " = " + this.fmtThumbnail() + "\n\r";
+
+    console.log(output);
+    console.log("\n\r\n\r\n\r");
   }
 }

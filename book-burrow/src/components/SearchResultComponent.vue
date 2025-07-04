@@ -1,20 +1,20 @@
 <template>
   <section class="book-card-mini">
-    <p id="book-card-title">{{ props.item.volumeInfo.title }}</p>
+    <p id="book-card-title">{{ props.book.title }}</p>
     <div class="book-card-details">
-      <img :src="`${getThumbnail(props.item)}`" />
+      <img :src="`${props.book.fmtThumbnail()}`" />
       <section class="book-info">
         <p class="info-text">
           <span id="author">
-            {{ getAuthors() }}
+            {{ props.book.fmtAuthors() }}
           </span>
           <span id="publish-year">
-            {{ getPublishedDate() }}
+            {{ props.book.fmtPublishedDate() }}
           </span>
         </p>
         <article class="info-text">
           <span id="description">
-            {{ getDescription() }}
+            {{ props.book.fmtDescription() }}
           </span>
         </article>
       </section>
@@ -23,83 +23,14 @@
 </template>
 
 <script setup>
+import { GoogleBook } from "../GoogleBook.js";
+
 const props = defineProps({
-  item: {
-    type: Object,
+  book: {
+    type: GoogleBook,
     required: true
   }
-})
-
-function getThumbnail(item) {
-  if (item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.thumbnail)
-    return item.volumeInfo.imageLinks.thumbnail
-  else {
-    return './assets/thumbnail-missing.jpg'
-  }
-}
-
-function getAuthors() {
-  if (props.item.volumeInfo.authors) {
-    let authors = ''
-
-    for (let key in props.item.volumeInfo.authors) {
-      authors += `[${props.item.volumeInfo.authors[key]}] `
-    }
-
-    return authors
-  } else {
-    return 'Unknown Authors'
-  }
-}
-
-function getDescription() {
-  if (props.item.volumeInfo.description) {
-    return props.item.volumeInfo.description
-  } else {
-    return 'No description availabile.'
-  }
-}
-
-function getPublishedDate() {
-  if (!props.item.volumeInfo.publishedDate) return 'Unknown Publish Date'
-
-  const text = props.item.volumeInfo.publishedDate.split('-')
-
-  if (!text) {
-    return 'Unknown Publish Date'
-  } else if (text.length != 3) {
-    return text[0]
-  } else {
-    const year = text[0]
-    const month = getMonth(Number(text[1]))
-
-    const formatted = `${month}, ${year}`
-    return formatted
-  }
-}
-
-const months = [
-  'January',
-  'Febuary',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-]
-
-function getMonth(month) {
-  let monthString = ''
-
-  if (months[month - 1]) {
-    return months[month - 1]
-  }
-}
+});
 </script>
 
 <style scoped>

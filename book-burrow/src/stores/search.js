@@ -4,7 +4,7 @@ import { config } from "../config.js";
 import { GoogleBook } from "../GoogleBook.js";
 
 export const useSearchStore = defineStore("search", () => {
-  const itemCache = ref({});
+  const googleBookResults = ref([]);
 
   // Simple search, querys google api for any book with any field that
   // matches this search string.  ?q={term+term+term...}
@@ -81,10 +81,15 @@ export const useSearchStore = defineStore("search", () => {
 
     if (response.ok) {
       const data = await response.json();
-      this.itemCache = data.items;
 
-      const book = new GoogleBook(this.itemCache[0]);
-      book.debugPrintBook();
+      // Make sure we 'reset' the book result array, otherwise it will get huge.
+      // I may implement dictionary or map for result history in the future.
+      this.googleBookResults = [];
+
+      for (let index = 0; index < data.items.length; index++) {
+        const book = new GoogleBook(data.items[index]);
+        this.googleBookResults.push(book);
+      }
     }
   }
 
@@ -113,13 +118,13 @@ export const useSearchStore = defineStore("search", () => {
 
     if (response.ok) {
       const data = await response.json();
-      this.itemCache = data.items;
+      this.responseObjectCache = data.items;
     }
   }
 
   return {
     /* properties */
-    itemCache, // search result item data
+    googleBookResults, // array of books populated by response
     basicQuery, // last simple query string from input
     completeQuery, // last advanced query string we built
 

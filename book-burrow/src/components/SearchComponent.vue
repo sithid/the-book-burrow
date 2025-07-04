@@ -4,8 +4,8 @@
       <button @click="filter.toggleFilterPanel" class="filter-button">
         <i class="fa fa-filter" aria-hidden="true"></i>
       </button>
-      <input id="search-input" type="text" v-model="search.basicQuery" @keyup.enter="onSearch"
-        class="search-input" required />
+      <input id="search-input" type="text" v-model="search.basicQuery" @keyup.enter="onSearch" class="search-input"
+        required />
       <button v-if="!filter.isPanelOpen" @click="onSearch" class="search-button">
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
@@ -19,8 +19,8 @@
         <p>To Be Read</p>
       </div>
       <div class="result-cards">
-        <div v-for="item of search.itemCache">
-          <SearchResultComponent :item="item"></SearchResultComponent>
+        <div v-for="book of search.googleBookResults">
+          <SearchResultComponent :book="book"></SearchResultComponent>
         </div>
       </div>
       <div class="read-container">
@@ -43,15 +43,15 @@ const search = useSearchStore();
 
 const onSearch = async () => {
   if( !filter.isPanelOpen )
-    await search.queryApiBasic(search.basicQuery, 10);
+    await search.queryApiBasic(search.basicQuery);
 }
 
 onMounted(async () => {
   if (search.basicQuery != '')
-    await search.queryApiBasic(search.basicQuery, 10);
+    await search.queryApiBasic(search.basicQuery);
   else {
     search.basicQuery = "popular";
-    await search.queryApiBasic(search.basicQuery, 10)
+    await search.queryApiBasic(search.basicQuery)
   }
 });
 
