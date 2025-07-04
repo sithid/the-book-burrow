@@ -19,7 +19,7 @@
         <p>To Be Read</p>
       </div>
       <div class="result-cards">
-        <div v-for="item of search.items.value">
+        <div v-for="item of search.itemCache">
           <SearchResultComponent :item="item"></SearchResultComponent>
         </div>
       </div>
@@ -32,8 +32,7 @@
 </template>
 
 <script setup>
-import { config } from "../../config.js";
-import { ref, onMounted } from "vue";
+import { onMounted } from "vue";
 import { useFilterStore } from "@/stores/filter";
 import { useSearchStore } from "@/stores/search";
 import SearchResultComponent from "../components/SearchResultComponent.vue";

@@ -21,27 +21,14 @@
 
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import { onMounted, onBeforeUnmount } from 'vue'
-
 import { useFilterStore } from '@/stores/filter'
-import { useScreenStore } from '@/stores/screen'
 
 const filterStore = useFilterStore()
-const screen = useScreenStore()
 
 function preferencesBtnOnClick() {
   console.log('Preferences button clicked!')
 }
 
-onMounted(() => {
-  screen.updateScreenDimensions()
-  window.addEventListener('resize', screen.updateScreenDimensions)
-})
-
-onBeforeUnmount(() => {
-  screen.updateScreenDimensions()
-  window.removeEventListener('resize', screen.updateScreenDimensions)
-})
 </script>
 
 <style scoped>

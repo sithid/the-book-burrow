@@ -11,14 +11,10 @@
 </template>
 
 <script setup>
-import FilterPanelComponent from "../components/FilterPanelComponent.vue";
-import { ref } from "vue";
 import { useRouter } from "vue-router";
 
-import { useFilterStore } from "@/stores/filter";
 import { useSearchStore } from "@/stores/search";
 
-const filter = useFilterStore();
 const search = useSearchStore();
 
 const router = useRouter();

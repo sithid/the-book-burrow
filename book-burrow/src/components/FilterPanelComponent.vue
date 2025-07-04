@@ -58,7 +58,6 @@
 <script setup>
 import { useFilterStore } from "@/stores/filter";
 import { useSearchStore } from "@/stores/search";
-import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const filter = useFilterStore();
