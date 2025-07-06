@@ -18,7 +18,21 @@ export class GoogleBook {
     this.publisher = gBook.volumeInfo.publisher; // string
     this.publishedDate = gBook.volumeInfo.publishedDate; // Date
     this.description = gBook.volumeInfo.description; // string
-    this.industryIdentifiers = gBook.volumeInfo.industryIdentifiers; // [ { type, id }, ... ]
+    this.isbn10 = "";
+    this.isbn13 = "";
+
+    for (const identifier in gBook.volumeInfo.industryIdentifiers) {
+      if (identifier.type === "ISBN_10") {
+        this.isbn10 = identifier.identifier;
+
+        if (config.DEBUG) console.log(this.isbn10);
+      } else if (identifier.type === "ISBN_13") {
+        this.isbn13 = identifier.identifier;
+
+        if (config.DEBUG) console.log(this.isbn13);
+      }
+    }
+
     this.pageCount = gBook.volumeInfo.pageCount; // string
     this.printedPageCount = gBook.volumeInfo.printedPageCount; // string
     this.averageRating = gBook.volumeInfo.averageRating; // number
@@ -36,7 +50,7 @@ export class GoogleBook {
   fmtAuthors() {
     let fmtAuthors = "";
 
-    if (!this.authors) return "Unknown Authors";
+    if (!this.authors) return "[Unknown Authors]";
 
     for (let key in this.authors) {
       fmtAuthors += `[${this.authors[key]}] `;
@@ -49,7 +63,7 @@ export class GoogleBook {
     if (this.description) {
       return this.description;
     } else {
-      return "No description availabile.";
+      return "There is no description availible for this book.";
     }
   }
 
@@ -75,16 +89,23 @@ export class GoogleBook {
     if (!text) {
       return "Unknown Publish Date";
     } else if (text.length != 3) {
-      return text[0];
+      if (text.length === 2) {
+        const year = text[0];
+        const month = this.fmtMonth(Number(text[1]));
+
+        return `${month}, ${year}`;
+      } else {
+        return text[0];
+      }
     } else {
       const year = text[0];
-      const month = this.getMonth(Number(text[1]));
-
-      return `${month}, ${year}`;
+      const month = this.fmtMonth(Number(text[1]));
+      const day = text[2];
+      return `${month} ${day}, ${year}`;
     }
   }
 
-  getMonth(month) {
+  fmtMonth(month) {
     const months = [
       "January",
       "Febuary",
@@ -100,10 +121,10 @@ export class GoogleBook {
       "December",
     ];
 
-    let monthString = "";
-
     if (months[month - 1]) {
       return months[month - 1];
+    } else {
+      return "Unknown";
     }
   }
 
@@ -111,7 +132,7 @@ export class GoogleBook {
     const pad = 20;
     const bufMax = 80;
 
-    let output = this.title + '\n\r';
+    let output = this.title + "\n\r";
     output += "\n\rDebug Book: properties\n\r";
 
     for (const attr in this) {
@@ -136,7 +157,8 @@ export class GoogleBook {
     output +=
       "\tfmtDescription".padEnd(pad, " ") +
       " = " +
-      this.fmtDescription().slice(0, bufMax) + "..." +
+      this.fmtDescription().slice(0, bufMax) +
+      "..." +
       "\n\r";
     output +=
       "\tfmtThumbnail".padEnd(pad, " ") + " = " + this.fmtThumbnail() + "\n\r";

@@ -99,7 +99,7 @@ const props = defineProps({
   .book-card-details {
     display: flex;
     flex-direction: row;
-    gap: 0;
+    gap: 5px;
   }
 
   #book-card-title {
@@ -116,6 +116,7 @@ const props = defineProps({
   #description {
     text-align: justify;
     padding-left: 10px;
+    padding-right: 10px;
     font-size: 0.7rem;
   }
 }

@@ -58,11 +58,9 @@
 <script setup>
 import { useFilterStore } from "@/stores/filter";
 import { useSearchStore } from "@/stores/search";
-import { useRouter } from "vue-router";
 
 const filter = useFilterStore();
 const search = useSearchStore();
-const router = useRouter();
 
 async function queryApiAdvanced() {
   await search.queryApiAdvanced(40);

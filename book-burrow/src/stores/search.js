@@ -32,23 +32,37 @@ export const useSearchStore = defineStore("search", () => {
 
   // formats title, author, publisher, published, subject query string
   function formatFilterByOptions() {
-    let keywords = new URLSearchParams();
+    let keywords = "";
 
-    if (title.value != "") keywords.append("intitle", title.value);
+    if (title.value != "") {
+      if (keywords === "") keywords = `intitle:"${title.value}"`;
+      else keywords += `+intitle:"${title.value}"`;
+    }
 
-    if (author.value != "") keywords.append("inauthor", author.value);
+    if (author.value != "") {
+      if (keywords === "") keywords = `inauthor:"${author.value}"`;
+      else keywords += `+inauthor:"${author.value}"`;
+    }
 
-    if (publisher.value != "") keywords.append("inpublisher", publisher.value);
+    if (publisher.value != "") {
+      if (keywords === "") keywords = `inpublisher:"${publisher.value}"`;
+      else keywords += `+inpublisher:"${publisher.value}"`;
+    }
 
-    if (subject.value != "") keywords.append("subject", subject.value);
+    if (subject.value != "") {
+      if (keywords === "") keywords = `subject:"${subject.value}"`;
+      else keywords += `+subject:"${subject.value}"`;
+    }
 
-    if (published.value != "") keywords.append("inpublished", published.value);
+    if (published.value != "") {
+      if (keywords === "") keywords = `inpublished:"${published.value}"`;
+      else keywords += `+inpublished:"${published.value}"`;
+    }
 
-    let keywordString = `${keywords}`;
-    keywordString = keywordString.replace(/&/g, "+");
-    keywordString = keywordString.replace(/=/g, ":");
+    if( config.DEBUG )
+      console.log(keywords);
 
-    return keywordString;
+    return keywords;
   }
 
   // formats addtional options query string
@@ -58,7 +72,19 @@ export const useSearchStore = defineStore("search", () => {
 
   // build the entire formatted advanced query string
   function buildQueryUrl(words, filters, options) {
-    let queryString = `${config.API_URL}?q=${words}+${filters}`;
+    let queryString = `${config.API_URL}?q=`;
+
+    if (words != "") {
+      queryString += `${words}`;
+    }
+
+    if (filters != "") {
+      if (words != "") {
+        queryString += `+${filters}`;
+      } else {
+        queryString += `${filters}`;
+      }
+    }
 
     console.log(queryString);
     return queryString;
@@ -118,7 +144,13 @@ export const useSearchStore = defineStore("search", () => {
 
     if (response.ok) {
       const data = await response.json();
-      this.responseObjectCache = data.items;
+
+      this.googleBookResults = [];
+
+      for (let index = 0; index < data.items.length; index++) {
+        const book = new GoogleBook(data.items[index]);
+        this.googleBookResults.push(book);
+      }
     }
   }
 
