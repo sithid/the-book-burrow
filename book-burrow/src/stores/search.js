@@ -71,7 +71,7 @@ export const useSearchStore = defineStore("search", () => {
   }
 
   // build the entire formatted advanced query string
-  function buildQueryUrl(words, filters, options) {
+  function buildQueryUrl(words, filters, options, maxResults = config.MAX_RESULTS) {
     let queryString = `${config.API_URL}?q=`;
 
     if (words != "") {
@@ -86,6 +86,7 @@ export const useSearchStore = defineStore("search", () => {
       }
     }
 
+    queryString += `&maxResults=${maxResults}`;
     console.log(queryString);
     return queryString;
   }

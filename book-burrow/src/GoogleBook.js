@@ -18,8 +18,6 @@ export class GoogleBook {
     this.publisher = gBook.volumeInfo.publisher; // string
     this.publishedDate = gBook.volumeInfo.publishedDate; // Date
     this.description = gBook.volumeInfo.description; // string
-    this.isbn10 = "";
-    this.isbn13 = "";
 
     for (const identifier in gBook.volumeInfo.industryIdentifiers) {
       if (identifier.type === "ISBN_10") {
