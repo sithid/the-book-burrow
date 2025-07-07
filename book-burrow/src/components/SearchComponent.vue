@@ -1,12 +1,23 @@
 <template>
   <div class="search-component">
     <div class="search-container">
-      <button @click="filter.toggleFilterPanel" class="filter-button">
+      <button @click="toggleFilterPanel" class="filter-button">
         <i class="fa fa-filter" aria-hidden="true"></i>
       </button>
-      <input id="search-input" type="text" v-model="search.basicQuery" @keyup.enter="onSearch" class="search-input"
-        required />
-      <button v-if="!filter.isPanelOpen" @click="onSearch" class="search-button">
+      <input
+        v-if="!filter.isPanelOpen"
+        id="search-input"
+        type="text"
+        v-model="search.basicQuery"
+        @keyup.enter="onSearch"
+        class="search-input"
+        placeholder="Search Terms Required"
+      />
+      <button
+        v-if="!filter.isPanelOpen"
+        @click="onSearch"
+        class="search-button"
+      >
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
     </div>
@@ -41,20 +52,18 @@ import FilterPanelComponent from "../components/FilterPanelComponent.vue";
 const filter = useFilterStore();
 const search = useSearchStore();
 
+const toggleFilterPanel = () => {
+  filter.toggleFilterPanel;
+};
+
 const onSearch = async () => {
-  if( !filter.isPanelOpen )
+  if (!filter.isPanelOpen && search.basicQuery != "")
     await search.queryApiBasic(search.basicQuery);
-}
+};
 
 onMounted(async () => {
-  if (search.basicQuery != '')
-    await search.queryApiBasic(search.basicQuery);
-  else {
-    search.basicQuery = "popular";
-    await search.queryApiBasic(search.basicQuery)
-  }
+  if (search.basicQuery != "") await search.queryApiBasic(search.basicQuery);
 });
-
 </script>
 
 <style scoped>

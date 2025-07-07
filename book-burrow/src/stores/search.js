@@ -7,7 +7,7 @@ export const useSearchStore = defineStore("search", () => {
   const googleBookResults = ref([]);
 
   // Simple search, querys google api for any book with any field that
-  // matches this search string.  ?q={term+term+term...}
+  // matches this search string.  ?q={}
   const basicQuery = ref("");
 
   // The advanced query string that was built for the advanced search.
@@ -98,6 +98,7 @@ export const useSearchStore = defineStore("search", () => {
     requestHeaders.append("key", config.API_TOKEN);
 
     const url = `${config.API_URL}?q=${params}&maxResults=${maxResults}`;
+    console.log(url);
 
     const options = {
       method: "GET",

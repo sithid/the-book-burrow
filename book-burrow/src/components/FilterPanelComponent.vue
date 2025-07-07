@@ -3,51 +3,104 @@
     <div class="left-panel">
       <p id="left-panel-info">Find Results:</p>
       <div class="option-group">
-        <input id="all-words" name="allWords" type="text" v-model="search.allWords"
-          placeholder="with all of these words" />
+        <input
+          id="all-words"
+          name="allWords"
+          type="text"
+          v-model="search.allWords"
+          placeholder="with all of these words"
+        />
       </div>
       <div class="option-group">
-        <input id="exact-words" name="exactWords" type="text" v-model="search.exactWords"
-          placeholder="with these exact words" />
+        <input
+          id="exact-words"
+          name="exactWords"
+          type="text"
+          v-model="search.exactWords"
+          placeholder="with these exact words"
+        />
       </div>
       <div class="option-group">
-        <input id="atleast-one-word" name="atleastOneWord" type="text" v-model="search.atleastOneWord"
-          placeholder="with at least one of these words" />
+        <input
+          id="atleast-one-word"
+          name="atleastOneWord"
+          type="text"
+          v-model="search.atleastOneWord"
+          placeholder="with at least one of these words"
+        />
       </div>
       <div class="option-group">
-        <input id="without-these-words" name="withoutTheseWords" type="text" v-model="search.withoutTheseWords"
-          placeholder="without these words" />
+        <input
+          id="without-these-words"
+          name="withoutTheseWords"
+          type="text"
+          v-model="search.withoutTheseWords"
+          placeholder="without these words"
+        />
       </div>
     </div>
     <div class="middle-panel">
       <p id="middle-panel-info">Filter By:</p>
       <div class="option-group">
         <label for="book-title">Title</label>
-        <input id="book-title" name="title" type="text" v-model="search.title" placeholder="Enter book title here..." />
+        <input
+          id="book-title"
+          name="title"
+          type="text"
+          v-model="search.title"
+          placeholder="Enter book title here..."
+        />
       </div>
       <div class="option-group">
         <label for="book-author">Author</label>
-        <input id="book-author" name="author" type="text" v-model="search.author"
-          placeholder="Enter book author here..." />
+        <input
+          id="book-author"
+          name="author"
+          type="text"
+          v-model="search.author"
+          placeholder="Enter book author here..."
+        />
       </div>
       <div class="option-group">
         <label for="book-subject">Subject</label>
-        <input id="book-subject" name="subject" type="text" v-model="search.subject"
-          placeholder="Enter book subject here..." />
+        <input
+          id="book-subject"
+          name="subject"
+          type="text"
+          v-model="search.subject"
+          placeholder="Enter book subject here..."
+        />
       </div>
       <div class="option-group">
         <label for="book-publisher">Publisher</label>
-        <input id="book-publisher" name="publisher" type="text" v-model="search.publisher"
-          placeholder="Enter book publisher here..." />
+        <input
+          id="book-publisher"
+          name="publisher"
+          type="text"
+          v-model="search.publisher"
+          placeholder="Enter book publisher here..."
+        />
       </div>
       <div class="option-group">
         <label for="book-published">Published</label>
-        <input id="book-published" name="published" type="text" v-model="search.published"
-          placeholder="Enter book published here..." />
+        <input
+          id="book-published"
+          name="published"
+          type="text"
+          v-model="search.published"
+          placeholder="Enter book published here..."
+        />
       </div>
     </div>
     <div class="right-panel">
       <p id="right-panel-info">Additional Options:</p>
+
+      <label for="language-select">Language</label>
+      <select id="language-select">
+        <option value="en">English</option>
+        <option value="es">Spanish</option>
+      </select>
+      
       <div class="option-group">
         <button id="adv-search-button" @click="queryApiAdvanced">Search</button>
       </div>
@@ -146,7 +199,13 @@ async function queryApiAdvanced() {
   #left-panel-info,
   #middle-panel-info,
   #right-panel-info {
-    font-size: .8rem;
+    font-size: 0.8rem;
+  }
+
+  #adv-search-button {
+    max-height: 25px;
+    font-size: 0.6rem;
+    margin: 0 10px;
   }
 }
 </style>
