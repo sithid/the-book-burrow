@@ -78,7 +78,7 @@ export const useSearchStore = defineStore("search", () => {
     }
 
     queryString += `&maxResults=${maxResults}`;
-    console.log(queryString);
+    queryString += `&key=${config.API_TOKEN}`;
     return queryString;
   }
 
@@ -86,9 +86,8 @@ export const useSearchStore = defineStore("search", () => {
   async function queryApiBasic(params, maxResults = config.MAX_RESULTS) {
     const requestHeaders = new Headers();
     requestHeaders.append("Content-Type", "application/json");
-    requestHeaders.append("key", config.API_TOKEN);
 
-    const url = `${config.API_URL}?q=${params}&maxResults=${maxResults}`;
+    const url = `${config.API_URL}?q=${params}&maxResults=${maxResults}&key=${config.API_TOKEN}`;
     console.log(url);
 
     const options = {
@@ -103,30 +102,26 @@ export const useSearchStore = defineStore("search", () => {
 
       // Make sure we 'reset' the book result array, otherwise it will get huge.
       // I may implement dictionary or map for result history in the future.
-      this.googleBookResults = [];
+      googleBookResults.value = [];
 
       for (let index = 0; index < data.items.length; index++) {
         const book = new GoogleBook(data.items[index]);
-        this.googleBookResults.push(book);
+        googleBookResults.value.push(book);
       }
     }
   }
 
   // perform an advanced, targeted search for combined terms, filters, and options
   async function queryApiAdvanced(maxResults = config.MAX_RESULTS) {
-    const findResults = this.formatFindResultsOptions();
-    const filterByOptions = this.formatFilterByOptions();
-    const additionalOptions = this.formatAdditionalOptions();
+    const findResults = formatFindResultsOptions();
+    const filterByOptions = formatFilterByOptions();
+    const additionalOptions = formatAdditionalOptions();
 
-    const url = this.buildQueryUrl(
-      findResults,
-      filterByOptions,
-      additionalOptions
-    );
-
+    const url = buildQueryUrl(findResults, filterByOptions, additionalOptions);
+    console.log(url);
+    
     const requestHeaders = new Headers();
     requestHeaders.append("Content-Type", "application/json");
-    requestHeaders.append("key", config.API_TOKEN);
 
     const options = {
       method: "GET",
@@ -138,11 +133,11 @@ export const useSearchStore = defineStore("search", () => {
     if (response.ok) {
       const data = await response.json();
 
-      this.googleBookResults = [];
+      googleBookResults.value = [];
 
       for (let index = 0; index < data.items.length; index++) {
         const book = new GoogleBook(data.items[index]);
-        this.googleBookResults.push(book);
+        googleBookResults.value.push(book);
       }
     }
   }
