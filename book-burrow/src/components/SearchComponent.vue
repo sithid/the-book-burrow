@@ -1,23 +1,12 @@
 <template>
   <div class="search-component">
-    <div class="search-container">
+    <div v-if="!filter.isPanelOpen" class="search-container">
       <button @click="toggleFilterPanel" class="filter-button">
         <i class="fa fa-filter" aria-hidden="true"></i>
       </button>
-      <input
-        v-if="!filter.isPanelOpen"
-        id="search-input"
-        type="text"
-        v-model="search.basicQuery"
-        @keyup.enter="onSearch"
-        class="search-input"
-        placeholder="Search Terms Required"
-      />
-      <button
-        v-if="!filter.isPanelOpen"
-        @click="onSearch"
-        class="search-button"
-      >
+      <input id="search-input" type="text" v-model="search.basicQuery" @keyup.enter="onSearch" class="search-input"
+        placeholder="Search Terms Required" />
+      <button v-if="!filter.isPanelOpen" @click="onSearch" class="search-button">
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
     </div>
