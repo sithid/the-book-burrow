@@ -21,6 +21,16 @@ export const useFilterStore = defineStore("filter", () => {
 
   const toggleFilterPanel = computed(() => {
     filterPanelOpen.value = !filterPanelOpen.value;
+
+    allWords.value = "";
+    exactWords.value = "";
+    withoutTheseWords.value = "";
+    atleastOneWord.value = "";
+
+    title.value = "";
+    author.value = "";
+    publisher.value = "";
+    subject.value = "";
   });
 
   return {

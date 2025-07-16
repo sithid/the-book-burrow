@@ -4,6 +4,9 @@
       <button @click="toggleFilterPanel" class="filter-button">
         <i class="fa fa-filter" aria-hidden="true"></i>
       </button>
+      <button @click="clearClick" class="clear-button">
+        <i class="fa fa-cancel" aria-hidden="true"></i>
+      </button>
       <input id="search-input" type="text" v-model="search.basicQuery" @keyup.enter="onSearch" class="search-input"
         placeholder="Search Terms Required" />
       <button v-if="!filter.isPanelOpen" @click="onSearch" class="search-button">
@@ -41,14 +44,18 @@ import FilterPanelComponent from "../components/FilterPanelComponent.vue";
 const filter = useFilterStore();
 const search = useSearchStore();
 
-const toggleFilterPanel = () => {
+function toggleFilterPanel() {
   filter.toggleFilterPanel;
-};
+}
 
-const onSearch = async () => {
+async function onSearch() {
   if (!filter.isPanelOpen && search.basicQuery != "")
     await search.queryApiBasic(search.basicQuery);
-};
+}
+
+function clearClick() {
+  search.clear();
+}
 
 onMounted(async () => {
   if (search.basicQuery != "") await search.queryApiBasic(search.basicQuery);

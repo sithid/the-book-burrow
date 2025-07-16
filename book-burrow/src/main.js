@@ -2,7 +2,6 @@ import './assets/global.css';
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import { config } from './config.js';
 import App from './App.vue';
 import router from './router';
 

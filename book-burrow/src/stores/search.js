@@ -19,6 +19,9 @@ export const useSearchStore = defineStore("search", () => {
   // formats allWords/exactWords/atleastOneWord/withoutTheseWords query string
   function formatFindResultsOptions() {
     let keywords = "";
+
+    config.FMT_PRINT_DEBUG("formatFindResultsOptions::keywords", keywords);
+
     return keywords;
   }
 
@@ -46,13 +49,23 @@ export const useSearchStore = defineStore("search", () => {
       else keywords += `+subject:"${filter.subject}"`;
     }
 
-    if (config.DEBUG) console.log(keywords);
+    config.FMT_PRINT_DEBUG("formatFilterByOptions::keywords", keywords);
 
     return keywords;
   }
 
+  function clear() {
+    googleBookResults.value = [];
+    basicQuery.value = "";
+    completeQuery.value = "";
+  }
+
   // formats addtional options query string
   function formatAdditionalOptions() {
+    let keywords = "";
+
+    config.FMT_PRINT_DEBUG("formatAdditionalOptions::keywords", keywords);
+
     return "";
   }
 
@@ -79,6 +92,8 @@ export const useSearchStore = defineStore("search", () => {
 
     queryString += `&maxResults=${maxResults}`;
     queryString += `&key=${config.API_TOKEN}`;
+
+    config.FMT_PRINT_DEBUG("buildQueryUrl::queryString", queryString);
     return queryString;
   }
 
@@ -88,8 +103,9 @@ export const useSearchStore = defineStore("search", () => {
     requestHeaders.append("Content-Type", "application/json");
 
     const url = `${config.API_URL}?q=${params}&maxResults=${maxResults}&key=${config.API_TOKEN}`;
-    console.log(url);
 
+    config.FMT_PRINT_DEBUG("queryApiBasic::url", url);
+    
     const options = {
       method: "GET",
       headers: requestHeaders,
@@ -118,8 +134,8 @@ export const useSearchStore = defineStore("search", () => {
     const additionalOptions = formatAdditionalOptions();
 
     const url = buildQueryUrl(findResults, filterByOptions, additionalOptions);
-    console.log(url);
-    
+    config.FMT_PRINT_DEBUG("queryApiAdvanced::url", url);
+
     const requestHeaders = new Headers();
     requestHeaders.append("Content-Type", "application/json");
 
@@ -149,6 +165,7 @@ export const useSearchStore = defineStore("search", () => {
     completeQuery, // last advanced query string we built
 
     /* functions */
+    clear, // clears values.
     formatFindResultsOptions, // formats allWords/exactWords/atleastOneWord/withoutTheseWords query string
     formatFilterByOptions, // formats title, author, publisher, published, subject query string
     formatAdditionalOptions, // formats addtional options query string

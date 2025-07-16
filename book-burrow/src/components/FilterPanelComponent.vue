@@ -51,7 +51,7 @@
       </select>
       <div class="adv-option-group">
         <div class="option-group">
-          <button id="adv-cancel-button" @click="filter.toggleFilterPanel">
+          <button id="adv-cancel-button" @click="cancelClick">
             Cancel
           </button>
         </div>
@@ -74,6 +74,14 @@ const search = useSearchStore();
 
 async function queryApiAdvanced() {
   await search.queryApiAdvanced();
+}
+
+// Setting the values of the stores has to be set directly.  Between vue and pinia, the values are destructured/unwrapped for you.
+// If you access the property from within the store, you have to use prop.value.
+// This caused so much confusion originally.
+function cancelClick() {
+  filter.toggleFilterPanel;
+  search.googleBookResults = [];
 }
 </script>
 

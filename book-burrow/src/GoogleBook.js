@@ -19,15 +19,15 @@ export class GoogleBook {
     this.publishedDate = gBook.volumeInfo.publishedDate; // Date
     this.description = gBook.volumeInfo.description; // string
 
-    for (const identifier in gBook.volumeInfo.industryIdentifiers) {
-      if (identifier.type === "ISBN_10") {
-        this.isbn10 = identifier.identifier;
-
-        if (config.DEBUG) console.log(this.isbn10);
-      } else if (identifier.type === "ISBN_13") {
-        this.isbn13 = identifier.identifier;
-
-        if (config.DEBUG) console.log(this.isbn13);
+    if (gBook.volumeInfo.industryIdentifiers) {
+      for (const identifier of gBook.volumeInfo.industryIdentifiers) {
+        if (identifier.type === "ISBN_10") {
+          this.isbn10 = identifier.identifier;
+          if (config.DEBUG) console.log(this.isbn10);
+        } else if (identifier.type === "ISBN_13") {
+          this.isbn13 = identifier.identifier;
+          if (config.DEBUG) console.log(this.isbn13);
+        }
       }
     }
 

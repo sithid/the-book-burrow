@@ -21,22 +21,10 @@
 
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
-import { useFilterStore } from "@/stores/filter";
-import { onMounted, onBeforeUnmount } from "vue";
-
-const filterStore = useFilterStore();
 
 function preferencesBtnOnClick() {
   console.log("Preferences button clicked!");
 }
-
-onMounted(() => {
-  // load settings etc from local storage
-});
-
-onBeforeUnmount(() => {
-  // save settings etc to local storage
-})
 </script>
 
 <style scoped>
