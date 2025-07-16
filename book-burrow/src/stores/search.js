@@ -17,12 +17,53 @@ export const useSearchStore = defineStore("search", () => {
   const completeQuery = ref("");
 
   // formats allWords/exactWords/atleastOneWord/withoutTheseWords query string
+  // regex REALLY makes this so much easier <3
+
   function formatFindResultsOptions() {
-    let keywords = "";
+    let queryParts = []; // query string 'parts'
 
-    config.FMT_PRINT_DEBUG("formatFindResultsOptions::keywords", keywords);
+    if (filter.allWords.length > 0) {
+      const trimmedWords = filter.allWords.trim();
+      if (trimmedWords) {
+        queryParts.push(trimmedWords.replace(/\s+/g, "+"));
+      }
+    }
 
-    return keywords;
+    if (filter.exactWords.length > 0) {
+      const trimmedExactWords = filter.exactWords.trim();
+      if (trimmedExactWords) {
+        queryParts.push(`"${trimmedExactWords}"`);
+      }
+    }
+
+    if (filter.atleastOneWord.length > 0) {
+      const trimmedAtLeastOneWord = filter.atleastOneWord.trim();
+      if (trimmedAtLeastOneWord) {
+        const words = trimmedAtLeastOneWord
+          .split(/\s+/)
+          .filter((word) => word !== "");
+        if (words.length > 0) {
+          queryParts.push(`(${words.join(" OR ")})`);
+        }
+      }
+    }
+
+    if (filter.withoutTheseWords.length > 0) {
+      const trimmedWithoutTheseWords = filter.withoutTheseWords.trim();
+      if (trimmedWithoutTheseWords) {
+        const words = trimmedWithoutTheseWords
+          .split(/\s+/)
+          .filter((word) => word !== "");
+        const excludedTerms = words.map((word) => `-${word}`);
+        queryParts.push(...excludedTerms);
+      }
+    }
+
+    const finalKeywords = queryParts.join("+");
+
+    config.FMT_PRINT_DEBUG("formatFindResultsOptions::keywords", finalKeywords);
+
+    return finalKeywords;
   }
 
   // formats title, author, publisher, published, subject query string
@@ -105,7 +146,7 @@ export const useSearchStore = defineStore("search", () => {
     const url = `${config.API_URL}?q=${params}&maxResults=${maxResults}&key=${config.API_TOKEN}`;
 
     config.FMT_PRINT_DEBUG("queryApiBasic::url", url);
-    
+
     const options = {
       method: "GET",
       headers: requestHeaders,
@@ -148,6 +189,11 @@ export const useSearchStore = defineStore("search", () => {
 
     if (response.ok) {
       const data = await response.json();
+
+      if (!data.items) {
+        console.log("Something went wrong...");
+        return;
+      }
 
       googleBookResults.value = [];
 

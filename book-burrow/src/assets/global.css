@@ -44,6 +44,18 @@ body {
   margin: auto 0;
 }
 
+.error-info-panel {
+
+}
+
+.error-info {
+  font-size: 0.9rem;
+  color: rgb(124, 2, 2);
+}
+
+#error-panel {
+}
+
 .search-button,
 .clear-button,
 .filter-button,

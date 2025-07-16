@@ -5,6 +5,6 @@ export const config = {
   MAX_RESULTS: "10",
   FMT_PRINT_DEBUG: (frm, msg) => {
     if( config.DEBUG )
-      console.log(`DEBUG::${frm} | ${msg}`);
+      console.log(`DEBUG::${frm} | ${msg}\n\r`);
   }
 };

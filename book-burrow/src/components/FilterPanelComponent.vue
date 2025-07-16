@@ -3,18 +3,22 @@
     <div class="left-panel">
       <p id="left-panel-info">Find Results:</p>
       <div class="option-group">
+        <label for="all-words">All Words</label>
         <input id="all-words" name="allWords" type="text" v-model="filter.allWords"
           placeholder="with all of these words" />
       </div>
       <div class="option-group">
+        <label for="exact-words">Exact Words</label>
         <input id="exact-words" name="exactWords" type="text" v-model="filter.exactWords"
           placeholder="with these exact words" />
       </div>
       <div class="option-group">
+        <label for="atleast-one-word">Atleast One</label>
         <input id="atleast-one-word" name="atleastOneWord" type="text" v-model="filter.atleastOneWord"
           placeholder="with at least one of these words" />
       </div>
       <div class="option-group">
+        <label for="without-these-words">Without These</label>
         <input id="without-these-words" name="withoutTheseWords" type="text" v-model="filter.withoutTheseWords"
           placeholder="without these words" />
       </div>
@@ -43,11 +47,26 @@
     </div>
     <div class="right-panel">
       <p id="right-panel-info">Additional Options:</p>
-
       <label for="language-select">Language</label>
-      <select id="language-select">
+      <select id="language-select" v-model="filter.language">
         <option value="en">English</option>
         <option value="es">Spanish</option>
+        <option value="fr">French</option>
+        <option value="de">German</option>
+        <option value="it">Italian</option>
+        <option value="ja">Japanese</option>
+        <option value="ko">Korean</option>
+        <option value="zh">Chinese(Simplified)</option>
+        <option value="zh-Hant">Chinese(Traditional)</option>
+        <option value="pt">Portuguese</option>
+        <option value="ru">Russian</option>
+        <option value="ar">Arabic</option>
+        <option value="nl">Dutch</option>
+        <option value="hi">Hindi</option>
+        <option value="id">Indonesian</option>
+        <option value="th">Thai</option>
+        <option value="tr">Turkish</option>
+        <option value="vi">Vietnamese</option>
       </select>
       <div class="adv-option-group">
         <div class="option-group">
@@ -56,10 +75,18 @@
           </button>
         </div>
         <div class="option-group">
+          <button id="adv-clear-button" @click="clearClick">
+            Clear
+          </button>
+        </div>
+        <div class="option-group">
           <button id="adv-search-button" @click="queryApiAdvanced">
             Search
           </button>
         </div>
+      </div>
+      <div v-if="filter.errorMsg.length > 0" id="error-panel" class="error-info-panel">
+        <p class="error-info">{{ filter.errorMsg }}</p>
       </div>
     </div>
   </div>
@@ -73,16 +100,33 @@ const filter = useFilterStore();
 const search = useSearchStore();
 
 async function queryApiAdvanced() {
-  await search.queryApiAdvanced();
+
+  let strings = "";
+  strings += filter.allWords + filter.exactWords + filter.atleastOneWord + filter.withoutTheseWords;
+  strings += filter.title + filter.author + filter.subject + filter.publisher;
+
+  if (strings.length > 0) {
+    await search.queryApiAdvanced();
+  } else {
+    filter.errorMsg = 'You must include text in at least one field!';
+  }
 }
 
 // Setting the values of the stores has to be set directly.  Between vue and pinia, the values are destructured/unwrapped for you.
 // If you access the property from within the store, you have to use prop.value.
 // This caused so much confusion originally.
 function cancelClick() {
-  filter.toggleFilterPanel;
+  filter.errorMsg = '';
+  filter.toggleFilterPanel();
   search.googleBookResults = [];
 }
+
+function clearClick() {
+  filter.errorMsg = '';
+  filter.reset();
+  search.googleBookResults = [];
+}
+
 </script>
 
 <style scoped>
@@ -95,22 +139,12 @@ function cancelClick() {
   gap: 10px;
 }
 
-.left-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  margin-bottom: 5px;
-}
-
-.middle-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
+.left-panel,
+.middle-panel,
 .right-panel {
   display: flex;
   flex-direction: column;
+  margin-bottom: 5px;
   gap: 2px;
 }
 
@@ -119,7 +153,7 @@ function cancelClick() {
 #right-panel-info {
   text-align: left;
   margin: 0 10px;
-  padding-left: 0 10px;
+  padding: 0 10px;
   font-size: 0.6rem;
 }
 
@@ -127,17 +161,18 @@ function cancelClick() {
   display: flex;
   flex-direction: row;
   justify-content: end;
-  gap: 10px;
 }
 
 .option-group input {
-  margin: 0px 0px;
+  margin: 0px 5px;
   font-size: 1rem;
 }
 
 .option-group label {
-  margin-left: 20px;
-  font-size: 1rem;
+  display: flex;
+  margin: 10px 0;
+  font-size: 0.7rem;
+
 }
 
 .adv-option-group {
@@ -176,6 +211,7 @@ function cancelClick() {
   }
 
   #adv-cancel-button,
+  #adv-clear-button,
   #adv-search-button {
     max-height: 25px;
     font-size: 0.6rem;

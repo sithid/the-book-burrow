@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
+import { watch } from "vue";
+import { storeToRefs } from "pinia";
 
 export const useFilterStore = defineStore("filter", () => {
   // Advanced filter options. https://www.googleapis.com/books/v1/volumes?q=<string>
@@ -12,6 +14,9 @@ export const useFilterStore = defineStore("filter", () => {
   const author = ref(""); // inAuthor:author
   const publisher = ref(""); // inPublisher:publisher
   const subject = ref(""); // subject:subject
+  const language = ref("en"); // &langRestrict=en
+
+  const errorMsg = ref("");
 
   const filterPanelOpen = ref(false);
 
@@ -19,9 +24,28 @@ export const useFilterStore = defineStore("filter", () => {
     return filterPanelOpen.value;
   });
 
-  const toggleFilterPanel = computed(() => {
-    filterPanelOpen.value = !filterPanelOpen.value;
+  watch(
+    [
+      allWords,
+      exactWords,
+      withoutTheseWords,
+      atleastOneWord,
+      title,
+      author,
+      publisher,
+      subject,
+    ],
+    (newValues, oldValues) => {
+      const anyFilterValueIsNotEmpty = newValues.some((value) => value !== "");
 
+      if (anyFilterValueIsNotEmpty) {
+        errorMsg.value = ""; // Clear the error message
+      }
+    },
+    { deep: false }
+  );
+
+  function reset() {
     allWords.value = "";
     exactWords.value = "";
     withoutTheseWords.value = "";
@@ -31,7 +55,17 @@ export const useFilterStore = defineStore("filter", () => {
     author.value = "";
     publisher.value = "";
     subject.value = "";
-  });
+
+    language.value = "en";
+    errorMsg.value = "";
+
+    console.clear();
+  }
+
+  function toggleFilterPanel() {
+    filterPanelOpen.value = !filterPanelOpen.value;
+    reset();
+  }
 
   return {
     allWords, // search across a wide range of fields that includes all of the words
@@ -43,7 +77,10 @@ export const useFilterStore = defineStore("filter", () => {
     author, // books with this in the author
     publisher, // books with this in the publisher
     subject, // books with this in the subject (genre)
+    language, // languages available from google api
+    errorMsg,
 
+    reset,
     isPanelOpen,
     toggleFilterPanel,
   };

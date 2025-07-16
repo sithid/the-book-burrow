@@ -1,7 +1,7 @@
 <template>
   <div class="search-component">
     <div v-if="!filter.isPanelOpen" class="search-container">
-      <button @click="toggleFilterPanel" class="filter-button">
+      <button @click="filter.toggleFilterPanel" class="filter-button">
         <i class="fa fa-filter" aria-hidden="true"></i>
       </button>
       <button @click="clearClick" class="clear-button">
@@ -43,10 +43,6 @@ import FilterPanelComponent from "../components/FilterPanelComponent.vue";
 
 const filter = useFilterStore();
 const search = useSearchStore();
-
-function toggleFilterPanel() {
-  filter.toggleFilterPanel;
-}
 
 async function onSearch() {
   if (!filter.isPanelOpen && search.basicQuery != "")
