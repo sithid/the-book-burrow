@@ -69,9 +69,9 @@ h1 {
 @media (min-width: 768px) {
   .header {
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    padding: 20px 20px;
+    padding: 20px 10px;
   }
 
   h1 {
