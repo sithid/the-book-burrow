@@ -63,6 +63,7 @@
         <option value="ar">Arabic</option>
         <option value="nl">Dutch</option>
         <option value="hi">Hindi</option>
+        <option value="ur">Urdu</option>
         <option value="id">Indonesian</option>
         <option value="th">Thai</option>
         <option value="tr">Turkish</option>
@@ -118,13 +119,13 @@ async function queryApiAdvanced() {
 function cancelClick() {
   filter.errorMsg = '';
   filter.toggleFilterPanel();
-  search.googleBookResults = [];
+  search.clear();
 }
 
 function clearClick() {
   filter.errorMsg = '';
   filter.reset();
-  search.googleBookResults = [];
+  search.clear();
 }
 
 </script>

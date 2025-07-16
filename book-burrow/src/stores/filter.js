@@ -14,7 +14,7 @@ export const useFilterStore = defineStore("filter", () => {
   const author = ref(""); // inAuthor:author
   const publisher = ref(""); // inPublisher:publisher
   const subject = ref(""); // subject:subject
-  const language = ref("en"); // &langRestrict=en
+  const language = ref('en'); // &langRestrict=en
 
   const errorMsg = ref("");
 
@@ -56,7 +56,7 @@ export const useFilterStore = defineStore("filter", () => {
     publisher.value = "";
     subject.value = "";
 
-    language.value = "en";
+    language.value = 'en';
     errorMsg.value = "";
 
     console.clear();

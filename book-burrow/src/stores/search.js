@@ -13,9 +13,6 @@ export const useSearchStore = defineStore("search", () => {
   // matches this search string.  ?q={}
   const basicQuery = ref("");
 
-  // The advanced query string that was built for the advanced search.
-  const completeQuery = ref("");
-
   // formats allWords/exactWords/atleastOneWord/withoutTheseWords query string
   // regex REALLY makes this so much easier <3
 
@@ -98,43 +95,41 @@ export const useSearchStore = defineStore("search", () => {
   function clear() {
     googleBookResults.value = [];
     basicQuery.value = "";
-    completeQuery.value = "";
   }
 
   // formats addtional options query string
-  function formatAdditionalOptions() {
+  function formatAdditionalOptions(maxResults = config.MAX_RESULTS) {
     let keywords = "";
+
+    keywords += `&langRestrict=${filter.language}`;
+    keywords += `&maxResults=${maxResults}`;
+    keywords += `&key=${config.API_TOKEN}`;
 
     config.FMT_PRINT_DEBUG("formatAdditionalOptions::keywords", keywords);
 
-    return "";
+    return keywords;
   }
 
   // build the entire formatted advanced query string
-  function buildQueryUrl(
-    words,
-    filters,
-    options,
-    maxResults = config.MAX_RESULTS
-  ) {
+  function buildQueryUrl(words, filters, additionalOptions) {
     let queryString = `${config.API_URL}?q=`;
 
-    if (words != "") {
+    if (words) {
       queryString += `${words}`;
     }
 
-    if (filters != "") {
-      if (words != "") {
-        queryString += `+${filters}`;
-      } else {
+    if (filters) {
+      if (words === "") {
         queryString += `${filters}`;
+      } else {
+        queryString += `+${filters}`;
       }
     }
 
-    queryString += `&maxResults=${maxResults}`;
-    queryString += `&key=${config.API_TOKEN}`;
+    if (additionalOptions) {
+      queryString += `${additionalOptions}`;
+    }
 
-    config.FMT_PRINT_DEBUG("buildQueryUrl::queryString", queryString);
     return queryString;
   }
 
@@ -169,12 +164,13 @@ export const useSearchStore = defineStore("search", () => {
   }
 
   // perform an advanced, targeted search for combined terms, filters, and options
-  async function queryApiAdvanced(maxResults = config.MAX_RESULTS) {
+  async function queryApiAdvanced() {
     const findResults = formatFindResultsOptions();
     const filterByOptions = formatFilterByOptions();
     const additionalOptions = formatAdditionalOptions();
 
     const url = buildQueryUrl(findResults, filterByOptions, additionalOptions);
+
     config.FMT_PRINT_DEBUG("queryApiAdvanced::url", url);
 
     const requestHeaders = new Headers();
@@ -195,11 +191,15 @@ export const useSearchStore = defineStore("search", () => {
         return;
       }
 
-      googleBookResults.value = [];
-
+      // even though we are filtering by language from the api, there are apparently
+      // some weird edge cases that make it nessessary to filter by language on the
+      // client side of things.
       for (let index = 0; index < data.items.length; index++) {
-        const book = new GoogleBook(data.items[index]);
-        googleBookResults.value.push(book);
+        const item = data.items[index];
+        if (item.volumeInfo && item.volumeInfo.language === filter.language) {
+          const book = new GoogleBook(item);
+          googleBookResults.value.push(book);
+        }
       }
     }
   }
@@ -208,7 +208,6 @@ export const useSearchStore = defineStore("search", () => {
     /* properties */
     googleBookResults, // array of books populated by response
     basicQuery, // last simple query string from input
-    completeQuery, // last advanced query string we built
 
     /* functions */
     clear, // clears values.
