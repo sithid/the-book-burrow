@@ -36,9 +36,9 @@ export const useFilterStore = defineStore("filter", () => {
       subject,
     ],
     (newValues, oldValues) => {
-      const anyFilterValueIsNotEmpty = newValues.some((value) => value !== "");
+      const newValueNotEmpty = newValues.some((value) => value !== "");
 
-      if (anyFilterValueIsNotEmpty) {
+      if (newValueNotEmpty) {
         errorMsg.value = ""; // Clear the error message
       }
     },
@@ -78,7 +78,7 @@ export const useFilterStore = defineStore("filter", () => {
     publisher, // books with this in the publisher
     subject, // books with this in the subject (genre)
     language, // languages available from google api
-    errorMsg,
+    errorMsg, // error message for adv search.
 
     reset,
     isPanelOpen,

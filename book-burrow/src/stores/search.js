@@ -22,14 +22,14 @@ export const useSearchStore = defineStore("search", () => {
     if (filter.allWords.length > 0) {
       const trimmedWords = filter.allWords.trim();
       if (trimmedWords) {
-        queryParts.push(trimmedWords.replace(/\s+/g, "+"));
+        queryParts.push(encodeURIComponent(trimmedWords).replace(/%20/g, "+"));
       }
     }
 
     if (filter.exactWords.length > 0) {
       const trimmedExactWords = filter.exactWords.trim();
       if (trimmedExactWords) {
-        queryParts.push(`"${trimmedExactWords}"`);
+        queryParts.push(`"${encodeURIComponent(trimmedExactWords)}"`);
       }
     }
 
@@ -40,7 +40,9 @@ export const useSearchStore = defineStore("search", () => {
           .split(/\s+/)
           .filter((word) => word !== "");
         if (words.length > 0) {
-          queryParts.push(`(${words.join(" OR ")})`);
+          queryParts.push(
+            `(${words.map((word) => encodeURIComponent(word)).join(" OR ")})`
+          );
         }
       }
     }
@@ -51,7 +53,9 @@ export const useSearchStore = defineStore("search", () => {
         const words = trimmedWithoutTheseWords
           .split(/\s+/)
           .filter((word) => word !== "");
-        const excludedTerms = words.map((word) => `-${word}`);
+        const excludedTerms = words.map(
+          (word) => `-${encodeURIComponent(word)}`
+        );
         queryParts.push(...excludedTerms);
       }
     }
@@ -68,23 +72,27 @@ export const useSearchStore = defineStore("search", () => {
     let keywords = "";
 
     if (filter.title && filter.title != "") {
-      if (keywords === "") keywords = `intitle:"${filter.title}"`;
-      else keywords += `+intitle:"${filter.title}"`;
+      if (keywords === "")
+        keywords = `intitle:"${encodeURIComponent(filter.title)}"`;
+      else keywords += `+intitle:"${encodeURIComponent(filter.title)}"`;
     }
 
     if (filter.author && filter.author != "") {
-      if (keywords === "") keywords = `inauthor:"${filter.author}"`;
-      else keywords += `+inauthor:"${filter.author}"`;
+      if (keywords === "")
+        keywords = `inauthor:"${encodeURIComponent(filter.author)}"`;
+      else keywords += `+inauthor:"${encodeURIComponent(filter.author)}"`;
     }
 
     if (filter.publisher && filter.publisher != "") {
-      if (keywords === "") keywords = `inpublisher:"${filter.publisher}"`;
-      else keywords += `+inpublisher:"${filter.publisher}"`;
+      if (keywords === "")
+        keywords = `inpublisher:"${encodeURIComponent(filter.publisher)}"`;
+      else keywords += `+inpublisher:"${encodeURIComponent(filter.publisher)}"`;
     }
 
     if (filter.subject && filter.subject != "") {
-      if (keywords === "") keywords = `subject:"${filter.subject}"`;
-      else keywords += `+subject:"${filter.subject}"`;
+      if (keywords === "")
+        keywords = `subject:"${encodeURIComponent(filter.subject)}"`;
+      else keywords += `+subject:"${encodeURIComponent(filter.subject)}"`;
     }
 
     config.FMT_PRINT_DEBUG("formatFilterByOptions::keywords", keywords);
@@ -99,9 +107,7 @@ export const useSearchStore = defineStore("search", () => {
 
   // formats addtional options query string
   function formatAdditionalOptions(maxResults = config.MAX_RESULTS) {
-    let keywords = "";
-
-    keywords += `&langRestrict=${filter.language}`;
+    let keywords = `&langRestrict=${filter.language}`;
     keywords += `&maxResults=${maxResults}`;
     keywords += `&key=${config.API_TOKEN}`;
 
@@ -115,14 +121,14 @@ export const useSearchStore = defineStore("search", () => {
     let queryString = `${config.API_URL}?q=`;
 
     if (words) {
-      queryString += `${words}`;
+      queryString += `${encodeURIComponent(words)}`;
     }
 
     if (filters) {
       if (words === "") {
-        queryString += `${filters}`;
+        queryString += `${encodeURIComponent(filters)}`;
       } else {
-        queryString += `+${filters}`;
+        queryString += `+${encodeURIComponent(filters)}`;
       }
     }
 
@@ -138,7 +144,9 @@ export const useSearchStore = defineStore("search", () => {
     const requestHeaders = new Headers();
     requestHeaders.append("Content-Type", "application/json");
 
-    const url = `${config.API_URL}?q=${params}&maxResults=${maxResults}&key=${config.API_TOKEN}`;
+    const url = `${config.API_URL}?q=${encodeURIComponent(
+      params
+    )}&maxResults=${maxResults}&key=${config.API_TOKEN}`;
 
     config.FMT_PRINT_DEBUG("queryApiBasic::url", url);
 
