@@ -7,6 +7,7 @@
 
 <script setup>
 import { GoogleBook } from "../GoogleBook.js";
+import { onMounted } from 'vue';
 
 const props = defineProps({
   book: {

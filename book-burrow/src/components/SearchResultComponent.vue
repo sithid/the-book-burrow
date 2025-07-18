@@ -23,7 +23,12 @@
 </template>
 
 <script setup>
+import { useBookStore } from "@/stores/book.js";
 import { GoogleBook } from "../GoogleBook.js";
+import { useRouter } from "vue-router";
+
+const book = useBookStore();
+const router = useRouter();
 
 const props = defineProps({
   book: {
@@ -33,7 +38,8 @@ const props = defineProps({
 });
 
 function onThumbnailClicked() {
-  
+  book.setActiveBook(props.book);
+  router.push("/details");
 }
 </script>
 
