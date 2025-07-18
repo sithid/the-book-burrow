@@ -2,7 +2,7 @@
   <section class="book-card-mini">
     <p id="book-card-title">{{ props.book.title }}</p>
     <div class="book-card-details">
-      <img :src="`${props.book.fmtThumbnail()}`" />
+      <img :src="`${props.book.fmtThumbnail()}`" @click="onThumbnailClicked"/>
       <section class="book-info">
         <p class="info-text">
           <span id="author">
@@ -31,6 +31,10 @@ const props = defineProps({
     required: true
   }
 });
+
+function onThumbnailClicked() {
+  
+}
 </script>
 
 <style scoped>

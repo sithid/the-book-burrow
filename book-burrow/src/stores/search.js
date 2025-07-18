@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { config } from "../config.js";
 import { GoogleBook } from "../GoogleBook.js";
 import { useFilterStore } from "@/stores/filter";
@@ -15,8 +15,7 @@ export const useSearchStore = defineStore("search", () => {
 
   // formats allWords/exactWords/atleastOneWord/withoutTheseWords query string
   // regex REALLY makes this so much easier <3
-
-  function formatFindResultsOptions() {
+  const formatFindResultsOptions = computed(() => {
     let queryParts = []; // query string 'parts'
 
     if (filter.allWords.length > 0) {
@@ -65,10 +64,10 @@ export const useSearchStore = defineStore("search", () => {
     config.FMT_PRINT_DEBUG("formatFindResultsOptions::keywords", finalKeywords);
 
     return finalKeywords;
-  }
+  });
 
   // formats title, author, publisher, published, subject query string
-  function formatFilterByOptions() {
+  const formatFilterByOptions = computed(() => {
     let keywords = "";
 
     if (filter.title && filter.title != "") {
@@ -98,7 +97,7 @@ export const useSearchStore = defineStore("search", () => {
     config.FMT_PRINT_DEBUG("formatFilterByOptions::keywords", keywords);
 
     return keywords;
-  }
+  });
 
   function clear() {
     googleBookResults.value = [];
@@ -106,19 +105,23 @@ export const useSearchStore = defineStore("search", () => {
   }
 
   // formats addtional options query string
-  function formatAdditionalOptions(maxResults = config.MAX_RESULTS) {
+  const formatAdditionalOptions = computed(() => {
     let keywords = `&langRestrict=${filter.language}`;
-    keywords += `&maxResults=${maxResults}`;
+    keywords += `&maxResults=${config.MAX_RESULTS}`;
     keywords += `&key=${config.API_TOKEN}`;
 
     config.FMT_PRINT_DEBUG("formatAdditionalOptions::keywords", keywords);
 
     return keywords;
-  }
+  });
 
   // build the entire formatted advanced query string
-  function buildQueryUrl(words, filters, additionalOptions) {
+  const advancedQueryUrl = computed(() => {
     let queryString = `${config.API_URL}?q=`;
+
+    const words = formatFindResultsOptions.value;
+    const filters = formatFilterByOptions.value;
+    const additionalOptions = formatAdditionalOptions.value;
 
     if (words) {
       queryString += `${encodeURIComponent(words)}`;
@@ -137,7 +140,7 @@ export const useSearchStore = defineStore("search", () => {
     }
 
     return queryString;
-  }
+  });
 
   // perform a generic search across a wide trange of fields
   async function queryApiBasic(params, maxResults = config.MAX_RESULTS) {
@@ -173,11 +176,7 @@ export const useSearchStore = defineStore("search", () => {
 
   // perform an advanced, targeted search for combined terms, filters, and options
   async function queryApiAdvanced() {
-    const findResults = formatFindResultsOptions();
-    const filterByOptions = formatFilterByOptions();
-    const additionalOptions = formatAdditionalOptions();
-
-    const url = buildQueryUrl(findResults, filterByOptions, additionalOptions);
+    const url = advancedQueryUrl.value;
 
     config.FMT_PRINT_DEBUG("queryApiAdvanced::url", url);
 
@@ -222,7 +221,7 @@ export const useSearchStore = defineStore("search", () => {
     formatFindResultsOptions, // formats allWords/exactWords/atleastOneWord/withoutTheseWords query string
     formatFilterByOptions, // formats title, author, publisher, published, subject query string
     formatAdditionalOptions, // formats addtional options query string
-    buildQueryUrl, // build the entire formatted advanced query string
+    advancedQueryUrl, // build the entire formatted advanced query string
     queryApiBasic, // perform a generic search across a wide trange of fields
     queryApiAdvanced, // perform an advanced, targeted search for combined terms, filters, and options
   };
