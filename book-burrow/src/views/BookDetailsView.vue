@@ -1,6 +1,5 @@
 <template>
   <div class="book-details-view">
-    <h1>Book Details View</h1>
     <BookDetailsComponent v-if="book.hasActiveBook" :book="book.getActiveBook"></BookDetailsComponent>
   </div>
 </template>

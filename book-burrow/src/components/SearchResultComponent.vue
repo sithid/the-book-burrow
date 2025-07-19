@@ -2,7 +2,7 @@
   <section class="book-card-mini">
     <p id="book-card-title">{{ props.book.title }}</p>
     <div class="book-card-details">
-      <img :src="`${props.book.fmtThumbnail()}`" @click="onThumbnailClicked"/>
+      <img :src="`${props.book.fmtThumbnail()}`" @click="onThumbnailClicked" />
       <section class="book-info">
         <p class="info-text">
           <span id="author">
@@ -33,8 +33,8 @@ const router = useRouter();
 const props = defineProps({
   book: {
     type: GoogleBook,
-    required: true
-  }
+    required: true,
+  },
 });
 
 function onThumbnailClicked() {
@@ -73,7 +73,6 @@ function onThumbnailClicked() {
   gap: 15px;
 }
 
-
 .book-info {
   display: flex;
   flex-direction: column;
@@ -106,6 +105,13 @@ function onThumbnailClicked() {
     padding-right: 10px;
   }
 
+  .book-card-mini img:hover {
+    border: 1px solid black;
+    background-color: rgb(214, 170, 26);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+
   .book-card-details {
     display: flex;
     flex-direction: row;
@@ -113,14 +119,14 @@ function onThumbnailClicked() {
   }
 
   #book-card-title {
-    font-size: .9rem;
+    font-size: 0.9rem;
     text-align: left;
   }
 
   #author,
   #publish-year {
     padding-left: 10px;
-    font-size: .8rem;
+    font-size: 0.8rem;
   }
 
   #description {
