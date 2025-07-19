@@ -1,19 +1,20 @@
 <template>
   <div class="book-card-large">
-    <h3 id="book-card-title">{{ props.book.title }}</h3>
-    <div class="book-card-details">
+    <div class="book-detail-section">
+      <h3 id="book-card-title">{{ props.book.title }}</h3>
       <img :src="`${props.book.fmtThumbnail()}`" @click="onThumbnailClicked" />
-      <!--
+    </div>
+    <!--
           id,
           selflink
-          title        
-          authors      
+          xtitle        
+          xauthors      
           subject
           publisher
           publishedDate
           description  
           industryIdentifiers::isbn_10/isbn_13
-          pageCOunt
+          pageCunt
           printedPageCount
           averageRating
           ratingCOunt
@@ -23,37 +24,43 @@
           infoLink
           canonicalVolumeLink
           saleInfo
-      -->
-      <section class="book-info">
-        <p class="info-text">
-          <span id="author">
-            {{ props.book.fmtAuthors() }}
-          </span>
-          <span id="publish-year">
-            {{ props.book.fmtPublishedDate() }}
-          </span>
-        </p>
-        <p class="info-text">
-          <span id="description">
-            {{ props.book.fmtDescription() }}
-          </span>
-        </p>
-      </section>
+        -->
+    <div class="book-detail-section">
+      <p class="info-text">
+        <span class="category-text">Written By</span>
+        <span id="author">{{ props.book.fmtAuthors() }}</span>
+      </p>
+      <p class="info-text">
+        <span class="category-text">Published By:</span>
+        <span id="publisher">{{ props.book.publisher }}</span>
+      </p>
+      <p class="info-text">
+        <span class="category-text">Publish Year:</span>
+        <span id="publish-year">{{ props.book.fmtPublishedDate() }}</span>
+      </p>
+    </div>
+    <div class="book-detail-section">
+      <p class="category-text">Description:</p>
+      <p class="info-text">
+        <span id="description">{{ props.book.fmtDescription() }}</span>
+      </p>
+    </div>
+    <div class="book-detail-section">
+      <p class="category-text">Additional Information:</p>
     </div>
   </div>
 </template>
 
 <script setup>
 import { GoogleBook } from "../GoogleBook.js";
-import { onMounted } from 'vue';
+import { onMounted } from "vue";
 
 const props = defineProps({
   book: {
     type: GoogleBook,
-    required: true
-  }
+    required: true,
+  },
 });
-
 </script>
 
 <style scoped>
@@ -61,48 +68,53 @@ const props = defineProps({
   display: flex;
   flex-direction: column;
   padding: 0 10px 10px 10px;
-  color: black;
+  color: var(--color-offset);
   background-color: var(--color-secondary);
 }
 
+.book-detail-section {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  gap: 3px;
+  font-size: 0.6rem;
+}
+
 #book-card-title {
-  font-size: .9rem;
+  font-size: 0.9rem;
   text-align: center;
   font-weight: bold;
   color: var(--color-offset);
+  background-color: var(--color-priamry);
 }
 
-.book-card-details {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-
-.book-info {
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-}
 
 .info-text {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
   margin: 0;
 }
 
-#author,
-#publish-year {
+.category-text {
   padding-left: 10px;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
+  text-align: left;
+  white-space: nowrap;
 }
 
 #description {
   padding-left: 10px;
-  padding-right: 10px;
   font-size: 0.6rem;
   text-align: justify;
+}
+
+#author,
+#publisher,
+#publish-year {
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 0.6rem;
+  white-space: nowrap;
 }
 
 @media (min-width: 768px) {
@@ -118,20 +130,21 @@ const props = defineProps({
   }
 
   #book-card-title {
-    font-size: .9rem;
+    font-size: 0.9rem;
     text-align: left;
   }
 
+  .category-text {
+    font-size: 0.8rem;
+  }
+
   #author,
+  #publisher,
   #publish-year {
-    padding-left: 10px;
-    font-size: .8rem;
+    font-size: 0.8rem;
   }
 
   #description {
-    text-align: justify;
-    padding-left: 10px;
-    padding-right: 10px;
     font-size: 0.7rem;
   }
 }
