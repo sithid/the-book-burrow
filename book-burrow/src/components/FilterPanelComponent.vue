@@ -167,6 +167,7 @@ function clearClick() {
 .option-group input {
   margin: 0px 5px;
   font-size: 1rem;
+
 }
 
 .option-group label {
@@ -185,6 +186,7 @@ function clearClick() {
 .left-panel input {
   margin-left: 10px;
   font-size: 1rem;
+  field-sizing: fixed;
 }
 
 @media (min-width: 768px) {

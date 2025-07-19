@@ -8,8 +8,9 @@ export const useBookStore = defineStore("book", () => {
   const activeBook = ref(null); // we wont have book data yet
 
   // now that i understand the purpose of computed functions (cached) I
-  // will use computed where possible.  essentially when the output
-  // is entirely dependent on other reactive state stuff.
+  // will use computed where possible, essentially when the output
+  // is entirely dependent on other reactive state stuff and there
+  // are no side effects.
   const hasActiveBook = computed(() => activeBook.value !== null);
   const getActiveBook = computed(() => activeBook.value);
 
