@@ -23,10 +23,10 @@ export class GoogleBook {
       for (const identifier of gBook.volumeInfo.industryIdentifiers) {
         if (identifier.type === "ISBN_10") {
           this.isbn10 = identifier.identifier;
-          config.FMT_PRINT_DEBUG('gbook::ctor::isbn10', this.isbn10);
+          config.FMT_PRINT_DEBUG("gbook::ctor::isbn10", this.isbn10);
         } else if (identifier.type === "ISBN_13") {
           this.isbn13 = identifier.identifier;
-          config.FMT_PRINT_DEBUG('gbook::ctor::isbn13', this.isbn13);
+          config.FMT_PRINT_DEBUG("gbook::ctor::isbn13", this.isbn13);
         }
       }
     }
@@ -46,15 +46,10 @@ export class GoogleBook {
   }
 
   fmtAuthors() {
-    let fmtAuthors = "";
-
     if (!this.authors) return "[Unknown Authors]";
 
-    for (let key in this.authors) {
-      fmtAuthors += `[${this.authors[key]}] `;
-    }
-
-    return fmtAuthors;
+    let fmtString = this.authors.join();
+    return fmtString.replaceAll(",", " & ");
   }
 
   fmtDescription() {
@@ -126,6 +121,12 @@ export class GoogleBook {
     }
   }
 
+  fmtSubject() {
+    if (!this.subject) return "[Unknown Authors]";
+
+    return this.subject.join();
+  }
+
   debugPrintBook() {
     let output = "object\n\r";
 
@@ -163,7 +164,7 @@ export class GoogleBook {
     output +=
       "\tfmtThumbnail".padEnd(pad, " ") + " = " + this.fmtThumbnail() + "\n\r";
 
-    config.FMT_PRINT_DEBUG('gbook', output);
-    console.log("\n\r\n\r\n\r");
+    config.FMT_PRINT_DEBUG("gbook", output);
+    config.FMT_PRINT_DEBUG("\n\r\n\r\n\r");
   }
 }
