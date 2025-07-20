@@ -46,12 +46,17 @@ export class GoogleBook {
   }
 
   fmtAuthors() {
-    if (!this.authors) return "[Unknown Authors]";
-
+    if (!this.authors) return "Unknown Author";
+    
     let fmtString = this.authors.join();
     return fmtString.replaceAll(",", " & ");
   }
 
+  fmtPublisher() {
+    if (!this.publisher) return "Unknown Publisher";
+    
+    return this.publisher;
+  }
   fmtDescription() {
     if (this.description) {
       return this.description;
@@ -163,8 +168,9 @@ export class GoogleBook {
       "\n\r";
     output +=
       "\tfmtThumbnail".padEnd(pad, " ") + " = " + this.fmtThumbnail() + "\n\r";
-
+    output +=
+      "\tfmtPublisher".padEnd(pad, " ") + " = " + this.fmtPublisher() + "\n\r";
+    
     config.FMT_PRINT_DEBUG("gbook", output);
-    config.FMT_PRINT_DEBUG("\n\r\n\r\n\r");
   }
 }

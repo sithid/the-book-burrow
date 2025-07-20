@@ -12,7 +12,7 @@
       </div>
       <div class="info-text">
         <span class="category-text">Published By</span>
-        <span id="publisher">{{ props.book.publisher }}</span>
+        <span id="publisher">{{ props.book.fmtPublisher() }}</span>
       </div>
       <div class="info-text">
         <span class="category-text"></span>
@@ -100,6 +100,11 @@ function onThumbnailClicked() {
       "No infolink available for this book: " + props.book.title
     );
 }
+
+onMounted(() => {
+  //config.FMT_PRINT_DEBUG('BookDetailsComponent::onMounted::props.book.fmtPublisher', props.book.fmtPublisher());
+});
+
 </script>
 
 <style scoped>
