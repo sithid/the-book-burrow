@@ -144,6 +144,8 @@ export const useSearchStore = defineStore("search", () => {
 
   // perform a generic search across a wide trange of fields
   async function queryApiBasic(params, maxResults = config.MAX_RESULTS) {
+    googleBookResults.value = [];
+    
     const requestHeaders = new Headers();
     requestHeaders.append("Content-Type", "application/json");
 
@@ -165,7 +167,6 @@ export const useSearchStore = defineStore("search", () => {
 
       // Make sure we 'reset' the book result array, otherwise it will get huge.
       // I may implement dictionary or map for result history in the future.
-      googleBookResults.value = [];
 
       for (let index = 0; index < data.items.length; index++) {
         const book = new GoogleBook(data.items[index]);
@@ -176,6 +177,7 @@ export const useSearchStore = defineStore("search", () => {
 
   // perform an advanced, targeted search for combined terms, filters, and options
   async function queryApiAdvanced() {
+    googleBookResults.value = [];
     const url = advancedQueryUrl.value;
 
     config.FMT_PRINT_DEBUG("queryApiAdvanced::url", url);

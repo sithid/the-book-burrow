@@ -1,12 +1,8 @@
 <template>
   <div class="book-card-large">
     <div class="book-detail-section cover">
-      <img
-        id="thumbnail"
-        :src="`${props.book.fmtThumbnail()}`"
-        :alt="`Thumbnail of ${props.book.title}`"
-        @click="onThumbnailClicked"
-      />
+      <img id="thumbnail" :src="`${props.book.fmtThumbnail()}`" :alt="`Thumbnail of ${props.book.title}`"
+        @click="onThumbnailClicked" />
       <h1 class="title-header">{{ props.book.title }}</h1>
     </div>
     <div class="book-detail-section">
@@ -38,6 +34,26 @@
         <span class="category-text">Genre/Subject</span>
         <span id="subject">{{ props.book.subject.join() }}</span>
       </div>
+      <div class="info-text" v-if="props.book.averageRating">
+        <span class="category-text">Average Rating</span>
+        <span id="subject">{{ props.book.averageRating }}</span>
+      </div>
+      <div class="info-text" v-if="props.book.ratingCount">
+        <span class="category-text">Rating Count</span>
+        <span id="subject">{{ props.book.ratingCount }}</span>
+      </div>
+      <div class="info-text" v-if="props.book.maturityRating">
+        <span class="category-text">Maturity Rating</span>
+        <span id="subject">{{ props.book.maturityRating }}</span>
+      </div>
+      <div class="info-text" v-if="props.book.pageCount">
+        <span class="category-text">Page Count</span>
+        <span id="subject">{{ props.book.pageCount }}</span>
+      </div>
+      <div class="info-text" v-if="props.book.printedPageCount">
+        <span class="category-text">Printed Page Count</span>
+        <span id="subject">{{ props.book.printedPageCount }}</span>
+      </div>
       <!--
           xid
           xselflink
@@ -48,8 +64,8 @@
           xpublishedDate
           xdescription  
           industryIdentifiers::isbn_10/isbn_13
-          pageCunt
-          printedPageCount
+          xpageCount
+          xprintedPageCount
           averageRating
           ratingCOunt
           maturityRating
