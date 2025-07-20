@@ -55,8 +55,8 @@ function onThumbnailClicked() {
 .book-card-mini img {
   width: 75%;
   align-self: center;
-  max-width: 200px;
-  max-height: 250px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 #book-card-title {
@@ -105,11 +105,15 @@ function onThumbnailClicked() {
     padding-right: 10px;
   }
 
+  .book-card-mini img {
+    max-width: 200px;
+    max-height: 250px;
+  }
+
   .book-card-mini img:hover {
-    border: 1px solid black;
-    background-color: rgb(214, 170, 26);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
+    transform: translateY(-5px);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
   }
 
   .book-card-details {

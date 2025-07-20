@@ -1,14 +1,15 @@
 <template>
   <div class="book-card-large">
-    <div class="book-detail-section">
+    <div class="book-detail-section cover-title">
       <img
         id="thumbnail"
         :src="`${props.book.fmtThumbnail()}`"
+        :alt="`Thumbnail of ${props.book.title}`"
         @click="onThumbnailClicked"
       />
+      <h1 class="title-header">{{ props.book.title }}</h1>
     </div>
     <div class="book-detail-section">
-      <h1>{{ props.book.title }}</h1>
       <div class="info-text">
         <span class="category-text">Written By</span>
         <span id="author">{{ props.book.fmtAuthors() }}</span>
@@ -23,7 +24,6 @@
       </div>
     </div>
     <div class="book-detail-section">
-      <h1>Description</h1>
       <div class="info-text">
         <p id="description">{{ props.book.fmtDescription() }}</p>
       </div>
@@ -33,16 +33,6 @@
       <div class="info-text" v-if="props.book.id">
         <span class="category-text">Id</span>
         <span id="book-id">{{ props.book.id }}</span>
-      </div>
-      <div class="info-text" v-if="props.book.infoLink">
-        <span class="category-text">Google Link</span>
-        <a
-          id="infoLink"
-          :href="props.book.infoLink"
-          target="_blank"
-          rel="noopener noreferrer"
-          >{{ props.book.title }}</a
-        >
       </div>
       <div class="info-text" v-if="props.book.subject">
         <span class="category-text">Genre/Subject</span>
@@ -75,6 +65,8 @@
 
 <script setup>
 import { GoogleBook } from "../GoogleBook.js";
+import { config } from "../config.js";
+
 import { onMounted } from "vue";
 
 const props = defineProps({
@@ -83,16 +75,35 @@ const props = defineProps({
     required: true,
   },
 });
+
+function onThumbnailClicked() {
+  if (props.book.infoLink) window.open(props.book.infoLink, "_blank");
+  else
+    config.FMT_PRINT_DEBUG(
+      "BookDetailsComponent::onThumbnailClicked",
+      "No infolink available for this book: " + props.book.title
+    );
+}
 </script>
 
 <style scoped>
 .book-card-large {
   display: flex;
   flex-direction: column;
-  padding: 0 10px 10px 10px;
+  align-items: center;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 8px;
   color: var(--color-offset);
   background-color: var(--color-secondary);
-  align-self: center;
+}
+
+.cover-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 25px;
+  width: 100%;
 }
 
 .book-detail-section {
@@ -136,6 +147,15 @@ span {
   text-align: justify;
 }
 
+#thumbnail {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
 @media (min-width: 768px) {
   .book-card-large {
     max-width: 600px;
@@ -155,6 +175,12 @@ span {
 
   #thumbnail {
     align-self: center;
+  }
+
+  #thumbnail:hover {
+    transform: translateY(-5px);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
   }
 
   #infoLink {
