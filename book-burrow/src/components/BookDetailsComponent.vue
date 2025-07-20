@@ -1,6 +1,6 @@
 <template>
   <div class="book-card-large">
-    <div class="book-detail-section cover-title">
+    <div class="book-detail-section cover">
       <img
         id="thumbnail"
         :src="`${props.book.fmtThumbnail()}`"
@@ -43,7 +43,7 @@
           xselflink
           xtitle        
           xauthors      
-          subject
+          xsubject
           xpublisher
           xpublishedDate
           xdescription  
@@ -87,6 +87,12 @@ function onThumbnailClicked() {
 </script>
 
 <style scoped>
+span {
+  padding-left: 0px;
+  font-size: 0.6rem;
+  white-space: nowrap;
+}
+
 .book-card-large {
   display: flex;
   flex-direction: column;
@@ -98,27 +104,24 @@ function onThumbnailClicked() {
   background-color: var(--color-secondary);
 }
 
-.cover-title {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 25px;
-  width: 100%;
-}
-
 .book-detail-section {
   display: flex;
   flex-direction: column;
   padding-top: 10px;
   gap: 3px;
+  width: 100%;
   font-size: 0.6rem;
+}
+
+.cover {
+  align-items: center;
+  margin-bottom: 25px;
 }
 
 .info-text {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 0;
 }
 
 .category-text {
@@ -126,22 +129,13 @@ function onThumbnailClicked() {
   font-size: 0.6rem;
   text-align: left;
   white-space: nowrap;
+  justify-content: space-between;
 }
 
-span {
-  padding-left: 0px;
-  font-size: 0.6rem;
-  white-space: nowrap;
-}
-
-/*
- * Because of specificity I like all of my id selectors at the end so I can use class selectors to set
- * general element styles and then target a spefic element with specific style changes I don't want
- * shared by every one of those elements.
- */
 #infoLink {
   font-size: 0.5rem;
 }
+
 #description {
   white-space: wrap;
   text-align: justify;
@@ -157,6 +151,10 @@ span {
 }
 
 @media (min-width: 768px) {
+  span {
+    font-size: 0.8rem;
+  }
+
   .book-card-large {
     max-width: 600px;
   }
@@ -166,10 +164,6 @@ span {
   }
 
   .category-text {
-    font-size: 0.8rem;
-  }
-
-  span {
     font-size: 0.8rem;
   }
 
