@@ -52,10 +52,6 @@ async function onSearch() {
 function clearClick() {
   search.clear();
 }
-
-onMounted(async () => {
-  if (search.basicQuery != "") await search.queryApiBasic(search.basicQuery);
-});
 </script>
 
 <style scoped>

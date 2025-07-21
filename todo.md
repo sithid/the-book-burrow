@@ -2,7 +2,7 @@
   * implement bookshelfs
   * work on home view
   * work on about view
-  * book result details view
+  * book result details view - partially finished
   * tweak query urls, where possible, to improve on the relavence of the returned books.
   * preferences option panel
   
@@ -13,8 +13,7 @@
   want the search responses.  Beyond local storage, one option is an import/export system that stringifys the json object, and then base64 encodes it and outputs the base64 encoding to the user who can then import it on a different device. I do not want to roll my own api, even if its a basic
   express server api.
 
-# Known Issues
-  if you use the advanced search after doing a basic search, when you click the search button it returns the correct
-  books api response, but the results dont update (the book array build from the api response doesnt get updated properly ).
-
+# To Remember
+  Custom objects require custom ser/deser handling in the stores for persistance to work right but its entirely worth setting up the persist object.
+  Once its set up, its magically delious.
 

@@ -19,17 +19,15 @@ export class GoogleBook {
     this.publishedDate = gBook.volumeInfo.publishedDate; // Date
     this.description = gBook.volumeInfo.description; // string
 
-    if (gBook.volumeInfo.industryIdentifiers) {
-      for (const identifier of gBook.volumeInfo.industryIdentifiers) {
-        if (identifier.type === "ISBN_10") {
-          this.isbn10 = identifier.identifier;
-          config.FMT_PRINT_DEBUG("gbook::ctor::isbn10", this.isbn10);
-        } else if (identifier.type === "ISBN_13") {
-          this.isbn13 = identifier.identifier;
-          config.FMT_PRINT_DEBUG("gbook::ctor::isbn13", this.isbn13);
-        }
-      }
-    }
+    const identifiers = gBook.volumeInfo?.industryIdentifiers;
+
+    const isbn10Identifier = identifiers?.find((id) => id.type === "ISBN_10");
+    this.isbn10 = isbn10Identifier?.identifier;
+    config.FMT_PRINT_DEBUG("gbook::ctor::isbn10", this.isbn10);
+    
+    const isbn13Identifier = identifiers?.find((id) => id.type === "ISBN_13");
+    this.isbn13 = isbn13Identifier?.identifier;
+    config.FMT_PRINT_DEBUG("gbook::ctor::isbn13", this.isbn13);
 
     this.pageCount = gBook.volumeInfo.pageCount; // string
     this.printedPageCount = gBook.volumeInfo.printedPageCount; // string
@@ -47,14 +45,14 @@ export class GoogleBook {
 
   fmtAuthors() {
     if (!this.authors) return "Unknown Author";
-    
+
     let fmtString = this.authors.join();
     return fmtString.replaceAll(",", " & ");
   }
 
   fmtPublisher() {
     if (!this.publisher) return "Unknown Publisher";
-    
+
     return this.publisher;
   }
   fmtDescription() {
@@ -170,7 +168,7 @@ export class GoogleBook {
       "\tfmtThumbnail".padEnd(pad, " ") + " = " + this.fmtThumbnail() + "\n\r";
     output +=
       "\tfmtPublisher".padEnd(pad, " ") + " = " + this.fmtPublisher() + "\n\r";
-    
+
     config.FMT_PRINT_DEBUG("gbook", output);
   }
 }

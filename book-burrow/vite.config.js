@@ -11,8 +11,8 @@ export default defineConfig({
     vueDevTools(),
   ],
   server: {
-    host: true,
-    port: 5173,
+    //host: true,
+    //port: 5173,
     proxy: {
       '/google-books-api': {
         target: 'https://www.googleapis.com',
