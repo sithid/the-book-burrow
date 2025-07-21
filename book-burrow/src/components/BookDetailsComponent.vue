@@ -83,8 +83,6 @@
 import { GoogleBook } from "../GoogleBook.js";
 import { config } from "../config.js";
 
-import { onMounted } from "vue";
-
 const props = defineProps({
   book: {
     type: GoogleBook,
@@ -100,10 +98,6 @@ function onThumbnailClicked() {
       "No infolink available for this book: " + props.book.title
     );
 }
-
-onMounted(() => {
-  //config.FMT_PRINT_DEBUG('BookDetailsComponent::onMounted::props.book.fmtPublisher', props.book.fmtPublisher());
-});
 
 </script>
 

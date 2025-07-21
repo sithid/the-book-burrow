@@ -106,7 +106,12 @@ export const useSearchStore = defineStore("search", () => {
 
   // formats addtional options query string
   const formatAdditionalOptions = computed(() => {
-    let keywords = `&langRestrict=${filter.language}`;
+    let keywords = "";
+
+    if (filter.language !== "Any" && filter.language !== "")
+      keywords += `&langRestrict=${filter.language}`;
+
+    keywords += `&printType=books`;
     keywords += `&maxResults=${config.MAX_RESULTS}`;
     keywords += `&key=${config.API_TOKEN}`;
 
@@ -145,13 +150,13 @@ export const useSearchStore = defineStore("search", () => {
   // perform a generic search across a wide trange of fields
   async function queryApiBasic(params, maxResults = config.MAX_RESULTS) {
     googleBookResults.value = [];
-    
+
     const requestHeaders = new Headers();
     requestHeaders.append("Content-Type", "application/json");
 
     const url = `${config.API_URL}?q=${encodeURIComponent(
       params
-    )}&maxResults=${maxResults}&key=${config.API_TOKEN}`;
+    )}&printType=books&maxResults=${maxResults}&key=${config.API_TOKEN}`;
 
     config.FMT_PRINT_DEBUG("queryApiBasic::url", url);
 
