@@ -1,12 +1,8 @@
 <template>
   <div class="book-card-large">
     <div class="book-detail-section cover">
-      <img
-        id="thumbnail"
-        :src="`${book.activeBook.fmtThumbnail()}`"
-        :alt="`Thumbnail of ${book.activeBook.title}`"
-        @click="onThumbnailClicked"
-      />
+      <img id="thumbnail" :src="`${book.activeBook.fmtThumbnail()}`" :alt="`Thumbnail of ${book.activeBook.title}`"
+        @click="onThumbnailClicked" />
       <h1 class="title-header">{{ book.activeBook.title }}</h1>
     </div>
     <div class="book-detail-section">
@@ -30,33 +26,53 @@
     </div>
     <div class="book-detail-section">
       <h1>Additional Information</h1>
-      <div class="info-text" v-if="book.activeBook.id">
-        <span class="category-text">Id</span>
-        <span id="book-id">{{ book.activeBook.id }}</span>
-      </div>
       <div class="info-text" v-if="book.activeBook.subject">
         <span class="category-text">Genre/Subject</span>
         <span id="subject">{{ book.activeBook.subject.join() }}</span>
       </div>
       <div class="info-text" v-if="book.activeBook.averageRating">
         <span class="category-text">Average Rating</span>
-        <span id="subject">{{ book.activeBook.averageRating }}</span>
+        <span id="average-rating">{{ book.activeBook.averageRating }}</span>
       </div>
       <div class="info-text" v-if="book.activeBook.ratingCount">
         <span class="category-text">Rating Count</span>
-        <span id="subject">{{ book.activeBook.ratingCount }}</span>
+        <span id="rating-count">{{ book.activeBook.ratingCount }}</span>
       </div>
       <div class="info-text" v-if="book.activeBook.maturityRating">
         <span class="category-text">Maturity Rating</span>
-        <span id="subject">{{ book.activeBook.maturityRating }}</span>
+        <span id="maturity-rating">{{ book.activeBook.maturityRating }}</span>
       </div>
       <div class="info-text" v-if="book.activeBook.pageCount">
         <span class="category-text">Page Count</span>
-        <span id="subject">{{ book.activeBook.pageCount }}</span>
+        <span id="page-count">{{ book.activeBook.pageCount }}</span>
       </div>
       <div class="info-text" v-if="book.activeBook.printedPageCount">
         <span class="category-text">Printed Page Count</span>
-        <span id="subject">{{ book.activeBook.printedPageCount }}</span>
+        <span id="printed-page-count">{{ book.activeBook.printedPageCount }}</span>
+      </div>
+      <div class="info-text" v-if="book.activeBook.language">
+        <span class="category-text">Language</span>
+        <span id="book-language">{{ book.activeBook.language }}</span>
+      </div>
+      <div class="info-text" v-if="book.activeBook.canonicalVolumeLink">
+        <span class="category-text">Canonical Volume Link</span>
+        <span id="book-canonical-link">
+          <a :href="book.activeBook.canonicalVolumeLink" target="_blank">
+            Here
+          </a>
+        </span>
+      </div>
+      <div class="info-text" v-if="book.activeBook.saleInfo" target="_blank">
+        <span class="category-text">Sale Info</span>
+        <span id="sale-info">
+          <a :href="book.activeBook.saleInfo">
+            Here
+          </a>
+        </span>
+      </div>
+      <div class="info-text" v-if="book.activeBook.id">
+        <span class="category-text">Id</span>
+        <span id="book-id">{{ book.activeBook.id }}</span>
       </div>
       <!--
           xid
@@ -70,14 +86,14 @@
           industryIdentifiers::isbn_10/isbn_13
           xpageCount
           xprintedPageCount
-          averageRating
-          ratingCOunt
-          maturityRating
-          imageLinks {object}
-          language
-          infoLink
-          canonicalVolumeLink
-          saleInfo
+          xaverageRating
+          xratingCOunt
+          xmaturityRating
+          ximageLinks {object}
+          xlanguage
+          xinfoLink
+          xcanonicalVolumeLink
+          xsaleInfo
         -->
     </div>
   </div>
