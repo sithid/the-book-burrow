@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 import { config } from "../config.js";
 import { GoogleBook } from "../GoogleBook.js";
+import { Bookshelf } from "../Bookshelf.js";
 import { useFilterStore } from "@/stores/filter";
 
 export const useSearchStore = defineStore(
@@ -180,6 +181,12 @@ export const useSearchStore = defineStore(
 
         // Make sure we 'reset' the book result array, otherwise it will get huge.
         // I may implement dictionary or map for result history in the future.
+        const bookshelf = new Bookshelf(
+          "Default Shelf",
+          "A default bookshelf for testing",
+          false,
+          "default-shelf-id"
+        );
 
         for (let index = 0; index < data.items.length; index++) {
           const book = new GoogleBook(data.items[index]);
@@ -277,8 +284,12 @@ export const useSearchStore = defineStore(
                     publishedDate: plainObject.publishedDate,
                     description: plainObject.description,
                     industryIdentifiers: [
-                      plainObject.isbn10 ? { type: "ISBN_10", identifier: plainObject.isbn10 } : null, // ternary operator to handle nulls
-                      plainObject.isbn13 ? { type: "ISBN_13", identifier: plainObject.isbn13 } : null, // ternary  operator to handle nulls
+                      plainObject.isbn10
+                        ? { type: "ISBN_10", identifier: plainObject.isbn10 }
+                        : null, // ternary operator to handle nulls
+                      plainObject.isbn13
+                        ? { type: "ISBN_13", identifier: plainObject.isbn13 }
+                        : null, // ternary  operator to handle nulls
                     ].filter(Boolean), // shortish syntax for filtering out nulls
                     pageCount: plainObject.pageCount,
                     printedPageCount: plainObject.printedPageCount,

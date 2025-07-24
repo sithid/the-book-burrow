@@ -19,28 +19,26 @@ export class GoogleBook {
     this.publishedDate = gBook.volumeInfo.publishedDate; // Date
     this.description = gBook.volumeInfo.description; // string
 
+    // parse the isbn identifiers
     const identifiers = gBook.volumeInfo?.industryIdentifiers;
 
     const isbn10Identifier = identifiers?.find((id) => id.type === "ISBN_10");
     this.isbn10 = isbn10Identifier?.identifier;
-    config.FMT_PRINT_DEBUG("gbook::ctor::isbn10", this.isbn10);
     
     const isbn13Identifier = identifiers?.find((id) => id.type === "ISBN_13");
     this.isbn13 = isbn13Identifier?.identifier;
-    config.FMT_PRINT_DEBUG("gbook::ctor::isbn13", this.isbn13);
 
     this.pageCount = gBook.volumeInfo.pageCount; // string
     this.printedPageCount = gBook.volumeInfo.printedPageCount; // string
     this.averageRating = gBook.volumeInfo.averageRating; // number
     this.ratingCount = gBook.volumeInfo.ratingCount; // number
     this.maturityRating = gBook.volumeInfo.maturityRating; // string
+
     this.imageLinks = gBook.volumeInfo.imageLinks; // { smallThumbnail, thumbnail, small, medium, large } :: { string, string, string, string, string }
     this.language = gBook.volumeInfo.language; // string
     this.infoLink = gBook.volumeInfo.infoLink; // string
     this.canonicalVolumeLink = gBook.volumeInfo.canonicalVolumeLink; // string
     this.saleInfo = gBook.volumeInfo.saleInfo; // { saleability, listPrice { amount, currencyCode } } :: { string, { number, string } }
-
-    if (config.DEBUG) this.debugPrintBook();
   }
 
   fmtAuthors() {
@@ -63,12 +61,22 @@ export class GoogleBook {
     }
   }
 
+  // we only really care about the thumbnail, but we will
+  // return the first image link that is defined, otherwise
+  // we will return a placeholder image that is 200x250px 
+  // with a message that the thumbnail is missing
   fmtThumbnail() {
     if (this.imageLinks != undefined) {
       if (this.imageLinks.thumbnail != undefined) {
         return this.imageLinks.thumbnail;
       } else if (this.imageLinks.smallThumbnail != undefined) {
         return this.imageLinks.smallThumbnail;
+      } else if (this.imageLinks.small != undefined) {
+        return this.imageLinks.small;
+      } else if (this.imageLinks.medium != undefined) {
+        return this.imageLinks.medium; 
+      } else if (this.imageLinks.large != undefined) {
+        return this.imageLinks.large;
       } else {
         return `https://place-hold.it/200x250?text="thumbnail%20missing"&fontsize=16`;
       }
