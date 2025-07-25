@@ -11,6 +11,7 @@ export const useSearchStore = defineStore(
     const filter = useFilterStore();
 
     const googleBookResults = ref([]);
+    const pageCount = ref(0); // used to track the number of pages of results
 
     // Simple search, querys google api for any book with any field that
     // matches this search string.  ?q={}
@@ -117,9 +118,9 @@ export const useSearchStore = defineStore(
     const formatAdditionalOptions = computed(() => {
       let keywords = "";
 
-      if (filter.language !== "Any" && filter.language !== "")
+      if (filter.language !== "" && filter.language !== "any")
         keywords += `&langRestrict=${filter.language}`;
-
+      
       keywords += `&printType=books`;
       keywords += `&maxResults=${config.MAX_RESULTS}`;
       keywords += `&key=${config.API_TOKEN}`;
@@ -137,16 +138,19 @@ export const useSearchStore = defineStore(
       const filters = formatFilterByOptions.value;
       const additionalOptions = formatAdditionalOptions.value;
 
+      // because we use encodeURIComponent to encode the query string in the
+      // respective format functions, we should not encode it again here (double encoding).
+      // this can break the query string or return unexpected results.
+      // Now i understand some of the results ive been getting.
       if (words) {
-        queryString += `${encodeURIComponent(words)}`;
+        queryString += `${words}`;
       }
 
       if (filters) {
         if (words === "") {
-          queryString += `${encodeURIComponent(filters)}`;
+          queryString += `${filters}`;
         } else {
-          queryString += `+${encodeURIComponent(filters)}`;
-          differnt;
+          queryString += `+${filters}`;
         }
       }
 
@@ -163,17 +167,7 @@ export const useSearchStore = defineStore(
     async function queryApiBasic(params, maxResults = config.MAX_RESULTS) {
       // Make sure i 'reset' the book result array, otherwise it will get huge.
       // just clear the array and repopulate it with the new results.
-      // i could save all the results, but there would be no point
-      // since i are only displaying 40 results and there will
-      // likely be more duplicates than unique results.  Google Books API
-      // returns a maximum of 40 results per query, the sample is just too small
-      // to filter client side and expect unique results. I have considered
-      // breaking the query into multiple querys, mutating user input in differnt ways
-      // and then filtering on client side but that would be
-      // a lot of work and would likely not yield any better results.
-      // in the fucture i may save all unique results to a separate results
-      // array that users can look through, maybe like a 'session result history'
-      // or something and only include results with unique ids.
+
       googleBookResults.value = [];
 
       const requestHeaders = new Headers();
@@ -194,13 +188,6 @@ export const useSearchStore = defineStore(
 
       if (response.ok) {
         const data = await response.json();
-
-        const bookshelf = new Bookshelf(
-          "Default Shelf",
-          "A default bookshelf for testing",
-          false,
-          "default-shelf-id"
-        );
 
         for (let index = 0; index < data.items.length; index++) {
           const book = new GoogleBook(data.items[index]);
@@ -225,34 +212,44 @@ export const useSearchStore = defineStore(
       };
 
       for (let index = 0; index < 10; index++) {
-        let indexedUrl = `${url}&startIndex=${
-          (index + 1) * config.MAX_RESULTS
-        }`;
+        let indexedUrl = `${url}&startIndex=${index * config.MAX_RESULTS}`;
+
+        config.FMT_PRINT_DEBUG(
+          "search::queryApiAdvanced",
+          `Querying page ${index + 1} with URL: ${indexedUrl}`
+        );
+
         const response = await fetch(indexedUrl, options);
 
         if (response.ok) {
           const data = await response.json();
-
-          if (!data.items && index === 0) {
-            // if index is 0 then theres no results, if its > 0 we have some results so we dont need to report an error.
-            config.FMT_PRINT_DEBUG("Something went wrong...", true);
-            pageCount.value = index - 1 < 0 ? 0 : index - 1;
-            return;
+          if (data.items === undefined) {
+            config.FMT_PRINT_DEBUG(
+              "search::queryApiAdvanced",
+              `No more results found on page ${index + 1}.`
+            );
+            break; // no more results, so break out of the loop.
           }
-
           // even though i am filtering by language from the api, there are apparently
           // some weird edge cases that make it nessessary to filter by language on the
           // client side of things.
-          for (let index = 0; index < data.items.length; index++) {
-            const item = data.items[index];
+          for (let itemIndex = 0; itemIndex < data.items.length; itemIndex++) {
+            const item = data.items[itemIndex];
             if (
-              item.volumeInfo &&
-              item.volumeInfo.language === filter.language
+              (item.volumeInfo &&
+                item.volumeInfo.language === filter.language) ||
+              filter.language !== "any"
             ) {
               const book = new GoogleBook(item);
               googleBookResults.value.push(book);
             }
           }
+
+          pageCount.value = Math.ceil(data.totalItems / config.MAX_RESULTS); // calculate the number of pages based on total items and max results
+          config.FMT_PRINT_DEBUG(
+            "search::queryApiAdvanced",
+            `Page ${index + 1} of ${pageCount.value} loaded.`
+          );
         }
       }
 
@@ -275,6 +272,7 @@ export const useSearchStore = defineStore(
     return {
       /* properties */
       googleBookResults, // array of books populated by response
+      pageCount, // number of pages of results
       basicQuery, // last simple query string from input
 
       /* functions */

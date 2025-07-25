@@ -71,25 +71,25 @@ pinia-plugin-persistedstate and its absolutely wonderful. I'm not sure how the p
 
 #### Choose at least three of the following
 
-| Feature                                                                                                                                                                                | Difficulty        | Done    |
-| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| :---------------: | :-----: |
-| Analyze data that is stored in arrays, objects, sets or maps and display information about it in your app.                                                                             | Easy              | &#x2713; (1) |
-| Use a regular expression to validate user input and either prevent the invalid input or inform the user about it (in all cases prevent invalid input from being stored or saved).      | Easy              | |
-| Create a function that accepts two or more input parameters and returns a value that is calculated or determined by the inputs. Basic math functions don’t count (e.g. addition, etc). | Easy              | |
-| Visualize data in a user friendly way. (e.g. graph, chart, etc). This can include using libraries like ChartJS                                                                         | Easy/Intermediate | |
-| Convert user input between two formats and display the result. (e.g. Fahrenheit to Celcius, kilograms to pounds, etc)                                                                  | Easy/Intermediate | |
-| Calculate and display data based on an external factor (ex: get the current date, and display how many days remaining until some event)                                                | Intermediate      | |
-| Persist data to an internal API and make the stored data accessible in your app. (including after reload/refresh). This can be achieved either by using local storage or building your own API that stores data into a JSON file.|Intermediate/Hard |&#x2713; (2)|
+| Feature                                                                                                                                                                                                                           | Difficulty         | Done         |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------: | :-----------:|
+| Analyze data that is stored in arrays, objects, sets or maps and display information about it in your app.                                                                                                                        |Easy                | &#x2713; (1) |
+| Use a regular expression to validate user input and either prevent the invalid input or inform the user about it (in all cases prevent invalid input from being stored or saved).                                                 | Easy               |              |   
+| Create a function that accepts two or more input parameters and returns a value that is calculated or determined by the inputs. Basic math functions don’t count (e.g. addition, etc).                                            | Easy               | &#x2713; (2) |
+| Visualize data in a user friendly way. (e.g. graph, chart, etc). This can include using libraries like ChartJS                                                                                                                    | Easy/Intermediate  |              |
+| Convert user input between two formats and display the result. (e.g. Fahrenheit to Celcius, kilograms to pounds, etc)                                                                                                             | Easy/Intermediate  |              |
+| Calculate and display data based on an external factor (ex: get the current date, and display how many days remaining until some event)                                                                                           | Intermediate       |              |
+| Persist data to an internal API and make the stored data accessible in your app. (including after reload/refresh). This can be achieved either by using local storage or building your own API that stores data into a JSON file. | Intermediate/Hard  | &#x2713; (3) |
    
 #### Can swap with items from section one:
 
-| Feature                                                                                                                                                                                | Difficulty        | Done    |
-| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------: | :-----: |
-| Create a node.js web server using a modern framework such as Express.js.                                                                                                               | Easy/Intermediate | |
-| Interact with a SQLite database to store and retrieve information                                                                                                                      | Intermediate/Hard | |
-| Implement modern interactive UI features (e.g. table/data sorting, autocomplete, drag-and-drop, calendar-date-picker, etc).                                                            | Intermediate      | |
-| Develop your project using a common JavaScript framework such as React, Svelte, or Vue.                                                                                                | Intermediate/Hard | [&#x2713;] (3) |
-| Create 3 or more unit tests for your application (and document how to run them)                                                                                                        | Intermediate/Hard | |
+| Feature                                                                                                                                                                                | Difficulty        | Done           |
+| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------: | :------------: |
+| Create a node.js web server using a modern framework such as Express.js.                                                                                                               | Easy/Intermediate |                |
+| Interact with a SQLite database to store and retrieve information                                                                                                                      | Intermediate/Hard |                |
+| Implement modern interactive UI features (e.g. table/data sorting, autocomplete, drag-and-drop, calendar-date-picker, etc).                                                            | Intermediate      |                |
+| Develop your project using a common JavaScript framework such as React, Svelte, or Vue.                                                                                                | Intermediate/Hard | [&#x2713;] (4) |
+| Create 3 or more unit tests for your application (and document how to run them)                                                                                                        | Intermediate/Hard |                |
 
 
 

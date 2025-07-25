@@ -49,6 +49,7 @@
       <p id="right-panel-info">Additional Options:</p>
       <label for="language-select">Language</label>
       <select id="language-select" v-model="filter.language">
+        <option value="any">Any</option>
         <option value="en">English</option>
         <option value="es">Spanish</option>
         <option value="fr">French</option>
@@ -97,8 +98,8 @@
 import { useFilterStore } from "@/stores/filter";
 import { useSearchStore } from "@/stores/search";
 
-const filter = useFilterStore();
 const search = useSearchStore();
+const filter = useFilterStore();
 
 async function queryApiAdvanced() {
 
