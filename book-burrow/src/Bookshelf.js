@@ -18,16 +18,15 @@ export class Bookshelf {
   }
 
   addBook(gBook) {
-    if (!(gBook instanceof GoogleBook)) {
-      config.FMT_PRINT_DEBUG("bookshelf::addBook", "Invalid book type provided. Expected GoogleBook instance.", true);
-      return false;
-    }
-    
     try {
       this.books.push(gBook);
       return true;
     } catch (error) {
-      config.FMT_PRINT_DEBUG("bookshelf::addBook", `Failed to add book: ${error}`, true);
+      config.FMT_PRINT_DEBUG(
+        "bookshelf::addBook",
+        `Failed to add book: ${error}`,
+        true
+      );
       return false;
     }
   }
@@ -37,12 +36,67 @@ export class Bookshelf {
     // i use the built in array.filter to filter out the book with the matching id, which
     // will always be unique.
     if (!bookId) {
-      config.FMT_PRINT_DEBUG("bookshelf::removeBook", "No book ID provided for removal.", true);
+      config.FMT_PRINT_DEBUG(
+        "bookshelf::removeBook",
+        "No book ID provided for removal.",
+        true
+      );
+      return false;
+    }
+    // filter should never return undefined, if the id doesnt exist it will just return the same array.
+    // I like this approach better than having to check if the book exists first and handling error logic
+    // for if it doesn't.
+    this.books = this.books.filter((book) => book.id !== bookId);
+    return true;
+  }
+
+  // simple combine function that uses the spread operator to combine this bookshelf with an input bookshelf.
+  // this will be usful for user bookshelf control (button for 'combine a bookshelf with this one')
+  combineBookshelf(otherBookshelf) {
+    this.books = [...this.books, ...otherBookshelf.books];
+    return true;
+  }
+
+  /*
+   * Feature: Create a function that accepts two or more input parameters and
+   * returns a value that is calculated or determined by the inputs.
+   *
+   * getCombinedBookshelfs: Combine two bookshelves into a new, single, bookshelf.
+   * This function takes two Bookshelf instances and combines their books into a new Bookshelf instance.
+   * It also allows for custom naming and description of the new bookshelf.
+   * If no name is supplied, it defaults to a combination of the two bookshelves' names.
+   * If no description is supplied, it defaults to a combination of the two bookshelves' descriptions.
+   * 
+   * This will allow me to have simple buttons for combining bookshelves into custom bookshelves within the ui
+   * without having to repeat this code in multiple places.
+   */
+  getCombinedBookshelfs(
+    bookshelf1,
+    bookshelf2,
+    newBookshelfName = `${bookshelf1.name} & ${bookshelf2.name}`,
+    newBookshelfDescription = `${bookshelf1.description} & ${bookshelf2.description}`
+  ) {
+    if (!bookshelf1 || !bookshelf2) {
+      config.FMT_PRINT_DEBUG(
+        "bookshelf::getCombinedBookshelfs",
+        "One or both bookshelves are undefined.",
+        true
+      );
       return false;
     }
 
-    this.books = this.books.filter((book) => book.id !== bookId);
-    return true;
+    // spread operator provides a shallow copy of the books arrays from both bookshelfs.
+    const combinedBooks = [...bookshelf1.books, ...bookshelf2.books];
+
+    if (combinedBooks.length === 0) {
+      return new Bookshelf(
+        newBookshelfName,
+        newBookshelfDescription,
+        false,
+        uuidv4(),
+        combinedBooks
+      );
+    }
   }
 
   getBookInfo(bookId) {
@@ -56,7 +110,7 @@ export class Bookshelf {
   debugPrint() {
     config.FMT_PRINT_DEBUG(
       "bookshelf::debugPrint",
-      `Bookshelf ID: ${this.id}, Name: ${this.name}, Description: ${this.description}, Is Default: ${this.isDefault}, Books Count: ${this.books.length}`,
+      `Bookshelf ID: ${this.id}, Name: ${this.name}, Description: ${this.description}, Is Default: ${this.isDefault}, Books Count: ${this.books.length}`
     );
-  }       
+  }
 }

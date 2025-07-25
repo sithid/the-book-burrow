@@ -74,27 +74,6 @@
         <span class="category-text">Id</span>
         <span id="book-id">{{ book.activeBook.id }}</span>
       </div>
-      <!--
-          xid
-          xselflink
-          xtitle        
-          xauthors      
-          xsubject
-          xpublisher
-          xpublishedDate
-          xdescription  
-          industryIdentifiers::isbn_10/isbn_13
-          xpageCount
-          xprintedPageCount
-          xaverageRating
-          xratingCOunt
-          xmaturityRating
-          ximageLinks {object}
-          xlanguage
-          xinfoLink
-          xcanonicalVolumeLink
-          xsaleInfo
-        -->
     </div>
   </div>
 </template>

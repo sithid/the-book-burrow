@@ -28,15 +28,30 @@ pinia-plugin-persistedstate and its absolutely wonderful. I'm not sure how the p
 
 ## Run/Install:
 
-1. clone repo.
-2. navigate to the repo directory.
-3. navigate to the book-burrow directory ~/the-book-burrow/book-burrow.
-4. run npm install from the command line.
-   `. create .env file with a single line 'VITE_API_KEY="GOOGLE_BOOKS_API_KEY"'
-5. run npm run dev to start the development build
-6. run npm run build for production dist.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/the-book-burrow.git
+   cd the-book-burrow/book-burrow
+   ```
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+3. **Set up environment variables**
+   ```bash
+   # Create a .env file in the book-burrow directory
+   echo "VITE_API_KEY=your_google_books_api_key_here" > .env
+   ```
 
-I will be providing an API key to the tester/reviewers who need one. 
+   I will be providing an API key to the tester/reviewers who need one.
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+5. **Build for production**
+   ```bash
+   npm run build
+   ```
 
 ## Web Development Project Requirements
 
@@ -76,3 +91,50 @@ I will be providing an API key to the tester/reviewers who need one.
 | Develop your project using a common JavaScript framework such as React, Svelte, or Vue.                                                                                                | Intermediate/Hard | [&#x2713;] (3) |
 | Create 3 or more unit tests for your application (and document how to run them)                                                                                                        | Intermediate/Hard | |
 
+
+
+### Create a function...
+
+```javascript
+/*
+   * Feature: Create a function that accepts two or more input parameters and
+   * returns a value that is calculated or determined by the inputs.
+   *
+   * getCombinedBookshelfs: Combine two bookshelves into a new, single, bookshelf.
+   * This function takes two Bookshelf instances and combines their books into a new Bookshelf instance.
+   * It also allows for custom naming and description of the new bookshelf.
+   * If no name is supplied, it defaults to a combination of the two bookshelves' names.
+   * If no description is supplied, it defaults to a combination of the two bookshelves' descriptions.
+   * 
+   * This will allow me to have simple buttons for combining bookshelves into custom bookshelves within the ui
+   * without having to repeat this code in multiple places.
+   */
+  getCombinedBookshelfs(
+    bookshelf1,
+    bookshelf2,
+    newBookshelfName = `${bookshelf1.name} & ${bookshelf2.name}`,
+    newBookshelfDescription = `${bookshelf1.description} & ${bookshelf2.description}`
+  ) {
+    if (!bookshelf1 || !bookshelf2) {
+      config.FMT_PRINT_DEBUG(
+        "bookshelf::getCombinedBookshelfs",
+        "One or both bookshelves are undefined.",
+        true
+      );
+      return false;
+    }
+
+    // spread operator provides a shallow copy of the books arrays from both bookshelfs.
+    const combinedBooks = [...bookshelf1.books, ...bookshelf2.books];
+
+    if (combinedBooks.length === 0) {
+      return new Bookshelf(
+        newBookshelfName,
+        newBookshelfDescription,
+        false,
+        uuidv4(),
+        combinedBooks
+      );
+    }
+  }
+```
