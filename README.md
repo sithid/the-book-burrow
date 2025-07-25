@@ -19,21 +19,60 @@ Users will also be able to save user preferences. There is no login required(or 
 and refresh will be stored using local storage. I am planning an export data feature, that will allow a user to export the json for their data (user preferences, bookshelfs) so they can import
 it on a different device and not have to build their bookshelfs all over again.
 
-Run/Install: 
-
-1. clone repo.
-2. navigate to the repo directory.
-3. navigate to the book-burrow directory ~/the-book-burrow/book-burrow.
-4. run npm install from the command line.
-5. create .env file with a single line 'VITE_API_KEY="GOOGLE_BOOKS_API_KEY"'
-5. run npm run dev to start the development build
-6. run npm run build for production dist.
-
-I will be providing an API key to the tester/reviewers who need one.
-
-Tech Used
+## Tech Used
 
 HTML, CSS, Javascript, Vu3
 
 I am using Vue3 Composition API with Pinia Stores and local storage to facilitate both reactivity and data persistence.  I manage my local storage data with pinia and a plugin for pinia called
 pinia-plugin-persistedstate and its absolutely wonderful. I'm not sure how the plugin works under the hood specifically but once you set up the persist object, which contains a serializer object with serialize (save the current state of the pinia store) and deserialize (load the saved state of the store, custom objects require mapping) functions.
+
+## Run/Install:
+
+1. clone repo.
+2. navigate to the repo directory.
+3. navigate to the book-burrow directory ~/the-book-burrow/book-burrow.
+4. run npm install from the command line.
+   `. create .env file with a single line 'VITE_API_KEY="GOOGLE_BOOKS_API_KEY"'
+5. run npm run dev to start the development build
+6. run npm run build for production dist.
+
+I will be providing an API key to the tester/reviewers who need one. 
+
+## Web Development Project Requirements
+
+* Responsive Design: 
+  * Implement responsive design using media queries, CSS Grid, Flexbox, etc. [&#x2713;]
+  * Your application should adapt to at least two screen sizes (mobile and desktop). [&#x2713;]
+  * Integrate responsive design as a testament to your JavaScript, HTML, and CSS integration skills. [&#x2713;]
+* Feature Implementation:
+  * Integrate an API into your project (MANDATORY) . Using a Weather API will not count. [&#x2713;]
+  * At least one media query to make your site responsive. [&#x2713;]
+  * Choose at least 3 items from the first table. [&#x2713;]
+    * You may substitute requirements from the first table with requirements from the second table. [&#x2713;]
+  * Consider adding a 4th feature as a backup plan.
+  * Failure to meet all requirements will result in incomplete status for the class.
+
+## Web Development Capstone Features List
+
+#### Choose at least three of the following
+
+| Feature                                                                                                                                                                                | Difficulty        |
+| :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| :---------------: |
+| Analyze data that is stored in arrays, objects, sets or maps and display information about it in your app.                                                                             | Easy &#x2713; (1) |
+| Use a regular expression to validate user input and either prevent the invalid input or inform the user about it (in all cases prevent invalid input from being stored or saved).      | Easy              |
+| Create a function that accepts two or more input parameters and returns a value that is calculated or determined by the inputs. Basic math functions don’t count (e.g. addition, etc). | Easy              |
+| Visualize data in a user friendly way. (e.g. graph, chart, etc). This can include using libraries like ChartJS                                                                         | Easy/Intermediate |
+| Convert user input between two formats and display the result. (e.g. Fahrenheit to Celcius, kilograms to pounds, etc)                                                                  | Easy/Intermediate |
+| Calculate and display data based on an external factor (ex: get the current date, and display how many days remaining until some event)                                                | Intermediate      |
+| Persist data to an internal API and make the stored data accessible in your app. (including after reload/refresh). This can be achieved either by using local storage or building your own API that stores data into a JSON file. | Intermediate/Hard &#x2713; (2)|
+   
+#### Can swap with items from section one:
+
+| Feature                                                                                                                                                                                | Difficulty        |
+| :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------: |
+| Create a node.js web server using a modern framework such as Express.js.                                                                                                               | Easy/Intermediate |
+| Interact with a SQLite database to store and retrieve information                                                                                                                      | Intermediate/Hard |
+| Implement modern interactive UI features (e.g. table/data sorting, autocomplete, drag-and-drop, calendar-date-picker, etc).                                                            | Intermediate      |
+| Develop your project using a common JavaScript framework such as React, Svelte, or Vue.                                                                                                | Intermediate/Hard [&#x2713;] (3)|
+| Create 3 or more unit tests for your application (and document how to run them)                                                                                                        | Intermediate/Hard |
+
