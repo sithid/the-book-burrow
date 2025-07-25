@@ -224,26 +224,51 @@ export const useSearchStore = defineStore(
         headers: requestHeaders,
       };
 
-      const response = await fetch(url, options);
+      for (let index = 0; index < 10; index++) {
+        let indexedUrl = `${url}&startIndex=${
+          (index + 1) * config.MAX_RESULTS
+        }`;
+        const response = await fetch(indexedUrl, options);
 
-      if (response.ok) {
-        const data = await response.json();
+        if (response.ok) {
+          const data = await response.json();
 
-        if (!data.items) {
-          console.log("Something went wrong...");
-          return;
-        }
+          if (!data.items && index === 0) {
+            // if index is 0 then theres no results, if its > 0 we have some results so we dont need to report an error.
+            config.FMT_PRINT_DEBUG("Something went wrong...", true);
+            pageCount.value = index - 1 < 0 ? 0 : index - 1;
+            return;
+          }
 
-        // even though i are filtering by language from the api, there are apparently
-        // some iird edge cases that make it nessessary to filter by language on the
-        // client side of things.
-        for (let index = 0; index < data.items.length; index++) {
-          const item = data.items[index];
-          if (item.volumeInfo && item.volumeInfo.language === filter.language) {
-            const book = new GoogleBook(item);
-            googleBookResults.value.push(book);
+          // even though i am filtering by language from the api, there are apparently
+          // some weird edge cases that make it nessessary to filter by language on the
+          // client side of things.
+          for (let index = 0; index < data.items.length; index++) {
+            const item = data.items[index];
+            if (
+              item.volumeInfo &&
+              item.volumeInfo.language === filter.language
+            ) {
+              const book = new GoogleBook(item);
+              googleBookResults.value.push(book);
+            }
           }
         }
+      }
+
+      if (googleBookResults.value.length === 0) {
+        config.FMT_PRINT_DEBUG(
+          "search::queryApiAdvanced",
+          "No books found matching the query."
+        );
+        pageCount.value = 0;
+      } else if (googleBookResults.value.length < config.MAX_RESULTS) {
+        pageCount.value = 1;
+      } else {
+        config.FMT_PRINT_DEBUG(
+          "search::queryApiAdvanced",
+          `Found ${googleBookResults.value.length} books matching the query.`
+        );
       }
     }
 

@@ -17,3 +17,12 @@
   Custom objects require custom ser/deser handling in the stores for persistance to work right but its entirely worth setting up the persist object.
   Once its set up, its magically delious.
 
+
+# DISCOVERY
+
+OMG I found out google books api lets you page requests.  I can set a start index, and a max results, and it will let me get more than 40 results.
+I can use a for loop, loop 10 cycles each time changing the tail end of the url so that it reflects `&startIndex=0`, `&startIndex=40`, `&startIndex=80`
+etc etc etc. Flippin magical.  I need to remember to implement proper paged results for the end user, scrolling down 400 results is absolutely AWFUL.
+I need to go back and recode how im doing the search and then add another setting could maxPages and allow users to set the preference for max pages and the max results property will represent max results per page.  Ya ya this will work great.
+
+
