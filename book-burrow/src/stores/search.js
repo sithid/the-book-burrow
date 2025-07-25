@@ -25,7 +25,7 @@ export const useSearchStore = defineStore(
         const trimmedWords = filter.allWords.trim();
         if (trimmedWords) {
           queryParts.push(
-            encodeURIComponent(trimmedWords).replace(/%20/g, "+")
+            encodeURIComponent(trimmedWords).replace(/%20/g, "+") // regex matches spaces and replaces them with +
           );
         }
       }
@@ -146,6 +146,7 @@ export const useSearchStore = defineStore(
           queryString += `${encodeURIComponent(filters)}`;
         } else {
           queryString += `+${encodeURIComponent(filters)}`;
+          differnt;
         }
       }
 
@@ -156,8 +157,23 @@ export const useSearchStore = defineStore(
       return queryString;
     });
 
-    // perform a generic search across a wide trange of fields
+    // perform a generic search across a wide range of fields
+    // if any field has content that matches the query string,
+    // it will return the book.
     async function queryApiBasic(params, maxResults = config.MAX_RESULTS) {
+      // Make sure i 'reset' the book result array, otherwise it will get huge.
+      // just clear the array and repopulate it with the new results.
+      // i could save all the results, but there would be no point
+      // since i are only displaying 40 results and there will
+      // likely be more duplicates than unique results.  Google Books API
+      // returns a maximum of 40 results per query, the sample is just too small
+      // to filter client side and expect unique results. I have considered
+      // breaking the query into multiple querys, mutating user input in differnt ways
+      // and then filtering on client side but that would be
+      // a lot of work and would likely not yield any better results.
+      // in the fucture i may save all unique results to a separate results
+      // array that users can look through, maybe like a 'session result history'
+      // or something and only include results with unique ids.
       googleBookResults.value = [];
 
       const requestHeaders = new Headers();
@@ -179,8 +195,6 @@ export const useSearchStore = defineStore(
       if (response.ok) {
         const data = await response.json();
 
-        // Make sure we 'reset' the book result array, otherwise it will get huge.
-        // I may implement dictionary or map for result history in the future.
         const bookshelf = new Bookshelf(
           "Default Shelf",
           "A default bookshelf for testing",
@@ -220,8 +234,8 @@ export const useSearchStore = defineStore(
           return;
         }
 
-        // even though we are filtering by language from the api, there are apparently
-        // some weird edge cases that make it nessessary to filter by language on the
+        // even though i are filtering by language from the api, there are apparently
+        // some iird edge cases that make it nessessary to filter by language on the
         // client side of things.
         for (let index = 0; index < data.items.length; index++) {
           const item = data.items[index];
@@ -250,15 +264,15 @@ export const useSearchStore = defineStore(
   },
   {
     // state persistence, automatically saves and loads state to/from localStorage
-    // our google book is a custom object, so we need to serialize it properly
+    // our google book is a custom object, so i need to serialize it properly
     // using a custom serializer/deserializer.
     persist: {
       serializer: {
-        // stringify the state, but we need to handle the GoogleBook object
-        // deserialize manually, since it is a custom object.
+        // stringify the state(state includes all of the properties of the store)
+        // but i only need to manually deserialize the googleBookResults array
         serialize: (state) => {
           const newState = {
-            ...state,
+            ...state, // the spread will help copy all other properties.
             googleBookResults: state.googleBookResults.map((book) => {
               return { ...book };
             }),
@@ -266,11 +280,11 @@ export const useSearchStore = defineStore(
           return JSON.stringify(newState);
         },
         deserialize: (str) => {
-          // we previously had to stringify the book object, so we need to parse it back.
+          // i previously serialized the store as a json object, so i need to parse it back.
           const loadedState = JSON.parse(str);
           if (loadedState.googleBookResults) {
-            // here we need to map each element of the loaded googleBookResults array to a new array
-            // of google books that we build from the plain object.
+            // here i need to map each element of the loaded googleBookResults array to a new array
+            // of google books that i build from the plain object.
             loadedState.googleBookResults = loadedState.googleBookResults.map(
               (plainObject) => {
                 return new GoogleBook({
