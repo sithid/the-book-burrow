@@ -15,6 +15,10 @@ with various combinations of input options to hlep refine searches.
 
 Additionally, users have what are called Bookshelfs.  These bookshelfs allow users to organize and save different collections of books.  Default options include 'To Be Read', 'Read', 'Owned', and 'To Be Owned'.  An option for custom bookshelfs is planned and should be implemented by the capstone due date.
 
+Users will also be able to save user preferences. There is no login required(or available for that matter), all usage is anonymous. All data intended to persist across multiple sessions
+and refresh will be stored using local storage. I am planning an export data feature, that will allow a user to export the json for their data (user preferences, bookshelfs) so they can import
+it on a different device and not have to build their bookshelfs all over again.
+
 Run/Install: 
 
 1. clone repo.
