@@ -18,6 +18,11 @@ export class Bookshelf {
   }
 
   addBook(gBook) {
+    if (!(gBook instanceof GoogleBook)) {
+      config.FMT_PRINT_DEBUG("bookshelf::addBook", "Invalid book type provided. Expected GoogleBook instance.", true);
+      return false;
+    }
+    
     try {
       this.books.push(gBook);
       return true;
@@ -27,8 +32,17 @@ export class Bookshelf {
     }
   }
 
+  // returns true if the book is removed.
   removeBook(bookId) {
+    // i use the built in array.filter to filter out the book with the matching id, which
+    // will always be unique.
+    if (!bookId) {
+      config.FMT_PRINT_DEBUG("bookshelf::removeBook", "No book ID provided for removal.", true);
+      return false;
+    }
+
     this.books = this.books.filter((book) => book.id !== bookId);
+    return true;
   }
 
   getBookInfo(bookId) {
