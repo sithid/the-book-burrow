@@ -24,7 +24,7 @@
 
 <script setup>
 import { useBookStore } from "@/stores/book.js";
-import { GoogleBook } from "../GoogleBook.js";
+import { GoogleBook } from "@/GoogleBook.js";
 import { useRouter } from "vue-router";
 
 const book = useBookStore();

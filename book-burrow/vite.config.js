@@ -13,16 +13,18 @@ export default defineConfig({
   server: {
     //host: true,
     //port: 5173,
+    // proxy stuff to get around cors issues with the google books api
     proxy: {
       '/google-books-api': {
-        target: 'https://www.googleapis.com',
+        target: 'https://www.googleapis.com', // the real api endpoint
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/google-books-api/, ''),
+        rewrite: (path) => path.replace(/^\/google-books-api/, ''), // strip the prefix we added and add it to the target
         secure: false,
       },
     },
   },
   resolve: {
+    // replace @ with ./src for convienence
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },

@@ -1,4 +1,4 @@
-import { config } from "./config.js";
+import { config } from "@/config.js";
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * We could carry around the entire object that is returned from the google books api, but

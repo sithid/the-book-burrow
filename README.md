@@ -25,8 +25,11 @@ Run/Install:
 2. navigate to the repo directory.
 3. navigate to the book-burrow directory ~/the-book-burrow/book-burrow.
 4. run npm install from the command line.
+5. create .env file with a single line 'VITE_API_KEY="GOOGLE_BOOKS_API_KEY"'
 5. run npm run dev to start the development build
 6. run npm run build for production dist.
+
+I will be providing an API key to the tester/reviewers who need one.
 
 Tech Used
 
