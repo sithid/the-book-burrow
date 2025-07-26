@@ -45,7 +45,10 @@ import { GoogleBook } from "@/GoogleBook.js";
 function constructBookshelfFromObject( plainObject ) {
   // this is used to create a new bookshelf object from a plain object.
   // this is good for deserializing the bookshelf from localStorage.
-  return new Bookshelf(plainObject.name, plainObject.description, plainObject.isDefault, plainObject.id, [plainObject.books]);
+  let newShelf = new Bookshelf(plainObject.name, plainObject.description, plainObject.isDefault, plainObject.id, [plainObject.books]);
+
+  config.FMT_PRINT_DEBUG("utility::constructBookshelfFromObject", newShelf);
+  return newShelf;
 }
 
 function constructGoogleBookFromObject(plainObject) {

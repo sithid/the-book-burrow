@@ -87,6 +87,7 @@ export const useBookStore = defineStore(
       }
 
       activeBookshelf.value = bookshelf;
+      activeBookshelfId.value = bookshelf.id;npm
       return true;
     };
 
