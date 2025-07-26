@@ -289,7 +289,7 @@ export const useSearchStore = defineStore(
     // our google book is a custom object, so i need to serialize it properly
     // using a custom serializer/deserializer.
     persist: {
-      pick: ["googleBookResults", "pageCount", "basicQuery"],
+      paths: ["googleBookResults", "pageCount", "basicQuery"],
       serializer: {
         // stringify the state(state includes all of the properties of the store)
         // but i only need to manually deserialize the googleBookResults array
@@ -311,7 +311,7 @@ export const useSearchStore = defineStore(
             // of google books that i build from the plain object.
             loadedState.googleBookResults = loadedState.googleBookResults.map(
               (plainObject) => {
-                return utility.constructGoogleBookFromObject(plainObject);
+                return utility.getGBookFrom(plainObject);
               }
             );
           }

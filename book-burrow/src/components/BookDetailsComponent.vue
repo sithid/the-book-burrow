@@ -3,88 +3,88 @@
     <div class="book-detail-section cover">
       <img
         id="thumbnail"
-        :src="`${book.activeBook.fmtThumbnail()}`"
-        :alt="`Thumbnail of ${book.activeBook.title}`"
+        :src="`${book.ActiveBook.fmtThumbnail()}`"
+        :alt="`Thumbnail of ${book.ActiveBook.title}`"
         @click="onThumbnailClicked"
       />
-      <h1 class="title-header">{{ book.activeBook.title }}</h1>
+      <h1 class="title-header">{{ book.ActiveBook.title }}</h1>
     </div>
     <div class="book-detail-section">
       <div class="info-text">
         <span class="category-text">Written By</span>
-        <span id="author">{{ book.activeBook.fmtAuthors() }}</span>
+        <span id="author">{{ book.ActiveBook.fmtAuthors() }}</span>
       </div>
       <div class="info-text">
         <span class="category-text">Published By</span>
-        <span id="publisher">{{ book.activeBook.fmtPublisher() }}</span>
+        <span id="publisher">{{ book.ActiveBook.fmtPublisher() }}</span>
       </div>
       <div class="info-text">
         <span class="category-text"></span>
-        <span id="publish-year">{{ book.activeBook.fmtPublishedDate() }}</span>
+        <span id="publish-year">{{ book.ActiveBook.fmtPublishedDate() }}</span>
       </div>
     </div>
     <div class="book-detail-section">
       <div class="info-text">
-        <p id="description">{{ book.activeBook.fmtDescription() }}</p>
+        <p id="description">{{ book.ActiveBook.fmtDescription() }}</p>
       </div>
     </div>
     <div class="book-detail-section">
       <h1>Additional Information</h1>
-      <div class="info-text" v-if="book.activeBook.subject">
+      <div class="info-text" v-if="book.ActiveBook.subject">
         <span class="category-text">Genre/Subject</span>
-        <span id="subject">{{ book.activeBook.subject.join() }}</span>
+        <span id="subject">{{ book.ActiveBook.subject.join() }}</span>
       </div>
-      <div class="info-text" v-if="book.activeBook.averageRating">
+      <div class="info-text" v-if="book.ActiveBook.averageRating">
         <span class="category-text">Average Rating</span>
-        <span id="average-rating">{{ book.activeBook.averageRating }}</span>
+        <span id="average-rating">{{ book.ActiveBook.averageRating }}</span>
       </div>
-      <div class="info-text" v-if="book.activeBook.ratingCount">
+      <div class="info-text" v-if="book.ActiveBook.ratingCount">
         <span class="category-text">Rating Count</span>
-        <span id="rating-count">{{ book.activeBook.ratingCount }}</span>
-      </div>
-      <div class="info-text" v-if="book.activeBook.maturityRating">
+        <span id="rating-count">{{ book.ActiveBook.ratingCount }}</span>
+      </div>maxRes
+      <div class="info-text" v-if="book.ActiveBook.maturityRating">
         <span class="category-text">Maturity Rating</span>
-        <span id="maturity-rating">{{ book.activeBook.maturityRating }}</span>
+        <span id="maturity-rating">{{ book.ActiveBook.maturityRating }}</span>
       </div>
-      <div class="info-text" v-if="book.activeBook.pageCount">
+      <div class="info-text" v-if="book.ActiveBook.pageCount">
         <span class="category-text">Page Count</span>
-        <span id="page-count">{{ book.activeBook.pageCount }}</span>
+        <span id="page-count">{{ book.ActiveBook.pageCount }}</span>
       </div>
-      <div class="info-text" v-if="book.activeBook.printedPageCount">
+      <div class="info-text" v-if="book.ActiveBook.printedPageCount">
         <span class="category-text">Printed Page Count</span>
         <span id="printed-page-count">{{
-          book.activeBook.printedPageCount
+          book.ActiveBook.printedPageCount
         }}</span>
       </div>
-      <div class="info-text" v-if="book.activeBook.language">
+      <div class="info-text" v-if="book.ActiveBook.language">
         <span class="category-text">Language</span>
-        <span id="book-language">{{ book.activeBook.language }}</span>
+        <span id="book-language">{{ book.ActiveBook.language }}</span>
       </div>
-      <div class="info-text" v-if="book.activeBook.canonicalVolumeLink">
+      <div class="info-text" v-if="book.ActiveBook.canonicalVolumeLink">
         <span class="category-text">Canonical Volume Link</span>
         <span id="book-canonical-link">
-          <a :href="book.activeBook.canonicalVolumeLink" target="_blank">
+          <a :href="book.ActiveBook.canonicalVolumeLink" target="_blank">
             Here
           </a>
         </span>
       </div>
-      <div class="info-text" v-if="book.activeBook.saleInfo" target="_blank">
+      <div class="info-text" v-if="book.ActiveBook.saleInfo" target="_blank">
         <span class="category-text">Sale Info</span>
         <span id="sale-info">
-          <a :href="book.activeBook.saleInfo"> Here </a>
+          <a :href="book.ActiveBook.saleInfo"> Here </a>
         </span>
       </div>
-      <div class="info-text" v-if="book.activeBook.isbn13">
+      <div class="info-text" v-if="book.ActiveBook.isbn13">
         <span class="category-text">ISBN_13</span>
-        <span id="book-isbn13">{{ book.activeBook.isbn13 }}</span>
+        <span id="book-isbn13">{{ book.ActiveBook.isbn13 }}</span>
       </div>
-      <div class="info-text" v-if="book.activeBook.isbn10">
+      <div class="info-text" v-if="book.ActiveBook.isbn10">
         <span class="category-text">ISBN_10</span>
-        <span id="book-isbn10">{{ book.activeBook.isbn10 }}</span>
+        <span id="book-isbn10">{{ book.ActiveBook.isbn10 }}</span>
       </div>
-      <div class="info-text" v-if="book.activeBook.id">
+      <div class="info-text" v-if="book.ActiveBook.id">
         <span class="category-text">Id</span>
-        <span id="book-id">{{ book.activeBook.id }}</span>
+        <span id="book-id">{{ book.ActiveBook.id }}</span>
       </div>
     </div>
   </div>
@@ -99,11 +99,11 @@ import { onMounted } from "vue";
 const book = useBookStore();
 
 function onThumbnailClicked() {
-  if (book.activeBook.infoLink) window.open(book.activeBook.infoLink, "_blank");
+  if (book.ActiveBook.infoLink) window.open(book.ActiveBook.infoLink, "_blank");
   else
     config.FMT_PRINT_DEBUG(
       "BookDetailsComponent::onThumbnailClicked",
-      "No infolink available for this book: " + book.activeBook.title
+      "No infolink available for this book: " + book.ActiveBook.title
     );
 }
 </script>

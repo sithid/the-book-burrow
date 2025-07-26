@@ -14,8 +14,8 @@ export const useBookStore = defineStore(
     // will use computed where possible, essentially when the output
     // is entirely dependent on other reactive state stuff and there
     // are no side effects.
-    const hasActiveBook = computed(() => activeBook.value !== null);
-    const getActiveBook = computed(() => activeBook.value);
+    const ActiveBook = computed(() => activeBook.value);
+    const HasActiveBook = computed(() => activeBook.value !== null);
 
     const setActiveBook = (book) => {
       activeBook.value = book;
@@ -27,8 +27,8 @@ export const useBookStore = defineStore(
 
     return {
       activeBook,
-      hasActiveBook,
-      getActiveBook,
+      ActiveBook,
+      HasActiveBook,
       setActiveBook,
       clearActiveBook,
     };
@@ -37,6 +37,7 @@ export const useBookStore = defineStore(
     // state persistence, automatically saves and loads state to/from localStorage
     // this will persist the activeBook data across page reloads/refreshes.
     persist: {
+      paths: ['activeBook'],
       // activeBook is the only property we worth persisting
       // the other 2 properties are computed from activeBook
       // as long as we can reload the active book, we can compute the values.
@@ -54,10 +55,13 @@ export const useBookStore = defineStore(
           const loadedState = JSON.parse(str);
 
           // we previously had to stringify the book store, so we need to parse it back.
-            const gBook = utility.constructGoogleBookFromObject(loadedState.activeBook);
-            loadedState.activeBook = gBook;
+          const loadedActiveBook = loadedState.activeBook
+            ? utility.getGBookFrom(loadedState.activeBook)
+            : null;
 
-          return loadedState;
+          return {
+            activeBook: loadedActiveBook,
+          };
         },
       },
     },

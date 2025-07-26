@@ -54,12 +54,14 @@ export const useUserStore = defineStore(
     const maxResults = ref(40);
     const maxPages = ref(10);
 
-    const getBookshelfs = computed(() => bookshelfs.value);
-    const getActiveBookshelf = computed(() => activeBookshelf.value);
-    const hasActiveBookshelf = computed(() => activeBookshelf.value !== null);
-    const getMaxResults = computed(() => maxResults.value);
-    const getMaxPages = computed(() => maxPages.value);
+    const Bookshelfs = computed(() => bookshelfs.value);
+    const ActiveBookshelf = computed(() => activeBookshelf.value);
+    const ActiveBookshelfId = computed(() => activeBookshelfId.value);
+    const HasActiveBookshelf = computed(() => activeBookshelf.value !== null);
+    const MaxResults = computed(() => maxResults.value);
+    const MaxPages = computed(() => maxPages.value);
 
+    // i treat these like setters
     const setMaxResults = (value) => {
       if (value < 10) value = 10;
       if (value > 40) value = 40;
@@ -85,13 +87,14 @@ export const useUserStore = defineStore(
       }
 
       activeBookshelf.value = bookshelf;
-      activeBookshelfId.value = bookshelf.id;npm
+      activeBookshelfId.value = bookshelf.id;
+      npm;
       return true;
     };
 
     const setActiveBookshelfById = (id) => {
       const bookshelf = bookshelfs.value.find((shelf) => shelf.id === id);
-      
+
       if (bookshelf) {
         activeBookshelf.value = bookshelf;
         return true;
@@ -112,11 +115,11 @@ export const useUserStore = defineStore(
       maxResults,
       maxPages,
 
-      getBookshelfs,
-      getActiveBookshelf,
-      hasActiveBookshelf,
-      getMaxResults,
-      getMaxPages,
+      Bookshelfs,
+      ActiveBookshelf,
+      HasActiveBookshelf,
+      MaxResults,
+      MaxPages,
 
       setActiveBookshelf,
       setActiveBookshelfById,
@@ -126,7 +129,13 @@ export const useUserStore = defineStore(
   },
   {
     persist: {
-      pick: ["bookshelfs", "activeBookshelf", "activeBookshelfId", "maxResults", "maxPages"],
+      paths: [
+        "bookshelfs",
+        "activeBookshelf",
+        "activeBookshelfId",
+        "maxResults",
+        "maxPages",
+      ],
       serializer: {
         serialize: (state) => {
           const newState = {
@@ -142,13 +151,15 @@ export const useUserStore = defineStore(
           // set the bookshelfs array to the value returned from mapping the current value of loadedState.bookshelfs
           // to a new array of bookshelf objects created using the Bookshelf constructor.
           // this is necessary because the bookshelfs are stored as plain objects in localStorage,
-          loadedState.bookshelfs = loadedState.bookshelfs.map((bookshelf) => {
-            return utility.constructBookshelfFromObject(bookshelf)
+          loadedState.bookshelfs = loadedState.Bookshelfs.map((bookshelf) => {
+            return utility.getBookshelfFrom(bookshelf);
           });
 
-          loadedState.activeBookshelf = setActiveBookshelfById(loadedState.activeBookshelfId);
-          loadedState.maxResults = setMaxResults(loadedState.maxResults);
-          loadedState.maxPages = setMaxPages(loadedState.maxPages);
+          loadedState.ActiveBookshelf = setActiveBookshelfById(
+            loadedState.ActiveBookshelfId
+          );
+          loadedState.MaxResults = setMaxResults(loadedState.MaxResults);
+          loadedState.MaxPages = setMaxPages(loadedState.MaxPages);
           return loadedState;
         },
       },
@@ -156,13 +167,14 @@ export const useUserStore = defineStore(
   }
 );
 
-
-
-
-
-
-
 /*
+ * this is from when i was manually rebuilding the plain object.
+ * the block of code is so huge, if i have to do this even twice
+ * its worth making a function just for this purpose
+ * 
+ * utility.js
+ 
+ 
 deserialize: (str) => {
           const loadedState = JSON.parse(str);
           // set the bookshelfs array to the value returned from mapping the current value of loadedState.bookshelfs
@@ -212,7 +224,6 @@ deserialize: (str) => {
               )
             );
           });
-          // now we set the activeBookshelf to the first bookshelf in the array if it exists
         },
       },
     },

@@ -61,12 +61,12 @@ export const useFilterStore = defineStore(
       errorMsg.value = "";
 
       console.clear();
-    }
+    };
 
-    const  toggleFilterPanel = () => {
+    const toggleFilterPanel = () => {
       filterPanelOpen.value = !filterPanelOpen.value;
       reset();
-    }
+    };
 
     return {
       allWords, // search across a wide range of fields that includes all of the words
@@ -79,6 +79,7 @@ export const useFilterStore = defineStore(
       publisher, // books with this in the publisher
       subject, // books with this in the subject (genre)
       language, // languages available from google api
+
       errorMsg, // error message for adv search.
 
       reset,
@@ -87,7 +88,18 @@ export const useFilterStore = defineStore(
     };
   },
   {
-    // state persistence, automatically saves and loads state to/from localStorage
-    persist: true,
+    persist: {
+      paths: [
+        "allWords",
+        "exactWords",
+        "withoutTheseWords",
+        "atleastOneWord",
+        "title",
+        "author",
+        "publisher",
+        "subject",
+        "language",
+      ],
+    },
   }
 );

@@ -1,6 +1,6 @@
 <template>
   <div class="book-details-view">
-    <BookDetailsComponent v-if="book.hasActiveBook"></BookDetailsComponent>
+    <BookDetailsComponent v-if="book.HasActiveBook"></BookDetailsComponent>
   </div>
 </template>
 
@@ -15,7 +15,7 @@ const book = useBookStore();
 
 
 onMounted(() => {
-  if (!book.activeBook) {
+  if (!book.ActiveBook) {
     router.push("/search");
   }
 });

@@ -43,7 +43,7 @@ export const utility = {
     }
   },
 
-  constructBookshelfFromObject: (plainObject) => {
+  getBookshelfFrom: (plainObject) => {
     // this is used to create a new bookshelf object from a plain object.
     // this is good for deserializing the bookshelf from localStorage.
     let newShelf = new Bookshelf(
@@ -58,7 +58,7 @@ export const utility = {
     return newShelf;
   },
 
-  constructGoogleBookFromObject: (plainObject) => {
+  getGBookFrom: (plainObject) => {
     // used to create a new google book object from a plain object.
     // this works great for deserializing the book from localStorage
     // because the book is stored as a plain object but the shape of it is that
