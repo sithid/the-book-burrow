@@ -2,9 +2,9 @@ import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 import { Bookshelf } from "@/Bookshelf.js";
 import { config } from "@/config.js";
-import { constructBookshelfFromObject } from "@/utility.js";
+import { utility } from "@/utility.js";
 
-export const useBookStore = defineStore(
+export const useUserStore = defineStore(
   "user",
   () => {
     // this user store is specifically for managing the users data.
@@ -51,8 +51,8 @@ export const useBookStore = defineStore(
 
     const activeBookshelf = ref(null);
     const activeBookshelfId = ref(null);
-    const maxResults = ref(config.maxResults);
-    const maxPages = ref(config.maxPages);
+    const maxResults = ref(40);
+    const maxPages = ref(10);
 
     const getBookshelfs = computed(() => bookshelfs.value);
     const getActiveBookshelf = computed(() => activeBookshelf.value);
@@ -64,7 +64,6 @@ export const useBookStore = defineStore(
       if (value < 10) value = 10;
       if (value > 40) value = 40;
 
-      config.MAX_RESULTS = value;
       maxResults.value = value;
     };
 
@@ -72,7 +71,6 @@ export const useBookStore = defineStore(
       if (value < 1) value = 1;
       if (value > 10) value = 10;
 
-      config.MAX_PAGES = value;
       maxPages.value = value;
     };
 
@@ -145,7 +143,7 @@ export const useBookStore = defineStore(
           // to a new array of bookshelf objects created using the Bookshelf constructor.
           // this is necessary because the bookshelfs are stored as plain objects in localStorage,
           loadedState.bookshelfs = loadedState.bookshelfs.map((bookshelf) => {
-            return constructBookshelfFromObject(bookshelf)
+            return utility.constructBookshelfFromObject(bookshelf)
           });
 
           loadedState.activeBookshelf = setActiveBookshelfById(loadedState.activeBookshelfId);

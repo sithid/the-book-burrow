@@ -2,13 +2,15 @@ import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 import { config } from "@/config.js";
 import { GoogleBook } from "@/GoogleBook.js";
-import { constructGoogleBookFromObject } from "@/utility.js";
+import { utility } from "@/utility.js";
 import { useFilterStore } from "@/stores/filter";
+import { useUserStore } from "@/stores/user";
 
 export const useSearchStore = defineStore(
   "search",
   () => {
     const filter = useFilterStore();
+    const user = useUserStore();
 
     const googleBookResults = ref([]);
     const pageCount = ref(0); // used to track the number of pages of results
@@ -122,7 +124,7 @@ export const useSearchStore = defineStore(
         keywords += `&langRestrict=${filter.language}`;
 
       keywords += `&printType=books`;
-      keywords += `&maxResults=${config.MAX_RESULTS}`;
+      keywords += `&maxResults=${user.maxResults}`;
       keywords += `&key=${config.API_TOKEN}`;
 
       config.FMT_PRINT_DEBUG("formatAdditionalOptions::keywords", keywords);
@@ -164,7 +166,7 @@ export const useSearchStore = defineStore(
     // perform a generic search across a wide range of fields
     // if any field has content that matches the query string,
     // it will return the book.
-    async function queryApiBasic(params, maxResults = config.MAX_RESULTS) {
+    async function queryApiBasic(params, maxResults = user.maxResults) {
       // Make sure i 'reset' the book result array, otherwise it will get huge.
       // just clear the array and repopulate it with the new results.
       googleBookResults.value = [];
@@ -211,7 +213,7 @@ export const useSearchStore = defineStore(
       };
 
       for (let index = 0; index < 10; index++) {
-        let indexedUrl = `${url}&startIndex=${index * config.MAX_RESULTS}`;
+        let indexedUrl = `${url}&startIndex=${index * user.maxResults}`;
 
         config.FMT_PRINT_DEBUG(
           "search::queryApiAdvanced",
@@ -244,7 +246,7 @@ export const useSearchStore = defineStore(
             }
           }
 
-          pageCount.value = Math.ceil(data.totalItems / config.MAX_RESULTS); // calculate the number of pages based on total items and max results
+          pageCount.value = Math.ceil(data.totalItems / user.maxResults); // calculate the number of pages based on total items and max results
           config.FMT_PRINT_DEBUG(
             "search::queryApiAdvanced",
             `Page ${index + 1} of ${pageCount.value} loaded.`
@@ -258,7 +260,7 @@ export const useSearchStore = defineStore(
           "No books found matching the query."
         );
         pageCount.value = 0;
-      } else if (googleBookResults.value.length < config.MAX_RESULTS) {
+      } else if (googleBookResults.value.length < user.maxResults) {
         pageCount.value = 1;
       } else {
         config.FMT_PRINT_DEBUG(
@@ -309,7 +311,7 @@ export const useSearchStore = defineStore(
             // of google books that i build from the plain object.
             loadedState.googleBookResults = loadedState.googleBookResults.map(
               (plainObject) => {
-                return constructGoogleBookFromObject(plainObject);
+                return utility.constructGoogleBookFromObject(plainObject);
               }
             );
           }

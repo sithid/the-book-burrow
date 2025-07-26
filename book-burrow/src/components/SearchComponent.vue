@@ -13,7 +13,7 @@
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
     </div>
-    <div class="filter-options-panel">
+    <div v-if="filter.isPanelOpen" class="filter-options-panel">
       <FilterPanelComponent></FilterPanelComponent>
     </div>
     <div class="results-container">
@@ -35,7 +35,6 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
 import { useFilterStore } from "@/stores/filter";
 import { useSearchStore } from "@/stores/search";
 import SearchResultComponent from "../components/SearchResultComponent.vue";

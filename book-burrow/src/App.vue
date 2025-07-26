@@ -4,7 +4,7 @@
     <nav class="nav-menu">
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/search">Search</RouterLink>
-      <RouterLink to="/bookshelf">Bookshelf</RouterLink>
+      <RouterLink to="/bookshelfs">Bookshelfs</RouterLink>
       <RouterLink to="/about">About</RouterLink>
       <button @click="preferencesBtnOnClick" class="preferences-button">
         <i class="fa fa-bars" aria-hidden="true"></i>
@@ -21,9 +21,10 @@
 
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
+import { config } from "@/config.js";
 
-function preferencesBtnOnClick() {
-  console.log("Preferences button clicked!");
+const preferencesBtnOnClick = () => {
+  config.FMT_PRINT_DEBUG("App::preferencesBtnOnClick", "The preferences button was clicked, but this feature is not yet implemented.", false);
 }
 </script>
 

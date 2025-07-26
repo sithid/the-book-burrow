@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
-import { constructGoogleBookFromObject } from "@/utility.js";
+import { utility } from "@/utility.js";
 
 // we could include this in search or filter, to some degree but
 // i would prefer to separate concerns to keep things clean and
@@ -54,7 +54,7 @@ export const useBookStore = defineStore(
           const loadedState = JSON.parse(str);
 
           // we previously had to stringify the book store, so we need to parse it back.
-            const gBook = constructGoogleBookFromObject(loadedState.activeBook);
+            const gBook = utility.constructGoogleBookFromObject(loadedState.activeBook);
             loadedState.activeBook = gBook;
 
           return loadedState;

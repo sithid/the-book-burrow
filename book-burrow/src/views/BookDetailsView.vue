@@ -9,7 +9,6 @@ import BookDetailsComponent from "../components/BookDetailsComponent.vue";
 import { useBookStore } from "@/stores/book";
 import { useRouter } from "vue-router";
 import { onMounted } from "vue";
-import { config } from "@/config.js";
 
 const router = useRouter();
 const book = useBookStore();
