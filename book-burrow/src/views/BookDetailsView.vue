@@ -22,7 +22,8 @@ onMounted(() => {
 });
 
 </script>
-<style>
+
+<style scoped>
 .book-details-view {
   display: flex;
   flex-direction: column;

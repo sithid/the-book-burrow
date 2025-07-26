@@ -52,7 +52,7 @@ function constructBookshelfFromObject( plainObject ) {
 }
 
 function constructGoogleBookFromObject(plainObject) {
-  // is used to create a new google book object from a plain object.
+  // used to create a new google book object from a plain object.
   // this works great for deserializing the book from localStorage
   // because the book is stored as a plain object but the shape of it is that
   // of a GoogleBook object and not a google books api response object.
@@ -60,7 +60,7 @@ function constructGoogleBookFromObject(plainObject) {
   const gbook = {
     id: plainObject.id, // string
     selfLink: plainObject.selfLink, // string
-    itemInfo: {
+    volumeInfo: {
       title: plainObject.title, // string
       authors: plainObject.authors, // string
       subject: plainObject.subject, // [string, ...]

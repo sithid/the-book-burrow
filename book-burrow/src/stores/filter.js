@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 import { watch } from "vue";
-import { storeToRefs } from "pinia";
 
 export const useFilterStore = defineStore(
   "filter",
@@ -47,7 +46,7 @@ export const useFilterStore = defineStore(
       { deep: false }
     );
 
-    function reset() {
+    const reset = () => {
       allWords.value = "";
       exactWords.value = "";
       withoutTheseWords.value = "";
@@ -64,7 +63,7 @@ export const useFilterStore = defineStore(
       console.clear();
     }
 
-    function toggleFilterPanel() {
+    const  toggleFilterPanel = () => {
       filterPanelOpen.value = !filterPanelOpen.value;
       reset();
     }

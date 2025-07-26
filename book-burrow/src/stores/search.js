@@ -109,7 +109,7 @@ export const useSearchStore = defineStore(
       return keywords;
     });
 
-    function clear() {
+    const clear = () => {
       googleBookResults.value = [];
       basicQuery.value = "";
     }

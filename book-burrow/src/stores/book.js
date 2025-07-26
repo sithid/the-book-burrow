@@ -17,11 +17,11 @@ export const useBookStore = defineStore(
     const hasActiveBook = computed(() => activeBook.value !== null);
     const getActiveBook = computed(() => activeBook.value);
 
-    function setActiveBook(book) {
+    const setActiveBook = (book) => {
       activeBook.value = book;
     };
 
-    function clearActiveBook() {
+    const clearActiveBook = () => {
       activeBook.value = null;
     };
 
@@ -40,7 +40,6 @@ export const useBookStore = defineStore(
       // activeBook is the only property we worth persisting
       // the other 2 properties are computed from activeBook
       // as long as we can reload the active book, we can compute the values.
-      pick: ["activeBook"],
       serializer: {
         // this is were we serialize the book store.
         // we need to stringify the book object, so we can store it in localStorage.
@@ -55,13 +54,8 @@ export const useBookStore = defineStore(
           const loadedState = JSON.parse(str);
 
           // we previously had to stringify the book store, so we need to parse it back.
-          if (loadedState.activeBook) {
-            loadedState.activeBook = constructGoogleBookFromObject(
-              loadedState.activeBook
-            );
-          } else {
-            loadedState.activeBook = null;
-          }
+            const gBook = constructGoogleBookFromObject(loadedState.activeBook);
+            loadedState.activeBook = gBook;
 
           return loadedState;
         },

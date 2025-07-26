@@ -92,7 +92,8 @@ export const useBookStore = defineStore(
     };
 
     const setActiveBookshelfById = (id) => {
-      const bookshelf = bookshelfs.value.find((b) => b.id === id);
+      const bookshelf = bookshelfs.value.find((shelf) => shelf.id === id);
+      
       if (bookshelf) {
         activeBookshelf.value = bookshelf;
         return true;
