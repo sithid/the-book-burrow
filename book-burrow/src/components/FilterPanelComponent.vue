@@ -4,45 +4,86 @@
       <p id="left-panel-info">Find Results:</p>
       <div class="option-group">
         <label for="all-words">All Words</label>
-        <input id="all-words" name="allWords" type="text" v-model="filter.allWords"
-          placeholder="with all of these words" />
+        <input
+          id="all-words"
+          name="allWords"
+          type="text"
+          v-model="filter.allWords"
+          placeholder="with all of these words"
+        />
       </div>
       <div class="option-group">
         <label for="exact-words">Exact Words</label>
-        <input id="exact-words" name="exactWords" type="text" v-model="filter.exactWords"
-          placeholder="with these exact words" />
+        <input
+          id="exact-words"
+          name="exactWords"
+          type="text"
+          v-model="filter.exactWords"
+          placeholder="with these exact words"
+        />
       </div>
       <div class="option-group">
         <label for="atleast-one-word">Atleast One</label>
-        <input id="atleast-one-word" name="atleastOneWord" type="text" v-model="filter.atleastOneWord"
-          placeholder="with at least one of these words" />
+        <input
+          id="atleast-one-word"
+          name="atleastOneWord"
+          type="text"
+          v-model="filter.atleastOneWord"
+          placeholder="with at least one of these words"
+        />
       </div>
       <div class="option-group">
         <label for="without-these-words">Without These</label>
-        <input id="without-these-words" name="withoutTheseWords" type="text" v-model="filter.withoutTheseWords"
-          placeholder="without these words" />
+        <input
+          id="without-these-words"
+          name="withoutTheseWords"
+          type="text"
+          v-model="filter.withoutTheseWords"
+          placeholder="without these words"
+        />
       </div>
     </div>
     <div class="middle-panel">
       <p id="middle-panel-info">Filter By:</p>
       <div class="option-group">
         <label for="book-title">Title</label>
-        <input id="book-title" name="title" type="text" v-model="filter.title" placeholder="Enter book title here..." />
+        <input
+          id="book-title"
+          name="title"
+          type="text"
+          v-model="filter.title"
+          placeholder="Enter book title here..."
+        />
       </div>
       <div class="option-group">
         <label for="book-author">Author</label>
-        <input id="book-author" name="author" type="text" v-model="filter.author"
-          placeholder="Enter book author here..." />
+        <input
+          id="book-author"
+          name="author"
+          type="text"
+          v-model="filter.author"
+          placeholder="Enter book author here..."
+        />
       </div>
       <div class="option-group">
         <label for="book-subject">Subject</label>
-        <input id="book-subject" name="subject" type="text" v-model="filter.subject"
-          placeholder="Enter book subject here..." />
+        <input
+          id="book-subject"
+          name="subject"
+          type="text"
+          v-model="filter.subject"
+          placeholder="Enter book subject here..."
+        />
       </div>
       <div class="option-group">
         <label for="book-publisher">Publisher</label>
-        <input id="book-publisher" name="publisher" type="text" v-model="filter.publisher"
-          placeholder="Enter book publisher here..." />
+        <input
+          id="book-publisher"
+          name="publisher"
+          type="text"
+          v-model="filter.publisher"
+          placeholder="Enter book publisher here..."
+        />
       </div>
     </div>
     <div class="right-panel">
@@ -72,14 +113,10 @@
       </select>
       <div class="adv-option-group">
         <div class="option-group">
-          <button id="adv-cancel-button" @click="cancelClick">
-            Cancel
-          </button>
+          <button id="adv-cancel-button" @click="cancelClick">Cancel</button>
         </div>
         <div class="option-group">
-          <button id="adv-clear-button" @click="clearClick">
-            Clear
-          </button>
+          <button id="adv-clear-button" @click="clearClick">Clear</button>
         </div>
         <div class="option-group">
           <button id="adv-search-button" @click="queryApiAdvanced">
@@ -87,7 +124,11 @@
           </button>
         </div>
       </div>
-      <div v-if="filter.errorMsg.length > 0" id="error-panel" class="error-info-panel">
+      <div
+        v-if="filter.errorMsg.length > 0"
+        id="error-panel"
+        class="error-info-panel"
+      >
         <p class="error-info">{{ filter.errorMsg }}</p>
       </div>
     </div>
@@ -102,15 +143,18 @@ const search = useSearchStore();
 const filter = useFilterStore();
 
 async function queryApiAdvanced() {
-
   let strings = "";
-  strings += filter.allWords + filter.exactWords + filter.atleastOneWord + filter.withoutTheseWords;
+  strings +=
+    filter.allWords +
+    filter.exactWords +
+    filter.atleastOneWord +
+    filter.withoutTheseWords;
   strings += filter.title + filter.author + filter.subject + filter.publisher;
 
   if (strings.length > 0) {
     await search.queryApiAdvanced();
   } else {
-    filter.errorMsg = 'You must include text in at least one field!';
+    filter.errorMsg = "You must include text in at least one field!";
   }
 }
 
@@ -118,17 +162,16 @@ async function queryApiAdvanced() {
 // If you access the property from within the store, you have to use prop.value.
 // This caused so much confusion originally.
 function cancelClick() {
-  filter.errorMsg = '';
+  filter.errorMsg = "";
   filter.toggleFilterPanel();
   search.clear();
 }
 
 function clearClick() {
-  filter.errorMsg = '';
+  filter.errorMsg = "";
   filter.reset();
   search.clear();
 }
-
 </script>
 
 <style scoped>
@@ -168,14 +211,12 @@ function clearClick() {
 .option-group input {
   margin: 0px 5px;
   font-size: 1rem;
-
 }
 
 .option-group label {
   display: flex;
   margin: 10px 0;
   font-size: 0.7rem;
-
 }
 
 .adv-option-group {
@@ -187,13 +228,12 @@ function clearClick() {
 .left-panel input {
   margin-left: 10px;
   font-size: 1rem;
-  field-sizing: fixed;
 }
 
 @media (min-width: 768px) {
   .advanced-search-container {
     flex-direction: row;
-    width: 100vw;
+        width: 100vw;
   }
 
   .option-group input {

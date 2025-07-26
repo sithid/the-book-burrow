@@ -3,6 +3,8 @@ import { config } from "@/config.js";
 import { v4 as uuidv4 } from "uuid";
 
 export class Bookshelf {
+  // this constructor is used to create a new bookshelf object from parameters only
+  // all-purpose constructor
   constructor(
     name,
     description = "",
@@ -11,7 +13,7 @@ export class Bookshelf {
     books = []
   ) {
     this.id = id; // I want every bookshelf to have a unique ID, uuid seems to be an accepted standard.
-    this.name = name; // this will be validated elsewhere (Library.js, add bookshelf component, etc ).
+    this.name = name; // this will be validated elsewhere
     this.description = description; // this will be validated elsewhere (Library.js, add bookshelf component, etc).
     this.isDefault = isDefault; // is this a default bookshelf or custom bookshelf?
     this.books = books; // pinia will make sure this serializes/deserializes correctly.
@@ -55,48 +57,6 @@ export class Bookshelf {
   combineBookshelf(otherBookshelf) {
     this.books = [...this.books, ...otherBookshelf.books];
     return true;
-  }
-
-  /*
-   * Feature: Create a function that accepts two or more input parameters and
-   * returns a value that is calculated or determined by the inputs.
-   *
-   * getCombinedBookshelfs: Combine two bookshelves into a new, single, bookshelf.
-   * This function takes two Bookshelf instances and combines their books into a new Bookshelf instance.
-   * It also allows for custom naming and description of the new bookshelf.
-   * If no name is supplied, it defaults to a combination of the two bookshelves' names.
-   * If no description is supplied, it defaults to a combination of the two bookshelves' descriptions.
-   * 
-   * This will allow me to have simple buttons for combining bookshelves into custom bookshelves within the ui
-   * without having to repeat this code in multiple places.
-   */
-  getCombinedBookshelfs(
-    bookshelf1,
-    bookshelf2,
-    newBookshelfName = `${bookshelf1.name} & ${bookshelf2.name}`,
-    newBookshelfDescription = `${bookshelf1.description} & ${bookshelf2.description}`
-  ) {
-    if (!bookshelf1 || !bookshelf2) {
-      config.FMT_PRINT_DEBUG(
-        "bookshelf::getCombinedBookshelfs",
-        "One or both bookshelves are undefined.",
-        true
-      );
-      return false;
-    }
-
-    // spread operator provides a shallow copy of the books arrays from both bookshelfs.
-    const combinedBooks = [...bookshelf1.books, ...bookshelf2.books];
-
-    if (combinedBooks.length === 0) {
-      return new Bookshelf(
-        newBookshelfName,
-        newBookshelfDescription,
-        false,
-        uuidv4(),
-        combinedBooks
-      );
-    }
   }
 
   getBookInfo(bookId) {

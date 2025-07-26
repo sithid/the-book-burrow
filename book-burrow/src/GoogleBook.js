@@ -9,18 +9,20 @@ import { config } from "@/config.js";
  * to the google books api but we will only use properties we care about, the rest will be lost.
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 export class GoogleBook {
-  constructor(gBook) {
-    this.id = gBook.id; // string
-    this.selflink = gBook.selflink; // string
-    this.title = gBook.volumeInfo.title; // string
-    this.authors = gBook.volumeInfo.authors; // string
-    this.subject = gBook.volumeInfo.categories; // [string, ...]
-    this.publisher = gBook.volumeInfo.publisher; // string
-    this.publishedDate = gBook.volumeInfo.publishedDate; // Date
-    this.description = gBook.volumeInfo.description; // string
+  // this constructor is used to create a new google book object from the api response object
+  // this constructor is good for creating a new google book object from the api response object
+  // for use within the application itself.
+  constructor( apiResponseObject) {
+    this.id = apiResponseObject.id; // string
+    this.selflink = apiResponseObject.selflink; // string
+    this.title = apiResponseObject.volumeInfo.title; // string
+    this.authors = apiResponseObject.volumeInfo.authors; // string
+    this.subject = apiResponseObject.volumeInfo.categories; // [string, ...]
+    this.publisher = apiResponseObject.volumeInfo.publisher; // string
+    this.publishedDate = apiResponseObject.volumeInfo.publishedDate; // Date
+    this.description = apiResponseObject.volumeInfo.description; // string
 
-    // parse the isbn identifiers
-    const identifiers = gBook.volumeInfo?.industryIdentifiers;
+    const identifiers = apiResponseObject.volumeInfo?.industryIdentifiers;
 
     const isbn10Identifier = identifiers?.find((id) => id.type === "ISBN_10");
     this.isbn10 = isbn10Identifier?.identifier;
@@ -28,17 +30,17 @@ export class GoogleBook {
     const isbn13Identifier = identifiers?.find((id) => id.type === "ISBN_13");
     this.isbn13 = isbn13Identifier?.identifier;
 
-    this.pageCount = gBook.volumeInfo.pageCount; // string
-    this.printedPageCount = gBook.volumeInfo.printedPageCount; // string
-    this.averageRating = gBook.volumeInfo.averageRating; // number
-    this.ratingCount = gBook.volumeInfo.ratingCount; // number
-    this.maturityRating = gBook.volumeInfo.maturityRating; // string
+    this.pageCount = apiResponseObject.volumeInfo.pageCount; // string
+    this.printedPageCount = apiResponseObject.volumeInfo.printedPageCount; // string
+    this.averageRating = apiResponseObject.volumeInfo.averageRating; // number
+    this.ratingCount = apiResponseObject.volumeInfo.ratingCount; // number
+    this.maturityRating = apiResponseObject.volumeInfo.maturityRating; // string
 
-    this.imageLinks = gBook.volumeInfo.imageLinks; // { smallThumbnail, thumbnail, small, medium, large } :: { string, string, string, string, string }
-    this.language = gBook.volumeInfo.language; // string
-    this.infoLink = gBook.volumeInfo.infoLink; // string
-    this.canonicalVolumeLink = gBook.volumeInfo.canonicalVolumeLink; // string
-    this.saleInfo = gBook.volumeInfo.saleInfo; // { saleability, listPrice { amount, currencyCode } } :: { string, { number, string } }
+    this.imageLinks = apiResponseObject.volumeInfo.imageLinks; // { smallThumbnail, thumbnail, small, medium, large } :: { string, string, string, string, string }
+    this.language = apiResponseObject.volumeInfo.language; // string
+    this.infoLink = apiResponseObject.volumeInfo.infoLink; // string
+    this.canonicalVolumeLink = apiResponseObject.volumeInfo.canonicalVolumeLink; // string
+    this.saleInfo = apiResponseObject.volumeInfo.saleInfo; // { saleability, listPrice { amount, currencyCode } } :: { string, { number, string } }
   }
 
   fmtAuthors() {

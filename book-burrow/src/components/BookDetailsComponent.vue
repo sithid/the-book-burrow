@@ -1,8 +1,12 @@
 <template>
   <div class="book-card-large">
     <div class="book-detail-section cover">
-      <img id="thumbnail" :src="`${book.activeBook.fmtThumbnail()}`" :alt="`Thumbnail of ${book.activeBook.title}`"
-        @click="onThumbnailClicked" />
+      <img
+        id="thumbnail"
+        :src="`${book.activeBook.fmtThumbnail()}`"
+        :alt="`Thumbnail of ${book.activeBook.title}`"
+        @click="onThumbnailClicked"
+      />
       <h1 class="title-header">{{ book.activeBook.title }}</h1>
     </div>
     <div class="book-detail-section">
@@ -48,7 +52,9 @@
       </div>
       <div class="info-text" v-if="book.activeBook.printedPageCount">
         <span class="category-text">Printed Page Count</span>
-        <span id="printed-page-count">{{ book.activeBook.printedPageCount }}</span>
+        <span id="printed-page-count">{{
+          book.activeBook.printedPageCount
+        }}</span>
       </div>
       <div class="info-text" v-if="book.activeBook.language">
         <span class="category-text">Language</span>
@@ -65,10 +71,16 @@
       <div class="info-text" v-if="book.activeBook.saleInfo" target="_blank">
         <span class="category-text">Sale Info</span>
         <span id="sale-info">
-          <a :href="book.activeBook.saleInfo">
-            Here
-          </a>
+          <a :href="book.activeBook.saleInfo"> Here </a>
         </span>
+      </div>
+      <div class="info-text" v-if="book.activeBook.isbn13">
+        <span class="category-text">ISBN_13</span>
+        <span id="book-isbn13">{{ book.activeBook.isbn13 }}</span>
+      </div>
+      <div class="info-text" v-if="book.activeBook.isbn10">
+        <span class="category-text">ISBN_10</span>
+        <span id="book-isbn10">{{ book.activeBook.isbn10 }}</span>
       </div>
       <div class="info-text" v-if="book.activeBook.id">
         <span class="category-text">Id</span>

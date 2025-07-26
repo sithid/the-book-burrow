@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
-import { config } from "../config.js";
-import { GoogleBook } from "../GoogleBook.js";
-import { Bookshelf } from "../Bookshelf.js";
+import { config } from "@/config.js";
+import { GoogleBook } from "@/GoogleBook.js";
+import { constructGoogleBookFromObject } from "@/utility.js";
 import { useFilterStore } from "@/stores/filter";
 
 export const useSearchStore = defineStore(
@@ -120,7 +120,7 @@ export const useSearchStore = defineStore(
 
       if (filter.language !== "" && filter.language !== "any")
         keywords += `&langRestrict=${filter.language}`;
-      
+
       keywords += `&printType=books`;
       keywords += `&maxResults=${config.MAX_RESULTS}`;
       keywords += `&key=${config.API_TOKEN}`;
@@ -167,7 +167,6 @@ export const useSearchStore = defineStore(
     async function queryApiBasic(params, maxResults = config.MAX_RESULTS) {
       // Make sure i 'reset' the book result array, otherwise it will get huge.
       // just clear the array and repopulate it with the new results.
-
       googleBookResults.value = [];
 
       const requestHeaders = new Headers();
@@ -238,7 +237,7 @@ export const useSearchStore = defineStore(
             if (
               (item.volumeInfo &&
                 item.volumeInfo.language === filter.language) ||
-              filter.language !== "any"
+              filter.language == "any"
             ) {
               const book = new GoogleBook(item);
               googleBookResults.value.push(book);
@@ -270,12 +269,10 @@ export const useSearchStore = defineStore(
     }
 
     return {
-      /* properties */
       googleBookResults, // array of books populated by response
       pageCount, // number of pages of results
       basicQuery, // last simple query string from input
 
-      /* functions */
       clear, // clears values.
       formatFindResultsOptions, // formats allWords/exactWords/atleastOneWord/withoutTheseWords query string
       formatFilterByOptions, // formats title, author, publisher, published, subject query string
@@ -290,6 +287,7 @@ export const useSearchStore = defineStore(
     // our google book is a custom object, so i need to serialize it properly
     // using a custom serializer/deserializer.
     persist: {
+      pick: ["googleBookResults", "pageCount", "basicQuery"],
       serializer: {
         // stringify the state(state includes all of the properties of the store)
         // but i only need to manually deserialize the googleBookResults array
@@ -305,44 +303,17 @@ export const useSearchStore = defineStore(
         deserialize: (str) => {
           // i previously serialized the store as a json object, so i need to parse it back.
           const loadedState = JSON.parse(str);
+          
           if (loadedState.googleBookResults) {
             // here i need to map each element of the loaded googleBookResults array to a new array
             // of google books that i build from the plain object.
             loadedState.googleBookResults = loadedState.googleBookResults.map(
               (plainObject) => {
-                return new GoogleBook({
-                  id: plainObject.id,
-                  selfLink: plainObject.selfLink,
-                  volumeInfo: {
-                    title: plainObject.title,
-                    authors: plainObject.authors,
-                    categories: plainObject.subject,
-                    publisher: plainObject.publisher,
-                    publishedDate: plainObject.publishedDate,
-                    description: plainObject.description,
-                    industryIdentifiers: [
-                      plainObject.isbn10
-                        ? { type: "ISBN_10", identifier: plainObject.isbn10 }
-                        : null, // ternary operator to handle nulls
-                      plainObject.isbn13
-                        ? { type: "ISBN_13", identifier: plainObject.isbn13 }
-                        : null, // ternary  operator to handle nulls
-                    ].filter(Boolean), // shortish syntax for filtering out nulls
-                    pageCount: plainObject.pageCount,
-                    printedPageCount: plainObject.printedPageCount,
-                    averageRating: plainObject.averageRating,
-                    ratingCount: plainObject.ratingCount,
-                    maturityRating: plainObject.maturityRating,
-                    imageLinks: plainObject.imageLinks,
-                    language: plainObject.language,
-                    infoLink: plainObject.infoLink,
-                    canonicalVolumeLink: plainObject.canonicalVolumeLink,
-                    saleInfo: plainObject.saleInfo,
-                  },
-                });
+                return constructGoogleBookFromObject(plainObject);
               }
             );
           }
+
           return loadedState;
         },
       },
