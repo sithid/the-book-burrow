@@ -10,14 +10,13 @@
 </template>
 
 <script setup>
-import { Bookshelf } from "@/Bookshelf";
 import { useUserStore } from "@/stores/user.js";
 
 const user = useUserStore();
 
 const props = defineProps({
   books: {
-    type: [],
+    type: Array,
     required: true,
   },
 });

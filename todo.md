@@ -25,4 +25,7 @@ I can use a for loop, loop 10 cycles each time changing the tail end of the url 
 etc etc etc. Flippin magical.  I need to remember to implement proper paged results for the end user, scrolling down 400 results is absolutely AWFUL.
 I need to go back and recode how im doing the search and then add another setting could maxPages and allow users to set the preference for max pages and the max results property will represent max results per page.  Ya ya this will work great.
 
+# Notes
+
+The more I work with Vue the more I love it.  Vue 3 Componsistion API functions in a way that just works with my brain.  It's not overly complicated, I can break whatever I want down into separate components so I can separate concerns cleanly and clearly.  Localstorage is made trivial via pinia-plugin-persistedstate or whatever it's name was.  As long as you serialize/deserialize, whats going on, its extremely easy.
 

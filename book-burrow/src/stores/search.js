@@ -16,7 +16,7 @@ export const useSearchStore = defineStore(
     const resultPages = ref([]);
     const currentPageIndex = ref(0);
     const pageCount = ref(0);
-    
+
     // Simple search, querys google api for any book with any field that
     // matches this search string.  ?q={}
     const basicQuery = ref("");
@@ -114,6 +114,9 @@ export const useSearchStore = defineStore(
 
     const clear = () => {
       googleBookResults.value = [];
+      resultPages.value = [];
+      pageCount.value = 0;
+      currentPageIndex.value = 0;
       basicQuery.value = "";
     };
 
@@ -213,12 +216,13 @@ export const useSearchStore = defineStore(
         }
 
         currentPageIndex.value = 0;
-
       }
     }
 
     async function queryApiAdvanced() {
       googleBookResults.value = [];
+      resultPages.value = [];
+
       const url = advancedQueryUrl.value;
 
       config.FMT_PRINT_DEBUG("queryApiAdvanced::url", url);
@@ -232,6 +236,11 @@ export const useSearchStore = defineStore(
       };
 
       for (let index = 0; index < user.maxPages; index++) {
+        const page = {
+          index: resultPages.value.length,
+          results: [],
+        };
+
         let indexedUrl = `${url}&startIndex=${index * user.maxResults}`;
 
         config.FMT_PRINT_DEBUG(
@@ -261,30 +270,14 @@ export const useSearchStore = defineStore(
             ) {
               const book = new GoogleBook(item);
               googleBookResults.value.push(book);
+              page.results.push(book);
             }
           }
 
-          pageCount.value = Math.ceil(data.totalItems / user.maxResults);
-          config.FMT_PRINT_DEBUG(
-            "search::queryApiAdvanced",
-            `Page ${index + 1} of ${pageCount.value} loaded.`
-          );
+          resultPages.value.push(page);
         }
-      }
 
-      if (googleBookResults.value.length === 0) {
-        config.FMT_PRINT_DEBUG(
-          "search::queryApiAdvanced",
-          "No books found matching the query."
-        );
-        pageCount.value = 0;
-      } else if (googleBookResults.value.length < user.maxResults) {
-        pageCount.value = 1;
-      } else {
-        config.FMT_PRINT_DEBUG(
-          "search::queryApiAdvanced",
-          `Found ${googleBookResults.value.length} books matching the query.`
-        );
+        currentPageIndex.value = 0;
       }
     }
 

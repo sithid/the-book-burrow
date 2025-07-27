@@ -159,13 +159,11 @@ async function queryApiAdvanced() {
 }
 
 function cancelClick() {
-  filter.errorMsg = "";
   filter.toggleFilterPanel();
   search.clear();
 }
 
 function clearClick() {
-  filter.errorMsg = "";
   filter.reset();
   search.clear();
 }
