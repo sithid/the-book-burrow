@@ -40,9 +40,11 @@ const maxResults = ref(user.maxResults);
 const applyClick = () => {
   user.setMaxPages(maxPages.value);
   user.setMaxResults(maxResults.value);
+
   maxPages.value = user.maxPages;
   maxResults.value = user.maxResults;
 };
+
 </script>
 
 <style scoped>

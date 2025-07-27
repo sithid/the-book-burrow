@@ -12,25 +12,26 @@ export const useSearchStore = defineStore(
     const filter = useFilterStore();
     const user = useUserStore();
 
+    // even though im paging the results, I still want to keep track of all of the results
+    // in one big array for usage later.  maybe i can use this to add a cache mode or something
+    // where users could store all results that are not duplicates and then toggle between
+    // online and offline modes where they can search through the cached results
+    // without having to query the API again. may also help lower API usage.
     const googleBookResults = ref([]);
     const resultPages = ref([]);
     const currentPageIndex = ref(0);
     const pageCount = ref(0);
 
-    // Simple search, querys google api for any book with any field that
-    // matches this search string.  ?q={}
     const basicQuery = ref("");
 
-    // formats allWords/exactWords/atleastOneWord/withoutTheseWords query string
-    // regex REALLY makes this so much easier <3
     const formatFindResultsOptions = computed(() => {
-      let queryParts = []; // query string 'parts'
+      let queryParts = [];
 
       if (filter.allWords.length > 0) {
         const trimmedWords = filter.allWords.trim();
         if (trimmedWords) {
           queryParts.push(
-            encodeURIComponent(trimmedWords).replace(/%20/g, "+") // regex matches spaces and replaces them with +
+            encodeURIComponent(trimmedWords).replace(/%20/g, "+")
           );
         }
       }
@@ -188,7 +189,7 @@ export const useSearchStore = defineStore(
         let indexedUrl = `${url}&startIndex=${index * user.maxResults}`;
 
         config.FMT_PRINT_DEBUG(
-          "search::queryApiAdvanced",
+          "search::queryApiBasic",
           `Querying page ${index + 1} with URL: ${indexedUrl}`
         );
 
@@ -282,20 +283,21 @@ export const useSearchStore = defineStore(
     }
 
     return {
-      googleBookResults, // array of books populated by response
-      pageCount, // number of pages of results
-      basicQuery, // last simple query string from input
-      resultPages, // an array of page objects
-      currentPageIndex, // the index of the current page within the resultPages array
+      googleBookResults,
+      pageCount,
+      basicQuery,
+      resultPages,
+      currentPageIndex, 
 
-      formatFindResultsOptions, // formats allWords/exactWords/atleastOneWord/withoutTheseWords query string
-      formatFilterByOptions, // formats title, author, publisher, published, subject query string
-      formatAdditionalOptions, // formats addtional options query string
-      advancedQueryUrl, // build the entire formatted advanced query string
+      formatFindResultsOptions,
+      formatFilterByOptions, 
+      formatAdditionalOptions,
+      advancedQueryUrl,
 
-      clear, // clears values.
-      queryApiBasic, // perform a generic search across a wide trange of fields
-      queryApiAdvanced, // perform an advanced, targeted search for combined terms, filters, and options
+      clear,
+      queryApiBasic, 
+      queryApiAdvanced, 
+
     };
   },
   {

@@ -153,7 +153,7 @@ export const useUserStore = defineStore(
       activeBookshelfId.value = null;
     }
     
-    const resetUserStore = () => {
+    const resetAllUserData = () => {
       resetBookshelfsToDefault();
       setMaxResults(40);
       setMaxPages(8);
@@ -178,7 +178,7 @@ export const useUserStore = defineStore(
       setDefaultLanguage,
       togglePrefsPanel,
       resetBookshelfsToDefault,
-      resetUserStore,
+      resetAllUserData,
     };
   },
   {

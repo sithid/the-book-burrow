@@ -29,27 +29,6 @@ export const useFilterStore = defineStore(
       return filterPanelOpen.value;
     });
 
-    watch(
-      [
-        allWords,
-        exactWords,
-        withoutTheseWords,
-        atleastOneWord,
-        title,
-        author,
-        publisher,
-        subject,
-      ],
-      (newValues, oldValues) => {
-        const newValueNotEmpty = newValues.some((value) => value !== "");
-
-        if (newValueNotEmpty) {
-          errorMsg.value = "";
-        }
-      },
-      { deep: false }
-    );
-
     const reset = () => {
       allWords.value = "";
       exactWords.value = "";
@@ -72,22 +51,45 @@ export const useFilterStore = defineStore(
       reset();
     };
 
+    watch(
+      [
+        allWords,
+        exactWords,
+        withoutTheseWords,
+        atleastOneWord,
+        title,
+        author,
+        publisher,
+        subject,
+      ],
+      (newValues, oldValues) => {
+        const newValueNotEmpty = newValues.some((value) => value !== "");
+
+        if (newValueNotEmpty) {
+          errorMsg.value = "";
+        }
+        else {
+          errorMsg.value = "You must include text in at least one field!";
+        }
+      },
+      { immediate: true }
+    );
     return {
-      allWords, // search across a wide range of fields that includes all of the words
-      exactWords, // includes this exact phrase
-      atleastOneWord, // includes atleast one of the words in this input "volumes?q=harry+OR+potter+OR+sorcerers+OR+stone"
-      withoutTheseWords, // does not include these words ex: volumes?q=-harry+-potter
+      allWords,
+      exactWords,
+      atleastOneWord,
+      withoutTheseWords,
 
-      title, // books with this in the title
-      author, // books with this in the author
-      publisher, // books with this in the publisher
-      subject, // books with this in the subject (genre)
-      language, // languages available from google api
+      title,
+      author,
+      publisher,
+      subject,
+      language,
 
-      errorMsg, // error message for adv search.
+      isPanelOpen,
+      errorMsg,
 
       reset,
-      isPanelOpen,
       toggleFilterPanel,
     };
   },

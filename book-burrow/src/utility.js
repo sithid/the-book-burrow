@@ -32,7 +32,6 @@ export const utility = {
       return false;
     }
 
-    // spread operator provides a shallow copy of the books arrays from both bookshelfs.
     const combinedBooks = [...bookshelf1.books, ...bookshelf2.books];
 
     if (combinedBooks.length === 0) {

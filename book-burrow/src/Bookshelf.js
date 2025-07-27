@@ -1,10 +1,8 @@
-import { GoogleBook } from "@/GoogleBook.js";
 import { config } from "@/config.js";
 import { v4 as uuidv4 } from "uuid";
+import { GoogleBook } from "./GoogleBook";
 
 export class Bookshelf {
-  // this constructor is used to create a new bookshelf object from parameters only
-  // all-purpose constructor
   constructor(
     name,
     description = "",
@@ -12,14 +10,42 @@ export class Bookshelf {
     id = uuidv4(),
     books = []
   ) {
-    this.id = id; // I want every bookshelf to have a unique ID, uuid seems to be an accepted standard.
-    this.name = name; // this will be validated elsewhere
-    this.description = description; // this will be validated elsewhere (Library.js, add bookshelf component, etc).
-    this.isDefault = isDefault; // is this a default bookshelf or custom bookshelf?
-    this.books = books; // pinia will make sure this serializes/deserializes correctly.
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.isDefault = isDefault;
+    this.books = books;
   }
 
   addBook(gBook) {
+    if (!(gBook instanceof GoogleBook)) {
+      config.FMT_PRINT_DEBUG(
+        "bookshelf::addBook",
+        "Invalid book object provided.",
+        true
+      );
+      return false;
+    }
+
+    if (!gBook.id || !gBook.title || !gBook.selfLink) {
+      config.FMT_PRINT_DEBUG(
+        "bookshelf::addBook",
+        "Book object is missing required properties.",
+        true
+      );
+      return false;
+    }
+
+    if (this.books.some((book) => book.id === gBook.id)) {
+      config.FMT_PRINT_DEBUG(
+        "bookshelf::addBook",
+        `Book with id ${gBook.id} already exists in the bookshelf.`,
+        true
+      );
+
+      return false;
+    }
+
     try {
       this.books.push(gBook);
       return true;
@@ -33,31 +59,56 @@ export class Bookshelf {
     }
   }
 
-  // returns true if the book is removed.
   removeBook(bookId) {
-    // i use the built in array.filter to filter out the book with the matching id, which
-    // will always be unique.
-    if (!bookId) {
+    if (typeof bookId !== "string") {
       config.FMT_PRINT_DEBUG(
         "bookshelf::removeBook",
-        "No book ID provided for removal.",
+        "Invalid book ID provided.",
         true
       );
       return false;
     }
-    // filter should never return undefined, if the id doesnt exist it will just return the same array.
-    // I like this approach better than having to check if the book exists first and handling error logic
-    // for if it doesn't.
-    this.books = this.books.filter((book) => book.id !== bookId);
+
+    if (!this.books.some((book) => book.id === bookId)) {
+      config.FMT_PRINT_DEBUG(
+        "bookshelf::removeBook",
+        `Book with id ${bookId} does not exist in the bookshelf.`,
+        true
+      );
+      return false;
+    }
+
+    try {
+      this.books = this.books.filter((book) => book.id !== bookId);
+    } catch (error) {
+      config.FMT_PRINT_DEBUG(
+        "bookshelf::removeBook",
+        `Failed to remove book: ${error}`,
+        true
+      );
+      return false;
+    }
     return true;
   }
 
   clearBooks() {
+    if (this.books.length === 0) {
+      config.FMT_PRINT_DEBUG(
+        "bookshelf::clearBooks",
+        "No books to clear in the bookshelf.",
+        true
+      );
+      return false;
+    }
+    config.FMT_PRINT_DEBUG(
+      "bookshelf::clearBooks",
+      `Clearing ${this.books.length} books from the bookshelf.`,
+      true
+    );
+    
     this.books = [];
   }
 
-  // simple combine function that uses the spread operator to combine this bookshelf with an input bookshelf.
-  // this will be usful for user bookshelf control (button for 'combine a bookshelf with this one')
   combineBookshelf(otherBookshelf) {
     this.books = [...this.books, ...otherBookshelf.books];
     return true;

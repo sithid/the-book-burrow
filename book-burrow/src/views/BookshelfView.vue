@@ -19,7 +19,7 @@ const user = useUserStore();
 <style>
 .bookshelfs {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   text-align: center;
   justify-content: space-between;
   min-width: 100%;

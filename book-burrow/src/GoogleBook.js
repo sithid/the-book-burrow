@@ -1,7 +1,10 @@
 import { config } from "@/config.js";
 
 export class GoogleBook {
-  constructor( apiResponseObject) {
+  constructor(apiResponseObject) {
+    // we need to flatten the api response some
+    // theres still a couple nested objects, but this
+    // is better than the original api response
     this.id = apiResponseObject.id; // string
     this.selflink = apiResponseObject.selflink; // string
     this.title = apiResponseObject.volumeInfo.title; // string

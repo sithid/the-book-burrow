@@ -143,19 +143,22 @@ const search = useSearchStore();
 const filter = useFilterStore();
 
 async function queryApiAdvanced() {
-  let strings = "";
-  strings +=
-    filter.allWords +
-    filter.exactWords +
-    filter.atleastOneWord +
-    filter.withoutTheseWords;
-  strings += filter.title + filter.author + filter.subject + filter.publisher;
-
-  if (strings.length > 0) {
-    await search.queryApiAdvanced();
-  } else {
+  if (
+    !filter.allWords &&
+    !filter.exactWords &&
+    !filter.atleastOneWord &&
+    !filter.withoutTheseWords &&
+    !filter.title &&
+    !filter.author &&
+    !filter.publisher &&
+    !filter.subject
+  ) {
     filter.errorMsg = "You must include text in at least one field!";
+    return;
   }
+
+  filter.errorMsg = "";
+  await search.queryApiAdvanced();
 }
 
 function cancelClick() {
