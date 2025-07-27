@@ -8,12 +8,9 @@ that has any fields that contain any of these keywords. This is a very broad sea
 
 Users can also do an more advanced search but opening up the filters panel from the search page and enter keywords into one of the various fields.
 
-The first group, Find Results, are inputs for broad searches (meaning, any field that has values that match, or in some cases do not match, these terms ).
-The second group, Filter Options, allows you to filter by various criteria (title, author, publisher, subject). When filtering by 'subject' please remember
-that subject is essentially genre or categorie. This is the closest you will get to filter by genre/category but isnt really exact. You will need to play around
-with various combinations of input options to hlep refine searches.
+The first group, Find Results, are inputs for broad searches (meaning, any field that has values that match, or in some cases do not match, these terms ). The second group, Filter By, allows you to filter by title, author, subject, and publisher. Author and publisher are fairly basic and you usually wont want to enter multiple authors but you should be able to just fine. The title option will separate the terms into individual words and add each to the url (intitle:harry+intitle:potter). When filtering by 'subject' please remember that subject is NOT a direct translation of genre, it's listed as category from the google books API. You will need to try various options. Subjects should be separated by semicolons and each 'word' created from splitting the input by semicolon will be added to the url (subject:"young adult"+subject:"science fiction"). Subject is NOT a direct translation of genre, it's listed as category from the google books API. You will need to try various options.
 
-Additionally, users have what are called Bookshelfs. These bookshelfs allow users to organize and save different collections of books. Default options include 'To Be Read', 'Read', 'Owned', and 'To Be Owned'. An option for custom bookshelfs is planned and should be implemented by the capstone due date.
+Additionally, users have what are called Bookshelfs. These bookshelfs allow users to organize and save different collections of books. Default options include 'To Be Read', 'Already Read', 'Already Owned', and 'To Be Owned'. An option for custom bookshelfs is planned and should be implemented by the capstone due date.
 
 Users will also be able to save user preferences. There is no login required(or available for that matter), all usage is anonymous. All data intended to persist across multiple sessions
 and refresh will be stored using local storage. I am planning an export data feature, that will allow a user to export the json for their data (user preferences, bookshelfs) so they can import
@@ -133,7 +130,6 @@ pinia-plugin-persistedstate and its absolutely wonderful. I'm not sure how the p
       return false;
     }
 
-    // spread operator provides a shallow copy of the books arrays from both bookshelfs.
     const combinedBooks = [...bookshelf1.books, ...bookshelf2.books];
 
     if (combinedBooks.length === 0) {

@@ -84,9 +84,13 @@ export const useSearchStore = defineStore(
       let keywords = "";
 
       if (filter.title && filter.title != "") {
-        if (keywords === "")
-          keywords = `intitle:"${encodeURIComponent(filter.title)}"`;
-        else keywords += `+intitle:"${encodeURIComponent(filter.title)}"`;
+        let tmp = filter.title.split(" ");
+        
+        for (let i = 0; i < tmp.length; i++) {
+          tmp[i] = `intitle:"${encodeURIComponent(tmp[i])}"`;
+        }
+
+        keywords = tmp.join("+");
       }
 
       if (filter.author && filter.author != "") {
@@ -103,9 +107,11 @@ export const useSearchStore = defineStore(
       }
 
       if (filter.subject && filter.subject != "") {
-        if (keywords === "")
-          keywords = `subject:"${encodeURIComponent(filter.subject)}"`;
-        else keywords += `+subject:"${encodeURIComponent(filter.subject)}"`;
+        const subjects = filter.subject.split(";");
+        for (let i = 0; i < subjects.length; i++) {
+          subjects[i] = `subject:"${encodeURIComponent(subjects[i].trim())}"`;
+        }
+        keywords += `+${subjects.join("+")}`;
       }
 
       config.FMT_PRINT_DEBUG("formatFilterByOptions::keywords", keywords);
