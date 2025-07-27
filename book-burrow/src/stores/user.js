@@ -110,6 +110,57 @@ export const useUserStore = defineStore(
       }
     };
 
+    const resetBookshelfsToDefault = () => {
+      bookshelfs.value = [
+        new Bookshelf(
+          "To Be Read",
+          "This bookshelf contains books you plan to read.",
+          true,
+          uuidv4()
+        ),
+        new Bookshelf(
+          "Already Read",
+          "This bookshelf contains books you have already read.",
+          true,
+          uuidv4()
+        ),
+        new Bookshelf(
+          "Currently Reading",
+          "This bookshelf contains books you are currently reading.",
+          true,
+          uuidv4()
+        ),
+        new Bookshelf(
+          "Wishlist",
+          "This bookshelf contains books you want to buy in the future.",
+          true,
+          uuidv4()
+        ),
+        new Bookshelf(
+          "Already Owned",
+          "This bookshelf contains books you own.",
+          true,
+          uuidv4()
+        ),
+        new Bookshelf(
+          "Favorites",
+          "This bookshelf contains your favorite books.",
+          true,
+          uuidv4()
+        ),
+      ];
+      activeBookshelf.value = null;
+      activeBookshelfId.value = null;
+    }
+    
+    const resetUserStore = () => {
+      resetBookshelfsToDefault();
+      setMaxResults(40);
+      setMaxPages(8);
+      setDefaultLanguage("any");
+      isPrefsPanelOpen.value = false;
+    };
+
     return {
       bookshelfs,
       activeBookshelf,
@@ -126,6 +177,8 @@ export const useUserStore = defineStore(
       setMaxPages,
       setDefaultLanguage,
       togglePrefsPanel,
+      resetBookshelfsToDefault,
+      resetUserStore,
     };
   },
   {

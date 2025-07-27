@@ -26,6 +26,7 @@ import UserPreferencesPanel from "./components/UserPreferencesPanel.vue";
 import { RouterLink, RouterView } from "vue-router";
 import { useFilterStore } from "./stores/filter.js";
 import { useUserStore } from "./stores/user.js";
+import { onMounted } from "vue";
 import { config } from "@/config.js";
 
 const user = useUserStore();
@@ -46,6 +47,7 @@ const preferencesBtnOnClick = () => {
     }
   }
 };
+
 </script>
 
 <style scoped>
