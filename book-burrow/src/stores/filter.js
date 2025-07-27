@@ -2,6 +2,8 @@ import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 import { watch } from "vue";
 import { useUserStore } from "@/stores/user.js";
+import { config } from "@/config.js";
+
 export const useFilterStore = defineStore(
   "filter",
   () => {
@@ -42,8 +44,15 @@ export const useFilterStore = defineStore(
         const newValueNotEmpty = newValues.some((value) => value !== "");
 
         if (newValueNotEmpty) {
-          errorMsg.value = ""; // Clear the error message
+          errorMsg.value = "";
         }
+
+        // debug output
+        // oldvalues | newValues
+
+        config.FMT_PRINT_DEBUG("Filter Store: watch triggered");
+        config.FMT_PRINT_DEBUG("oldValues:", oldValues);
+        config.FMT_PRINT_DEBUG("newValues:", newValues);
       },
       { deep: false }
     );

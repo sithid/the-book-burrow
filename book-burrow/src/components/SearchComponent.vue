@@ -26,15 +26,41 @@
     <div v-if="filter.isPanelOpen" class="filter-options-panel">
       <FilterPanelComponent></FilterPanelComponent>
     </div>
-    <div class="results-container">
+    <div class="component-container">
       <div class="to-read-container">
         <h1>Bookshelf</h1>
         <p>To Be Read</p>
       </div>
-      <div class="result-cards">
-        <div v-for="book of search.googleBookResults">
-          <SearchResultComponent :book="book"></SearchResultComponent>
+      <div class="result-container">
+        <div v-if="search.resultPages.length > 0">
+          <div class="paging">
+            <button @click="prevPage" :disabled="search.currentPageIndex === 0">
+              Previous
+            </button>
+
+            <h1 id="page-result-info">
+              Displaying page {{ search.currentPageIndex + 1 }} of
+              {{ search.resultPages.length }} for
+              {{ search.googleBookResults.length }} results.
+            </h1>
+
+            <button
+              @click="nextPage"
+              :disabled="
+                search.currentPageIndex >= search.resultPages.length - 1
+              "
+            >
+              Next
+            </button>
+          </div>
+          <div v-if="currentResults && currentResults.length > 0">
+            <div v-for="book in currentResults" class="result-cards">
+              <SearchResultComponent :book="book"></SearchResultComponent>
+            </div>
+          </div>
+          <p id="no-books" v-else>No books found on this page.</p>
         </div>
+        <p id="perform-search" v-else>Please perform a search to see results.</p>
       </div>
       <div class="read-container">
         <h1>Bookshelf</h1>
@@ -47,6 +73,9 @@
 <script setup>
 import SearchResultComponent from "../components/SearchResultComponent.vue";
 import FilterPanelComponent from "../components/FilterPanelComponent.vue";
+
+import { computed } from "vue";
+
 import { useFilterStore } from "@/stores/filter";
 import { useSearchStore } from "@/stores/search";
 import { useUserStore } from "@/stores/user";
@@ -59,14 +88,38 @@ const toggleFilterPanel = () => {
   filter.toggleFilterPanel();
 
   if (filter.isPanelOpen) {
-    if (user.PrefsPanelOpen ) {
+    if (user.PrefsPanelOpen) {
       user.togglePrefsPanel();
     }
   }
-}
+};
+
+const prevPage = () => {
+  if (search.currentPageIndex > 0) {
+    search.currentPageIndex--;
+  }
+};
+
+const nextPage = () => {
+  if (search.currentPageIndex < search.resultPages.length - 1) {
+    search.currentPageIndex++;
+  }
+};
+
+const currentResults = computed(() => {
+  if (
+    search.resultPages.length > 0 &&
+    search.currentPageIndex < search.resultPages.length
+  ) {
+    return search.resultPages[search.currentPageIndex].results;
+  }
+  return null;
+});
+
 async function onSearch() {
-  if (!filter.isPanelOpen && search.basicQuery != "")
+  if (!filter.isPanelOpen && search.basicQuery.length > 0) {
     await search.queryApiBasic(search.basicQuery);
+  }
 }
 
 function clearClick() {
@@ -85,22 +138,33 @@ function clearClick() {
 .results-container {
   display: flex;
   flex-direction: row;
-  margin: 10px;
+}
+
+.component-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 5px;
+}
+
+.paging {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin: 0px 10px 10px 10px;
+  height: 50px;
+  background-color: var(--color-secondary);
 }
 
 .result-cards {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  gap: 10px;
+  width: 100vw;
 }
 
 .to-read-container,
 .read-container {
   display: none;
-  flex-direction: column;
-  width: 400px;
-  background-color: var(--color-primary);
 }
 
 .to-read-container h1,
@@ -109,14 +173,35 @@ function clearClick() {
 .read-container p {
   padding: 10px;
   margin: 10px;
-  border: 1px solid black;
+  border: 1px solid var(--color-offset);
   background-color: #fff;
 }
 
+#page-result-info {
+  margin: 5px;
+}
+
+#no-books,
+#perform-search {
+  color: var(--color-text);
+  background-color: var(--secondary);
+}
 @media (min-width: 1024px) {
+  .component-container {
+    display: flex;
+    flex-direction: row;
+  }
+
   .to-read-container,
   .read-container {
     display: flex;
+    flex-direction: column;
+    width: 24vw;
+    background-color: var(--color-primary);
+  }
+
+  #page-result-info {
+    margin: 10px;
   }
 }
 </style>

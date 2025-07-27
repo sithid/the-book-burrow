@@ -27,7 +27,7 @@ import { useBookStore } from "@/stores/book.js";
 import { GoogleBook } from "@/GoogleBook.js";
 import { useRouter } from "vue-router";
 
-const book = useBookStore();
+const bookStore = useBookStore();
 const router = useRouter();
 
 const props = defineProps({
@@ -38,7 +38,7 @@ const props = defineProps({
 });
 
 function onThumbnailClicked() {
-  book.setActiveBook(props.book);
+  bookStore.setActiveBook(props.book);
   router.push("/details");
 }
 </script>
@@ -50,6 +50,8 @@ function onThumbnailClicked() {
   padding: 10px;
   color: var(black);
   background-color: var(--color-secondary);
+  border: 10px solid var(--color-offset);
+  border-top: none;
 }
 
 .book-card-mini img {

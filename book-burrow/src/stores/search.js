@@ -14,8 +14,9 @@ export const useSearchStore = defineStore(
 
     const googleBookResults = ref([]);
     const resultPages = ref([]);
-    const pageCount = ref(0); // used to track the number of pages of results
-
+    const currentPageIndex = ref(0);
+    const pageCount = ref(0);
+    
     // Simple search, querys google api for any book with any field that
     // matches this search string.  ?q={}
     const basicQuery = ref("");
@@ -171,6 +172,7 @@ export const useSearchStore = defineStore(
       // Make sure i 'reset' the book result array, otherwise it will get huge.
       // just clear the array and repopulate it with the new results.
       googleBookResults.value = [];
+      resultPages.value = [];
 
       const requestHeaders = new Headers();
       requestHeaders.append("Content-Type", "application/json");
@@ -187,7 +189,13 @@ export const useSearchStore = defineStore(
       };
 
       for (let index = 0; index < user.maxPages; index++) {
+        const page = {
+          index: resultPages.value.length,
+          results: [],
+        };
+
         let indexedUrl = `${url}&startIndex=${index * user.maxResults}`;
+
         config.FMT_PRINT_DEBUG(
           "search::queryApiAdvanced",
           `Querying page ${index + 1} with URL: ${indexedUrl}`
@@ -210,8 +218,14 @@ export const useSearchStore = defineStore(
           for (let itemIndex = 0; itemIndex < data.items.length; itemIndex++) {
             const book = new GoogleBook(data.items[itemIndex]);
             googleBookResults.value.push(book);
+            page.results.push(book);
           }
+
+          resultPages.value.push(page);
         }
+
+        currentPageIndex.value = 0;
+
       }
     }
 
@@ -293,46 +307,70 @@ export const useSearchStore = defineStore(
       googleBookResults, // array of books populated by response
       pageCount, // number of pages of results
       basicQuery, // last simple query string from input
+      resultPages, // an array of page objects
+      currentPageIndex, // the index of the current page within the resultPages array
 
-      clear, // clears values.
       formatFindResultsOptions, // formats allWords/exactWords/atleastOneWord/withoutTheseWords query string
       formatFilterByOptions, // formats title, author, publisher, published, subject query string
       formatAdditionalOptions, // formats addtional options query string
       advancedQueryUrl, // build the entire formatted advanced query string
+      clear, // clears values.
       queryApiBasic, // perform a generic search across a wide trange of fields
       queryApiAdvanced, // perform an advanced, targeted search for combined terms, filters, and options
     };
   },
   {
-    // state persistence, automatically saves and loads state to/from localStorage
-    // our google book is a custom object, so i need to serialize it properly
-    // using a custom serializer/deserializer.
     persist: {
-      paths: ["googleBookResults", "pageCount", "basicQuery"],
+      paths: [
+        "googleBookResults",
+        "pageCount",
+        "basicQuery",
+        "resultPages",
+        "currentPageIndex",
+      ],
       serializer: {
-        // stringify the state(state includes all of the properties of the store)
-        // but i only need to manually deserialize the googleBookResults array
         serialize: (state) => {
           const newState = {
-            ...state, // the spread will help copy all other properties.
+            ...state,
             googleBookResults: state.googleBookResults.map((book) => {
               return { ...book };
             }),
+            resultPages: state.resultPages.map((page) => {
+              return {
+                index: page.index,
+                results: page.results.map((book) => {
+                  return { ...book };
+                }),
+              };
+            }),
           };
+
           return JSON.stringify(newState);
         },
         deserialize: (str) => {
-          // i previously serialized the store as a json object, so i need to parse it back.
           const loadedState = JSON.parse(str);
 
           if (loadedState.googleBookResults) {
-            // here i need to map each element of the loaded googleBookResults array to a new array
-            // of google books that i build from the plain object.
             loadedState.googleBookResults = loadedState.googleBookResults.map(
               (plainObject) => {
                 return utility.getGBookFrom(plainObject);
               }
             );
+          }
+
+          if (loadedState.resultPages) {
+            loadedState.resultPages = loadedState.resultPages.map((page) => {
+              return {
+                index: page.index,
+                results: page.results.map((plainObject) => {
+                  return utility.getGBookFrom(plainObject);
+                }),
+              };
+            });
+          }
+
+          if (loadedState.resultPages && loadedState.resultPages.length > 0) {
+            loadedState.currentPageIndex = 0;
           }
 
           return loadedState;

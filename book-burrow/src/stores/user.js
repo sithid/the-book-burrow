@@ -52,17 +52,10 @@ export const useUserStore = defineStore(
     const activeBookshelf = ref(null);
     const activeBookshelfId = ref(null);
     const maxResults = ref(40);
-    const maxPages = ref(10);
-    const defaultLanguage = ref('any');
-    
-    const isPrefsPanelOpen = ref(false);
+    const maxPages = ref(8);
+    const defaultLanguage = ref("any");
 
-    const Bookshelfs = computed(() => bookshelfs.value);
-    const ActiveBookshelf = computed(() => activeBookshelf.value);
-    const ActiveBookshelfId = computed(() => activeBookshelfId.value);
-    const HasActiveBookshelf = computed(() => activeBookshelf.value !== null);
-    const MaxResults = computed(() => maxResults.value);
-    const MaxPages = computed(() => maxPages.value);
+    const isPrefsPanelOpen = ref(false);
 
     const PrefsPanelOpen = computed(() => {
       return isPrefsPanelOpen.value;
@@ -82,10 +75,12 @@ export const useUserStore = defineStore(
 
     const setMaxPages = (value) => {
       if (value < 1) value = 1;
-      if (value > 10) value = 10;
+      if (value > 100) value = 100;
 
       maxPages.value = value;
     };
+
+    const setDefaultLanguage = (language) => defaultLanguage.value = language;
 
     const setActiveBookshelf = (bookshelf) => {
       if (!bookshelf || !(bookshelf instanceof Bookshelf) || !bookshelf.id) {
@@ -125,20 +120,15 @@ export const useUserStore = defineStore(
       activeBookshelfId,
       maxResults,
       maxPages,
+      defaultLanguage,
       isPrefsPanelOpen,
-
-      Bookshelfs,
-      ActiveBookshelf,
-      ActiveBookshelfId,
-      HasActiveBookshelf,
-      MaxResults,
-      MaxPages,
       PrefsPanelOpen,
 
       setActiveBookshelf,
       setActiveBookshelfById,
       setMaxResults,
       setMaxPages,
+      setDefaultLanguage,
       togglePrefsPanel,
     };
   },
@@ -151,99 +141,39 @@ export const useUserStore = defineStore(
         "maxResults",
         "maxPages",
         "isPrefsPanelOpen",
+        "defaultLanguage",
       ],
       serializer: {
         serialize: (state) => {
           const newState = {
-            ...state,
+            bookshelfs: state.bookshelfs.map((bookshelf) => {
+              return utility.getBookshelfForm(bookshelf);
+            }),
             activeBookshelf: state.activeBookshelf
-              ? { ...state.activeBookshelf }
+              ? utility.getBookshelfForm(state.activeBookshelf)
               : null,
+            activeBookshelfId: state.activeBookshelfId,
+            maxResults: state.maxResults,
+            maxPages: state.maxPages,
+            isPrefsPanelOpen: state.isPrefsPanelOpen,
+            defaultLanguage: state.defaultLanguage,
           };
+
           return JSON.stringify(newState);
         },
         deserialize: (str) => {
           const loadedState = JSON.parse(str);
-          // set the bookshelfs array to the value returned from mapping the current value of loadedState.bookshelfs
-          // to a new array of bookshelf objects created using the Bookshelf constructor.
-          // this is necessary because the bookshelfs are stored as plain objects in localStorage,
           loadedState.bookshelfs = loadedState.Bookshelfs.map((bookshelf) => {
             return utility.getBookshelfFrom(bookshelf);
           });
 
-          loadedState.ActiveBookshelf = setActiveBookshelfById(
-            loadedState.ActiveBookshelfId
-          );
-          loadedState.MaxResults = setMaxResults(loadedState.MaxResults);
-          loadedState.MaxPages = setMaxPages(loadedState.MaxPages);
+          setActiveBookshelfById(loadedState.activeBookshelfId);
+          setMaxResults(loadedState.maxResults);
+          setMaxPages(loadedState.maxPages);
+          setDefaultLanguage(loadedState.defaultLanguage);
           return loadedState;
         },
       },
     },
   }
 );
-
-/*
- * this is from when i was manually rebuilding the plain object.
- * the block of code is so huge, if i have to do this even twice
- * its worth making a function just for this purpose
- * 
- * utility.js
- 
- 
-deserialize: (str) => {
-          const loadedState = JSON.parse(str);
-          // set the bookshelfs array to the value returned from mapping the current value of loadedState.bookshelfs
-          // to a new array of bookshelf objects created using the Bookshelf constructor.
-          // this is necessary because the bookshelfs are stored as plain objects in localStorage,
-          loadedState.bookshelfs = loadedState.bookshelfs.map((bookshelf) => {
-            return new Bookshelf(
-              bookshelf.name,
-              bookshelf.description,
-              bookshelf.isDefault,
-              bookshelf.id,
-              bookshelf.books.map(
-                (book) =>
-                  new GoogleBook({
-                    // every bookshelf contains an array of books, which must be carefully parsed
-                    // we can't just map the book object directly because the GoogleBook constructor
-                    // expects a specific structure. we need to ensure that the book object is correctly shaped for the GoogleBook constructor.
-                    id: book.id,
-                    selfLink: book.selfLink,
-                    volumeInfo: {
-                      title: book.title,
-                      authors: book.authors,
-                      categories: book.subject,
-                      publisher: book.publisher,
-                      publishedDate: book.publishedDate,
-                      description: book.description,
-                      industryIdentifiers: [
-                        book.isbn10
-                          ? { type: "ISBN_10", identifier: book.isbn10 }
-                          : null,
-                        book.isbn13
-                          ? { type: "ISBN_13", identifier: book.isbn13 }
-                          : null,
-                      ].filter(Boolean),
-                      pageCount: book.pageCount,
-                      printedPageCount: book.printedPageCount,
-                      averageRating: book.averageRating,
-                      ratingCount: book.ratingCount,
-                      maturityRating: book.maturityRating,
-                      imageLinks: book.imageLinks,
-                      language: book.language,
-                      infoLink: book.infoLink,
-                      canonicalVolumeLink: book.canonicalVolumeLink,
-                      saleInfo: book.saleInfo,
-                    },
-                  })
-              )
-            );
-          });
-        },
-      },
-    },
-  }
-);
-
-*/

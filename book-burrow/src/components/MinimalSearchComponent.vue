@@ -35,8 +35,8 @@ function clearClick() {
 
 async function searchBtnOnClick() {
   if (search.basicQuery.length > 0) {
-    await search.queryApiBasic(search.basicQuery);
     router.push("/search");
+    await search.queryApiBasic(search.basicQuery);
   }
 }
 
