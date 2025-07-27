@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="book-detail-section">
-      <h1>Additional Information</h1>
+      <h1 class="title-header">Additional Information</h1>
       <div class="info-text" v-if="book.ActiveBook.subject">
         <span class="category-text">Genre/Subject</span>
         <span id="subject">{{ book.ActiveBook.subject.join() }}</span>
@@ -86,6 +86,10 @@
         <span class="category-text">Id</span>
         <span id="book-id">{{ book.ActiveBook.id }}</span>
       </div>
+    </div>
+    <div class="book-detail-section">
+      <h1 class="title-header">Options</h1>
+      <label for="add-to-bookshelf"></label>
     </div>
   </div>
 </template>

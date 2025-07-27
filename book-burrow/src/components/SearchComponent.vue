@@ -7,19 +7,9 @@
       <button @click="clearClick" class="clear-button">
         <i class="fa fa-cancel" aria-hidden="true"></i>
       </button>
-      <input
-        id="search-input"
-        type="text"
-        v-model="search.basicQuery"
-        @keyup.enter="onSearch"
-        class="search-input"
-        placeholder="Search Terms Required"
-      />
-      <button
-        v-if="!filter.isPanelOpen"
-        @click="onSearch"
-        class="search-button"
-      >
+      <input id="search-input" type="text" v-model="search.basicQuery" @keyup.enter="onSearch" class="search-input"
+        placeholder="Search Terms Required" />
+      <button v-if="!filter.isPanelOpen" @click="onSearch" class="search-button">
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
     </div>
@@ -28,8 +18,7 @@
     </div>
     <div class="component-container">
       <div class="to-read-container">
-        <h1>Bookshelf</h1>
-        <p>To Be Read</p>
+        <BookshelfSidePanelComponent :bookshelf="toBeRead"></BookshelfSidePanelComponent>
       </div>
       <div class="result-container">
         <div v-if="search.resultPages.length > 0">
@@ -44,27 +33,23 @@
               {{ search.googleBookResults.length }} results.
             </h1>
 
-            <button
-              @click="nextPage"
-              :disabled="
+            <button @click="nextPage" :disabled="
                 search.currentPageIndex >= search.resultPages.length - 1
-              "
-            >
+              ">
               Next
             </button>
           </div>
-          <div v-if="currentResults && currentResults.length > 0">
-            <div v-for="book in currentResults" class="result-cards">
-              <SearchResultComponent :book="book"></SearchResultComponent>
-            </div>
+          <div v-for="book in currentResults" v-if="currentResults && currentResults.length > 0">
+            <SearchResultComponent :book="book"></SearchResultComponent>
           </div>
           <p id="no-books" v-else>No books found on this page.</p>
         </div>
-        <p id="perform-search" v-else>Please perform a search to see results.</p>
+        <p id="perform-search" v-else>
+          Please perform a search to see results.
+        </p>
       </div>
       <div class="read-container">
-        <h1>Bookshelf</h1>
-        <p>Have Read</p>
+        <BookshelfSidePanelComponent :bookshelf="alreadyRead"></BookshelfSidePanelComponent>
       </div>
     </div>
   </div>
@@ -73,6 +58,7 @@
 <script setup>
 import SearchResultComponent from "../components/SearchResultComponent.vue";
 import FilterPanelComponent from "../components/FilterPanelComponent.vue";
+import BookshelfSidePanelComponent from "../components/BookshelfSidePanelComponent.vue";
 
 import { computed } from "vue";
 
@@ -83,6 +69,9 @@ import { useUserStore } from "@/stores/user";
 const filter = useFilterStore();
 const search = useSearchStore();
 const user = useUserStore();
+
+const toBeRead = user.bookshelfs[0];
+const alreadyRead = user.bookshelfs[1];
 
 const toggleFilterPanel = () => {
   filter.toggleFilterPanel();
@@ -128,23 +117,16 @@ function clearClick() {
 </script>
 
 <style scoped>
-.filter-options-panel {
-  display: flex;
-  flex-direction: row;
-  position: relative;
-  background-color: var(--color-secondary);
-}
-
-.results-container {
-  display: flex;
-  flex-direction: row;
-}
-
 .component-container {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   margin-top: 5px;
+}
+
+.results-container {
+  display: flex;
+  flex-direction: row;
 }
 
 .paging {
@@ -159,7 +141,6 @@ function clearClick() {
 .result-cards {
   display: flex;
   flex-direction: column;
-  width: 100vw;
 }
 
 .to-read-container,
@@ -177,6 +158,13 @@ function clearClick() {
   background-color: #fff;
 }
 
+.filter-options-panel {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  background-color: var(--color-secondary);
+}
+
 #page-result-info {
   margin: 5px;
 }
@@ -192,12 +180,22 @@ function clearClick() {
     flex-direction: row;
   }
 
+  .result-container {
+    width: 50%;
+  }
+
   .to-read-container,
   .read-container {
     display: flex;
     flex-direction: column;
-    width: 24vw;
-    background-color: var(--color-primary);
+    width: 25%;
+  }
+
+  .filter-options-panel {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    background-color: var(--color-secondary);
   }
 
   #page-result-info {

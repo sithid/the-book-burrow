@@ -1,4 +1,7 @@
 import { GoogleBook } from "@/GoogleBook.js";
+import { Bookshelf } from "@/Bookshelf.js";
+import { config } from "@/config.js";
+import { v4 as uuidv4 } from "uuid";
 
 /*
  * Feature: Create a function that accepts two or more input parameters and
@@ -43,15 +46,23 @@ export const utility = {
     }
   },
 
+  getBookshelfForm: (bookshelf) => {
+    return {
+      id: bookshelf.id,
+      name: bookshelf.name,
+      description: bookshelf.description,
+      isDefault: bookshelf.isDefault,
+      books: bookshelf.books
+    };
+  },
+
   getBookshelfFrom: (plainObject) => {
-    // this is used to create a new bookshelf object from a plain object.
-    // this is good for deserializing the bookshelf from localStorage.
     let newShelf = new Bookshelf(
       plainObject.name,
       plainObject.description,
       plainObject.isDefault,
       plainObject.id,
-      [...plainObject.books]
+      plainObject.books
     );
 
     config.FMT_PRINT_DEBUG("utility::constructBookshelfFromObject", newShelf);
@@ -59,11 +70,6 @@ export const utility = {
   },
 
   getGBookFrom: (plainObject) => {
-    // used to create a new google book object from a plain object.
-    // this works great for deserializing the book from localStorage
-    // because the book is stored as a plain object but the shape of it is that
-    // of a GoogleBook object and not a google books api response object.
-
     const gbook = {
       id: plainObject.id, // string
       selfLink: plainObject.selfLink, // string
@@ -83,7 +89,13 @@ export const utility = {
         averageRating: plainObject.averageRating, // number
         ratingCount: plainObject.ratingCount, // number
         maturityRating: plainObject.maturityRating, // string
-        imageLinks: plainObject.imageLinks, // { smallThumbnail, thumbnail, small, medium, large } :: { string, string, string, string, string }
+        imageLinks: {
+          smallThumbnail: plainObject.imageLinks.smallThumbnail, // string
+          thumbnail: plainObject.imageLinks.thumbnail, // string
+          small: plainObject.imageLinks.small, // string
+          medium: plainObject.imageLinks.medium, // string
+          large: plainObject.imageLinks.large, // string
+        },
         language: plainObject.language, // string
         infoLink: plainObject.infoLink, // string
         canonicalVolumeLink: plainObject.canonicalVolumeLink, // string

@@ -3,49 +3,47 @@ import { ref, computed } from "vue";
 import { Bookshelf } from "@/Bookshelf.js";
 import { config } from "@/config.js";
 import { utility } from "@/utility.js";
+import { v4 as uuidv4 } from "uuid";
 
 export const useUserStore = defineStore(
   "user",
   () => {
-    // this user store is specifically for managing the users data.
-    // this includes everything from user preferences to their bookshelfs.
-
-    // this is the default bookshelf list
-    // this is how we will populate the users default bookshelfs
-    // from here, it can be updated, added to, or removed from by the user
-    // and the data will persist to localstorage thanks to pinia's persistence plugin
-    // we wanna make sure we use the BookShelf constructor function which will set
-    // the id with a uuid for us.
     const bookshelfs = ref([
       new Bookshelf(
         "To Be Read",
         "This bookshelf contains books you plan to read.",
-        true
-      ),
-      new Bookshelf(
-        "Currently Reading",
-        "This bookshelf contains books you are currently reading.",
-        true
+        true,
+        uuidv4()
       ),
       new Bookshelf(
         "Already Read",
         "This bookshelf contains books you have already read.",
-        true
+        true,
+        uuidv4()
+      ),
+      new Bookshelf(
+        "Currently Reading",
+        "This bookshelf contains books you are currently reading.",
+        true,
+        uuidv4()
       ),
       new Bookshelf(
         "Wishlist",
         "This bookshelf contains books you want to buy in the future.",
-        true
+        true,
+        uuidv4()
       ),
       new Bookshelf(
         "Already Owned",
         "This bookshelf contains books you own.",
-        true
+        true,
+        uuidv4()
       ),
       new Bookshelf(
         "Favorites",
         "This bookshelf contains your favorite books.",
-        true
+        true,
+        uuidv4()
       ),
     ]);
 
@@ -65,7 +63,6 @@ export const useUserStore = defineStore(
       isPrefsPanelOpen.value = !isPrefsPanelOpen.value;
     };
 
-    // i treat these like setters
     const setMaxResults = (value) => {
       if (value < 10) value = 10;
       if (value > 40) value = 40;
@@ -80,7 +77,7 @@ export const useUserStore = defineStore(
       maxPages.value = value;
     };
 
-    const setDefaultLanguage = (language) => defaultLanguage.value = language;
+    const setDefaultLanguage = (language) => (defaultLanguage.value = language);
 
     const setActiveBookshelf = (bookshelf) => {
       if (!bookshelf || !(bookshelf instanceof Bookshelf) || !bookshelf.id) {
@@ -94,7 +91,6 @@ export const useUserStore = defineStore(
 
       activeBookshelf.value = bookshelf;
       activeBookshelfId.value = bookshelf.id;
-      npm;
       return true;
     };
 
@@ -163,14 +159,18 @@ export const useUserStore = defineStore(
         },
         deserialize: (str) => {
           const loadedState = JSON.parse(str);
-          loadedState.bookshelfs = loadedState.Bookshelfs.map((bookshelf) => {
-            return utility.getBookshelfFrom(bookshelf);
-          });
-
-          setActiveBookshelfById(loadedState.activeBookshelfId);
-          setMaxResults(loadedState.maxResults);
-          setMaxPages(loadedState.maxPages);
-          setDefaultLanguage(loadedState.defaultLanguage);
+          
+          if (loadedState.bookshelfs) {
+            loadedState.bookshelfs = loadedState.bookshelfs.map((bookshelf) => {
+              return utility.getBookshelfFrom(bookshelf);
+            });
+          }
+          
+          // Recreate active bookshelf if it exists
+          if (loadedState.activeBookshelf) {
+            loadedState.activeBookshelf = utility.getBookshelfFrom(loadedState.activeBookshelf);
+          }
+          
           return loadedState;
         },
       },

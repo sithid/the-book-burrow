@@ -22,11 +22,11 @@
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
-import { config } from "@/config.js";
-import { useUserStore } from "./stores/user.js";
-import { useFilterStore } from "./stores/filter.js";
 import UserPreferencesPanel from "./components/UserPreferencesPanel.vue";
+import { RouterLink, RouterView } from "vue-router";
+import { useFilterStore } from "./stores/filter.js";
+import { useUserStore } from "./stores/user.js";
+import { config } from "@/config.js";
 
 const user = useUserStore();
 const filter = useFilterStore();
@@ -53,11 +53,9 @@ const preferencesBtnOnClick = () => {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  width: 100%;
   color: var(--color-text);
   background-color: var(--color-primary);
-  margin-bottom: 5px;
-  padding-bottom: 5px;
+  margin: 10px 10px 10px 10px;
 }
 
 .footer {

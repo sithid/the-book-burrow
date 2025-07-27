@@ -158,9 +158,6 @@ async function queryApiAdvanced() {
   }
 }
 
-// Setting the values of the stores has to be set directly.  Between vue and pinia, the values are destructured/unwrapped for you.
-// If you access the property from within the store, you have to use prop.value.
-// This caused so much confusion originally.
 function cancelClick() {
   filter.errorMsg = "";
   filter.toggleFilterPanel();

@@ -12,9 +12,7 @@
 
 <script setup>
 import { useUserStore } from "@/stores/user";
-import { useSearchStore } from "@/stores/search";
 
-const search = useSearchStore();
 const user = useUserStore();
 </script>
 

@@ -52,6 +52,10 @@ export class Bookshelf {
     return true;
   }
 
+  clearBooks() {
+    this.books = [];
+  }
+
   // simple combine function that uses the spread operator to combine this bookshelf with an input bookshelf.
   // this will be usful for user bookshelf control (button for 'combine a bookshelf with this one')
   combineBookshelf(otherBookshelf) {

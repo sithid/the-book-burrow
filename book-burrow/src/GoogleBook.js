@@ -1,17 +1,6 @@
 import { config } from "@/config.js";
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * We could carry around the entire object that is returned from the google books api, but
- * there are up to 40 results, all containing data for fields were not using and I don't think
- * we really need to pass all that around to each result container.
- *
- * Instead, we will build a book based on the google response object returned from our api query
- * to the google books api but we will only use properties we care about, the rest will be lost.
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 export class GoogleBook {
-  // this constructor is used to create a new google book object from the api response object
-  // this constructor is good for creating a new google book object from the api response object
-  // for use within the application itself.
   constructor( apiResponseObject) {
     this.id = apiResponseObject.id; // string
     this.selflink = apiResponseObject.selflink; // string
@@ -63,10 +52,6 @@ export class GoogleBook {
     }
   }
 
-  // we only really care about the thumbnail, but we will
-  // return the first image link that is defined, otherwise
-  // we will return a placeholder image that is 200x250px 
-  // with a message that the thumbnail is missing
   fmtThumbnail() {
     if (this.imageLinks != undefined) {
       if (this.imageLinks.thumbnail != undefined) {

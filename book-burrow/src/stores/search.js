@@ -79,7 +79,6 @@ export const useSearchStore = defineStore(
       return finalKeywords;
     });
 
-    // formats title, author, publisher, published, subject query string
     const formatFilterByOptions = computed(() => {
       let keywords = "";
 
@@ -118,7 +117,6 @@ export const useSearchStore = defineStore(
       basicQuery.value = "";
     };
 
-    // formats addtional options query string
     const formatAdditionalOptions = computed(() => {
       let keywords = "";
 
@@ -134,7 +132,6 @@ export const useSearchStore = defineStore(
       return keywords;
     });
 
-    // build the entire formatted advanced query string
     const advancedQueryUrl = computed(() => {
       let queryString = `${config.API_URL}?q=`;
 
@@ -142,10 +139,6 @@ export const useSearchStore = defineStore(
       const filters = formatFilterByOptions.value;
       const additionalOptions = formatAdditionalOptions.value;
 
-      // because we use encodeURIComponent to encode the query string in the
-      // respective format functions, we should not encode it again here (double encoding).
-      // this can break the query string or return unexpected results.
-      // Now i understand some of the results ive been getting.
       if (words) {
         queryString += `${words}`;
       }
@@ -165,12 +158,7 @@ export const useSearchStore = defineStore(
       return queryString;
     });
 
-    // perform a generic search across a wide range of fields
-    // if any field has content that matches the query string,
-    // it will return the book.
     async function queryApiBasic(params) {
-      // Make sure i 'reset' the book result array, otherwise it will get huge.
-      // just clear the array and repopulate it with the new results.
       googleBookResults.value = [];
       resultPages.value = [];
 
@@ -212,7 +200,7 @@ export const useSearchStore = defineStore(
               `No more results found on page ${index + 1}.`
             );
 
-            break; // no more results, so break out of the loop.
+            break;
           }
 
           for (let itemIndex = 0; itemIndex < data.items.length; itemIndex++) {
@@ -229,7 +217,6 @@ export const useSearchStore = defineStore(
       }
     }
 
-    // perform an advanced, targeted search for combined terms, filters, and options
     async function queryApiAdvanced() {
       googleBookResults.value = [];
       const url = advancedQueryUrl.value;
@@ -262,11 +249,9 @@ export const useSearchStore = defineStore(
               "search::queryApiAdvanced",
               `No more results found on page ${index + 1}.`
             );
-            break; // no more results, so break out of the loop.
+            break;
           }
-          // even though i am filtering by language from the api, there are apparently
-          // some weird edge cases that make it nessessary to filter by language on the
-          // client side of things.
+
           for (let itemIndex = 0; itemIndex < data.items.length; itemIndex++) {
             const item = data.items[itemIndex];
             if (
@@ -279,7 +264,7 @@ export const useSearchStore = defineStore(
             }
           }
 
-          pageCount.value = Math.ceil(data.totalItems / user.maxResults); // calculate the number of pages based on total items and max results
+          pageCount.value = Math.ceil(data.totalItems / user.maxResults);
           config.FMT_PRINT_DEBUG(
             "search::queryApiAdvanced",
             `Page ${index + 1} of ${pageCount.value} loaded.`
@@ -314,6 +299,7 @@ export const useSearchStore = defineStore(
       formatFilterByOptions, // formats title, author, publisher, published, subject query string
       formatAdditionalOptions, // formats addtional options query string
       advancedQueryUrl, // build the entire formatted advanced query string
+
       clear, // clears values.
       queryApiBasic, // perform a generic search across a wide trange of fields
       queryApiAdvanced, // perform an advanced, targeted search for combined terms, filters, and options
@@ -333,13 +319,13 @@ export const useSearchStore = defineStore(
           const newState = {
             ...state,
             googleBookResults: state.googleBookResults.map((book) => {
-              return { ...book };
+              return utility.getGBookFrom(book);
             }),
             resultPages: state.resultPages.map((page) => {
               return {
                 index: page.index,
                 results: page.results.map((book) => {
-                  return { ...book };
+                  return utility.getGBookFrom(book);
                 }),
               };
             }),

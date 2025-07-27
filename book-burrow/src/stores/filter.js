@@ -46,13 +46,6 @@ export const useFilterStore = defineStore(
         if (newValueNotEmpty) {
           errorMsg.value = "";
         }
-
-        // debug output
-        // oldvalues | newValues
-
-        config.FMT_PRINT_DEBUG("Filter Store: watch triggered");
-        config.FMT_PRINT_DEBUG("oldValues:", oldValues);
-        config.FMT_PRINT_DEBUG("newValues:", newValues);
       },
       { deep: false }
     );
