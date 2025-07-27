@@ -41,7 +41,7 @@
       <div class="info-text" v-if="book.ActiveBook.ratingCount">
         <span class="category-text">Rating Count</span>
         <span id="rating-count">{{ book.ActiveBook.ratingCount }}</span>
-      </div>maxRes
+      </div>
       <div class="info-text" v-if="book.ActiveBook.maturityRating">
         <span class="category-text">Maturity Rating</span>
         <span id="maturity-rating">{{ book.ActiveBook.maturityRating }}</span>

@@ -37,7 +37,7 @@ export const useBookStore = defineStore(
     // state persistence, automatically saves and loads state to/from localStorage
     // this will persist the activeBook data across page reloads/refreshes.
     persist: {
-      paths: ['activeBook'],
+      paths: ["activeBook"],
       // activeBook is the only property we worth persisting
       // the other 2 properties are computed from activeBook
       // as long as we can reload the active book, we can compute the values.

@@ -1,10 +1,12 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 import { watch } from "vue";
-
+import { useUserStore } from "@/stores/user.js";
 export const useFilterStore = defineStore(
   "filter",
   () => {
+    const user = useUserStore();
+
     // Advanced filter options. https://www.googleapis.com/books/v1/volumes?q=<string>
     const allWords = ref(""); // ./books/v1/volumes?q=term+term+term
     const exactWords = ref(""); // ./books/v1/volumes?q="test+test+test"
@@ -99,6 +101,7 @@ export const useFilterStore = defineStore(
         "publisher",
         "subject",
         "language",
+        "filterPanelOpen",
       ],
     },
   }

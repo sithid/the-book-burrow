@@ -1,11 +1,11 @@
 <template>
-  <div class="bookshelf">
+  <div class="bookshelfs">
     <h1>This is your bookshelf page</h1>
   </div>
 </template>
 
 <style>
-.bookshelf {
+.bookshelfs {
   min-height: 100vh;
   display: flex;
   justify-content: center;

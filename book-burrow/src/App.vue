@@ -11,6 +11,8 @@
       </button>
     </nav>
   </div>
+  <UserPreferencesPanel v-if="user.PrefsPanelOpen" class="prefs-panel">
+  </UserPreferencesPanel>
   <div class="content-panel">
     <RouterView />
   </div>
@@ -22,10 +24,28 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
 import { config } from "@/config.js";
+import { useUserStore } from "./stores/user.js";
+import { useFilterStore } from "./stores/filter.js";
+import UserPreferencesPanel from "./components/UserPreferencesPanel.vue";
+
+const user = useUserStore();
+const filter = useFilterStore();
 
 const preferencesBtnOnClick = () => {
-  config.FMT_PRINT_DEBUG("App::preferencesBtnOnClick", "The preferences button was clicked, but this feature is not yet implemented.", false);
-}
+  config.FMT_PRINT_DEBUG(
+    "App::preferencesBtnOnClick",
+    "The preferences button was clicked, but this feature is still being implemented.",
+    false
+  );
+
+  user.togglePrefsPanel();
+
+  if (user.PrefsPanelOpen) {
+    if (filter.isPanelOpen) {
+      filter.toggleFilterPanel();
+    }
+  }
+};
 </script>
 
 <style scoped>

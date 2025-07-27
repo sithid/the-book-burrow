@@ -51,7 +51,7 @@ export const utility = {
       plainObject.description,
       plainObject.isDefault,
       plainObject.id,
-      [plainObject.books]
+      [...plainObject.books]
     );
 
     config.FMT_PRINT_DEBUG("utility::constructBookshelfFromObject", newShelf);

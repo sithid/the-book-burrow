@@ -1,5 +1,5 @@
 <template>
-  <div class="book-details-view">
+  <div class="book-details">
     <BookDetailsComponent v-if="book.HasActiveBook"></BookDetailsComponent>
   </div>
 </template>
@@ -23,7 +23,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.book-details-view {
+.book-details {
   display: flex;
   flex-direction: column;
   text-align: center;

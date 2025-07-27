@@ -53,6 +53,9 @@ export const useUserStore = defineStore(
     const activeBookshelfId = ref(null);
     const maxResults = ref(40);
     const maxPages = ref(10);
+    const defaultLanguage = ref('any');
+    
+    const isPrefsPanelOpen = ref(false);
 
     const Bookshelfs = computed(() => bookshelfs.value);
     const ActiveBookshelf = computed(() => activeBookshelf.value);
@@ -60,6 +63,14 @@ export const useUserStore = defineStore(
     const HasActiveBookshelf = computed(() => activeBookshelf.value !== null);
     const MaxResults = computed(() => maxResults.value);
     const MaxPages = computed(() => maxPages.value);
+
+    const PrefsPanelOpen = computed(() => {
+      return isPrefsPanelOpen.value;
+    });
+
+    const togglePrefsPanel = () => {
+      isPrefsPanelOpen.value = !isPrefsPanelOpen.value;
+    };
 
     // i treat these like setters
     const setMaxResults = (value) => {
@@ -114,17 +125,21 @@ export const useUserStore = defineStore(
       activeBookshelfId,
       maxResults,
       maxPages,
+      isPrefsPanelOpen,
 
       Bookshelfs,
       ActiveBookshelf,
+      ActiveBookshelfId,
       HasActiveBookshelf,
       MaxResults,
       MaxPages,
+      PrefsPanelOpen,
 
       setActiveBookshelf,
       setActiveBookshelfById,
       setMaxResults,
       setMaxPages,
+      togglePrefsPanel,
     };
   },
   {
@@ -135,6 +150,7 @@ export const useUserStore = defineStore(
         "activeBookshelfId",
         "maxResults",
         "maxPages",
+        "isPrefsPanelOpen",
       ],
       serializer: {
         serialize: (state) => {

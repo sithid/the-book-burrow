@@ -1,15 +1,25 @@
 <template>
   <div class="search-component">
     <div v-if="!filter.isPanelOpen" class="search-container">
-      <button @click="filter.toggleFilterPanel" class="filter-button">
+      <button @click="toggleFilterPanel" class="filter-button">
         <i class="fa fa-filter" aria-hidden="true"></i>
       </button>
       <button @click="clearClick" class="clear-button">
         <i class="fa fa-cancel" aria-hidden="true"></i>
       </button>
-      <input id="search-input" type="text" v-model="search.basicQuery" @keyup.enter="onSearch" class="search-input"
-        placeholder="Search Terms Required" />
-      <button v-if="!filter.isPanelOpen" @click="onSearch" class="search-button">
+      <input
+        id="search-input"
+        type="text"
+        v-model="search.basicQuery"
+        @keyup.enter="onSearch"
+        class="search-input"
+        placeholder="Search Terms Required"
+      />
+      <button
+        v-if="!filter.isPanelOpen"
+        @click="onSearch"
+        class="search-button"
+      >
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
     </div>
@@ -35,14 +45,25 @@
 </template>
 
 <script setup>
-import { useFilterStore } from "@/stores/filter";
-import { useSearchStore } from "@/stores/search";
 import SearchResultComponent from "../components/SearchResultComponent.vue";
 import FilterPanelComponent from "../components/FilterPanelComponent.vue";
+import { useFilterStore } from "@/stores/filter";
+import { useSearchStore } from "@/stores/search";
+import { useUserStore } from "@/stores/user";
 
 const filter = useFilterStore();
 const search = useSearchStore();
+const user = useUserStore();
 
+const toggleFilterPanel = () => {
+  filter.toggleFilterPanel();
+
+  if (filter.isPanelOpen) {
+    if (user.PrefsPanelOpen ) {
+      user.togglePrefsPanel();
+    }
+  }
+}
 async function onSearch() {
   if (!filter.isPanelOpen && search.basicQuery != "")
     await search.queryApiBasic(search.basicQuery);
@@ -64,7 +85,7 @@ function clearClick() {
 .results-container {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  margin: 
 }
 
 .result-cards {
@@ -78,7 +99,7 @@ function clearClick() {
 .read-container {
   display: none;
   flex-direction: column;
-  width: 600px;
+  width: 400px;
   background-color: var(--color-primary);
 }
 
