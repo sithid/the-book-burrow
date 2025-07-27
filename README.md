@@ -1,5 +1,7 @@
 # The Book Burrow
 
+![Filter Panel Preview](./docs/FilterPanel.png)
+
 The book burrow is a responsive web app that functions much like Google Books, utilizing the google books api. Users can search for books by either
 using the minimal serach box on the home page to do a broad search for books that have ANY properties which contain the keywords they are search for.
 
@@ -37,11 +39,11 @@ pinia-plugin-persistedstate and its absolutely wonderful. I'm not sure how the p
 3. **Set up environment variables**
 
    ```bash
-   # Create a .env file in the book-burrow directory
-   echo "VITE_API_KEY=your_google_books_api_key_here" > .env
+   echo "VITE_GOOGLE_API_KEY=YOUR_GOOGLE_BOOKS_API_KEY_HERE" > .env
+   echo "VITE_NYT_API_KEY=YOUR_NYT_API_KEY_HERE" >> .env
    ```
 
-   I will be providing an API key to the tester/reviewers who need one.
+   I will be providing API keys to the testers/reviewers who need them. If you are testing this project, please contact me for the API keys.
 
 4. **Run the development server**
    ```bash
@@ -53,7 +55,7 @@ pinia-plugin-persistedstate and its absolutely wonderful. I'm not sure how the p
    ```
 6. **Debug Output**
    You can enable/disable debug output to the console by changing config.DEBUG from `./src/config.js`.
-   
+
    ```js
    export const config = {
      DEBUG: true,

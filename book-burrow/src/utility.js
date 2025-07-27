@@ -45,16 +45,6 @@ export const utility = {
     }
   },
 
-  getBookshelfForm: (bookshelf) => {
-    return {
-      id: bookshelf.id,
-      name: bookshelf.name,
-      description: bookshelf.description,
-      isDefault: bookshelf.isDefault,
-      books: bookshelf.books
-    };
-  },
-
   getBookshelfFrom: (plainObject) => {
     let newShelf = new Bookshelf(
       plainObject.name,

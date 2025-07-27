@@ -89,8 +89,8 @@ export const useUserStore = defineStore(
         return false;
       }
 
-      activeBookshelf.value = bookshelf;
-      activeBookshelfId.value = bookshelf.id;
+      setActiveBookshelfById(bookshelf.id);
+      
       return true;
     };
 
@@ -149,6 +149,7 @@ export const useUserStore = defineStore(
           uuidv4()
         ),
       ];
+
       activeBookshelf.value = null;
       activeBookshelfId.value = null;
     }

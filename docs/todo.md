@@ -5,6 +5,10 @@
   * book result details view - partially finished
   * tweak query urls, where possible, to improve on the relavence of the returned books.
   * preferences option panel
+  * add search by ISBN: https://www.googleapis.com/books/v1/volumes?q=isbn:9781781100486
+    * Harry Potter and the Sorcerer's Stone 
+    * isbn13: 9781781100486
+    * isbn10: 0001781100489
   
 # Data Persistence
   Saving, Loading, Importing, and Exporting Data: Implement import/export of user data (bookshelfs) and preferences.  User data will 

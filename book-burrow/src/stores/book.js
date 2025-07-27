@@ -27,7 +27,7 @@ export const useBookStore = defineStore(
       serializer: {
         serialize: (state) => {
           const newState = {
-            activeBook: utility.getGBookForm(state.activeBook)
+            activeBook: state.activeBook,
           };
 
           return JSON.stringify(newState);

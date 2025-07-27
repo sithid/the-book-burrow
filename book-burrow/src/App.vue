@@ -11,8 +11,10 @@
       </button>
     </nav>
   </div>
-  <UserPreferencesPanel v-if="user.PrefsPanelOpen" class="prefs-panel">
-  </UserPreferencesPanel>
+  <div>
+    <UserPreferencesPanel v-if="user.PrefsPanelOpen" class="prefs-panel">
+    </UserPreferencesPanel>
+  </div>
   <div class="content-panel">
     <RouterView />
   </div>
@@ -47,7 +49,6 @@ const preferencesBtnOnClick = () => {
     }
   }
 };
-
 </script>
 
 <style scoped>

@@ -1,7 +1,7 @@
 <template>
   <div class="user-preferences-panel">
     <div class="header">
-      <h1>User Preferences & Data</h1>
+      <h1 id="user-preferences-header">User Preferences & Data</h1>
     </div>
     <div class="pref-option">
       <label for="max-results" id="max-results-label">Results Per Page</label>
@@ -44,7 +44,6 @@ const applyClick = () => {
   maxPages.value = user.maxPages;
   maxResults.value = user.maxResults;
 };
-
 </script>
 
 <style scoped>
@@ -53,7 +52,6 @@ const applyClick = () => {
   flex-direction: column;
   padding: 10px;
   margin: 10px;
-
   color: var(--color-offset);
   background-color: var(--color-secondary);
 }
@@ -69,13 +67,25 @@ const applyClick = () => {
   font-size: 0.8rem;
 }
 
-#max-results,
-#max-pages {
-  width: 10%;
-  field-sizing: fixed;
+#user-preferences-header {
   text-align: center;
 }
 
+#max-results,
+#max-pages {
+  width: 45px;;
+  text-align: right;
+}
+
 @media (min-width: 768px) {
+  .user-preferences-panel {
+    width: 20%;
+    margin: 10px auto;
+  }
+
+  #max-results,
+  #max-pages {
+    width: 70px;
+  }
 }
 </style>

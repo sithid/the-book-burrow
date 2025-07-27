@@ -24,6 +24,13 @@ export const useSearchStore = defineStore(
 
     const basicQuery = ref("");
 
+    const clear = () => {
+      googleBookResults.value = [];
+      resultPages.value = [];
+      pageCount.value = 0;
+      currentPageIndex.value = 0;
+    };
+
     const formatFindResultsOptions = computed(() => {
       let queryParts = [];
 
@@ -85,7 +92,7 @@ export const useSearchStore = defineStore(
 
       if (filter.title && filter.title != "") {
         let tmp = filter.title.split(" ");
-        
+
         for (let i = 0; i < tmp.length; i++) {
           tmp[i] = `intitle:"${encodeURIComponent(tmp[i])}"`;
         }
@@ -119,14 +126,6 @@ export const useSearchStore = defineStore(
       return keywords;
     });
 
-    const clear = () => {
-      googleBookResults.value = [];
-      resultPages.value = [];
-      pageCount.value = 0;
-      currentPageIndex.value = 0;
-      basicQuery.value = "";
-    };
-
     const formatAdditionalOptions = computed(() => {
       let keywords = "";
 
@@ -135,7 +134,7 @@ export const useSearchStore = defineStore(
 
       keywords += `&printType=books`;
       keywords += `&maxResults=${user.maxResults}`;
-      keywords += `&key=${config.API_TOKEN}`;
+      keywords += `&key=${config.GOOGLE_API_KEY}`;
 
       config.FMT_PRINT_DEBUG("formatAdditionalOptions::keywords", keywords);
 
@@ -169,15 +168,16 @@ export const useSearchStore = defineStore(
     });
 
     async function queryApiBasic(params) {
-      googleBookResults.value = [];
-      resultPages.value = [];
+      clear();
 
       const requestHeaders = new Headers();
       requestHeaders.append("Content-Type", "application/json");
 
       const url = `${config.API_URL}?q=${encodeURIComponent(
         params
-      )}&printType=books&maxResults=${user.maxResults}&key=${config.API_TOKEN}`;
+      )}&printType=books&maxResults=${user.maxResults}&key=${
+        config.GOOGLE_API_KEY
+      }`;
 
       config.FMT_PRINT_DEBUG("queryApiBasic::url", url);
 
@@ -224,6 +224,66 @@ export const useSearchStore = defineStore(
 
         currentPageIndex.value = 0;
       }
+    }
+
+    async function queryApiISBN(isbn) {
+      clear();
+
+      if (!isbn || isbn.trim() === "") {
+        config.FMT_PRINT_DEBUG(
+          "queryApiISBN::isbn",
+          "ISBN is empty or undefined.",
+          true
+        );
+        return;
+      }
+
+      config.FMT_PRINT_DEBUG("queryApiISBN::isbn", isbn);
+
+      if (isbn.length < 10 || isbn.length > 13) {
+        config.FMT_PRINT_DEBUG(
+          "queryApiISBN::isbn",
+          "ISBN length is invalid. Must be 10 or 13 characters.",
+          true
+        );
+        return;
+      }
+
+      const requestHeaders = new Headers();
+      requestHeaders.append("Content-Type", "application/json");
+
+      const url = `${config.API_URL}?q=isbn:${encodeURIComponent(
+        isbn
+      )}&printType=books&maxResults=${user.maxResults}&key=${
+        config.GOOGLE_API_KEY
+      }`;
+
+      config.FMT_PRINT_DEBUG("queryApiISBN::url", url);
+
+      const options = {
+        method: "GET",
+        headers: requestHeaders,
+      };
+
+      const response = await fetch(url, options);
+
+      if (response.ok) {
+        const data = await response.json();
+
+        if (data.items && data.items.length > 0) {
+          const book = new GoogleBook(data.items[0]);
+          googleBookResults.value.push(book);
+
+          resultPages.value.push({
+            index: 0,
+            results: [book],
+          });
+        }
+
+        pageCount.value = 1;
+      }
+
+      currentPageIndex.value = 0;
     }
 
     async function queryApiAdvanced() {
@@ -288,22 +348,108 @@ export const useSearchStore = defineStore(
       }
     }
 
+    async function queryForRecommended(isbn) {
+      clear();
+
+      if (!isbn || isbn.trim() === "") {
+        config.FMT_PRINT_DEBUG(
+          "queryForRecommended::isbn",
+          "ISBN is empty or undefined.",
+          true
+        );
+        return;
+      }
+
+      config.FMT_PRINT_DEBUG("queryForRecommended::isbn", isbn);
+
+      if (isbn.length < 10 || isbn.length > 13) {
+        config.FMT_PRINT_DEBUG(
+          "queryForRecommended::isbn",
+          "ISBN length is invalid. Must be 10 or 13 characters.",
+          true
+        );
+        return;
+      }
+
+      const requestHeaders = new Headers();
+      requestHeaders.append("Content-Type", "application/json");
+
+      const url = `${config.API_URL}?q=isbn:${encodeURIComponent(isbn)}&key=${
+        config.GOOGLE_API_KEY
+      }`;
+
+      config.FMT_PRINT_DEBUG("queryForRecommended::url", url);
+
+      const options = {
+        method: "GET",
+        headers: requestHeaders,
+      };
+
+      const response = await fetch(url, options);
+
+      if (response.ok) {
+        const data = await response.json();
+
+        if (data.items && data.items.length > 0) {
+          const book = new GoogleBook(data.items[0]);
+          return book;
+        }
+      }
+    }
+
+    const loadResultsFromSource = (books) => {
+      clear();
+
+      if (!books || books.length === 0) {
+        config.FMT_PRINT_DEBUG(
+          "loadResultsFromSource",
+          "No books provided to load.",
+          true
+        );
+        return;
+      }
+
+      googleBookResults.value = [...books];
+
+      const pageSize = user.maxResults;
+
+      for (let i = 0; i < books.length; i += pageSize) {
+        const pageBooks = books.slice(i, i + pageSize);
+
+        resultPages.value.push({
+          index: resultPages.value.length,
+          results: pageBooks,
+        });
+      }
+
+      pageCount.value = resultPages.value.length;
+
+      currentPageIndex.value = 0;
+
+      config.FMT_PRINT_DEBUG(
+        "loadBooksIntoStore",
+        `Loaded ${books.length} books into ${pageCount.value} pages.`
+      );
+    };
+
     return {
       googleBookResults,
       pageCount,
       basicQuery,
       resultPages,
-      currentPageIndex, 
+      currentPageIndex,
 
       formatFindResultsOptions,
-      formatFilterByOptions, 
+      formatFilterByOptions,
       formatAdditionalOptions,
       advancedQueryUrl,
 
       clear,
-      queryApiBasic, 
-      queryApiAdvanced, 
-
+      queryApiBasic,
+      queryApiAdvanced,
+      queryApiISBN,
+      queryForRecommended,
+      loadResultsFromSource,
     };
   },
   {
@@ -319,17 +465,8 @@ export const useSearchStore = defineStore(
         serialize: (state) => {
           const newState = {
             ...state,
-            googleBookResults: state.googleBookResults.map((book) => {
-              return utility.getGBookFrom(book);
-            }),
-            resultPages: state.resultPages.map((page) => {
-              return {
-                index: page.index,
-                results: page.results.map((book) => {
-                  return utility.getGBookFrom(book);
-                }),
-              };
-            }),
+            googleBookResults: state.googleBookResults,
+            resultPages: state.resultPages,
           };
 
           return JSON.stringify(newState);
