@@ -85,7 +85,7 @@ function clearClick() {
 .results-container {
   display: flex;
   flex-direction: row;
-  margin: 
+  margin: 10px;
 }
 
 .result-cards {
