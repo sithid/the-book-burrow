@@ -1,6 +1,6 @@
 <template>
   <div class="book-details">
-    <BookDetailsComponent v-if="book.HasActiveBook"></BookDetailsComponent>
+    <BookDetailsComponent v-if="book.activeBook"></BookDetailsComponent>
   </div>
 </template>
 
@@ -13,9 +13,8 @@ import { onMounted } from "vue";
 const router = useRouter();
 const book = useBookStore();
 
-
 onMounted(() => {
-  if (!book.ActiveBook) {
+  if (!book.activeBook) {
     router.push("/search");
   }
 });
