@@ -45,7 +45,7 @@
           <p id="no-books" v-else>No books found on this page.</p>
         </div>
         <p id="perform-search" v-else>
-          Please perform a search to see results.
+          No Results found. Please perform a search to see results.
         </p>
       </div>
       <div class="read-container">
@@ -112,6 +112,7 @@ async function onSearch() {
 }
 
 function clearClick() {
+  search.basicQuery = "";
   search.clear();
 }
 </script>

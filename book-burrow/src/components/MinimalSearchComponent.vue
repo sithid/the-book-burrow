@@ -30,6 +30,7 @@ const user = useUserStore();
 const router = useRouter();
 
 function clearClick() {
+  search.basicQuery = "";
   search.clear();
 }
 

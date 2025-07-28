@@ -20,6 +20,7 @@ export const useFilterStore = defineStore(
     const publisher = ref(""); // inPublisher:publisher
     const subject = ref(""); // subject:subject
     const language = ref("any"); // &langRestrict=en
+    const isbn = ref(""); // volumes?q=isbn:9781098147907
 
     const errorMsg = ref("");
 
@@ -41,6 +42,7 @@ export const useFilterStore = defineStore(
       subject.value = "";
 
       language.value = "any";
+      isbn.value = "";
       errorMsg.value = "";
 
       console.clear();
@@ -48,7 +50,6 @@ export const useFilterStore = defineStore(
 
     const toggleFilterPanel = () => {
       filterPanelOpen.value = !filterPanelOpen.value;
-      reset();
     };
 
     watch(
@@ -61,14 +62,19 @@ export const useFilterStore = defineStore(
         author,
         publisher,
         subject,
+        isbn,
       ],
       (newValues, oldValues) => {
         const newValueNotEmpty = newValues.some((value) => value !== "");
-
-        if (newValueNotEmpty) {
+        if (isbn.value !== "") {
           errorMsg.value = "";
-        }
-        else {
+        } else if (newValueNotEmpty) {
+          if (isbn.value.length < 10 || isbn.value.length > 13) {
+            errorMsg.value = "ISBN must be between 10 and 13 characters long.";
+          } else {
+            errorMsg.value = "";
+          }
+        } else {
           errorMsg.value = "You must include text in at least one field!";
         }
       },
@@ -85,6 +91,7 @@ export const useFilterStore = defineStore(
       publisher,
       subject,
       language,
+      isbn,
 
       isPanelOpen,
       errorMsg,

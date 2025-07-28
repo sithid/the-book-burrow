@@ -88,7 +88,17 @@
     </div>
     <div class="right-panel">
       <p id="right-panel-info">Additional Options:</p>
-      <label for="language-select">Language</label>
+      <div class="option-group">
+        <label for="book-isbn">ISBN</label>
+        <input
+          id="book-isbn"
+          name="isbn"
+          type="text"
+          v-model="filter.isbn"
+          placeholder="Enter book isbn here..."
+        />
+      </div>
+      <label id="language-label" for="language-select">Language</label>
       <select id="language-select" v-model="filter.language">
         <option value="any">Any</option>
         <option value="en">English</option>
@@ -123,6 +133,11 @@
             Search
           </button>
         </div>
+        <div class="option-group">
+          <button id="adv-close-button" @click="filter.toggleFilterPanel">
+            Close
+          </button>
+        </div>
       </div>
       <div
         v-if="filter.errorMsg.length > 0"
@@ -151,18 +166,24 @@ async function queryApiAdvanced() {
     !filter.title &&
     !filter.author &&
     !filter.publisher &&
-    !filter.subject
+    !filter.subject &&
+    !filter.isbn
   ) {
-    filter.errorMsg = "You must include text in at least one field!";
+    filter.errorMsg =
+      "You must include the ISBN or text in at least other field!";
     return;
   }
 
-  filter.errorMsg = "";
-  await search.queryApiAdvanced();
+  if (filter.isbn !== "") {
+    if (filter.isbn.length >= 10 && filter.isbn.length <= 13)
+      await search.queryApiISBN(filter.isbn);
+    else filter.errorMsg = "The ISBN must be between 10 and 13 digits long.";
+  } else await search.queryApiAdvanced();
 }
 
 function cancelClick() {
   filter.toggleFilterPanel();
+  filter.reset();
   search.clear();
 }
 
@@ -236,25 +257,34 @@ function clearClick() {
   }
 
   .option-group input {
-    font-size: 1rem;
+    font-size: 0.7rem;
   }
 
   .option-group label {
-    font-size: 1rem;
+    font-size: 0.7rem;
   }
 
-  .left-panel input {
-    font-size: 1rem;
+  .adv-option-group {
+    font-size: 0.7rem;
+  }
+
+  #language-label {
+    text-align: left;
+    font-size: 0.7rem;
+  }
+  #language-select {
+    font-size: 0.7rem;
   }
 
   #left-panel-info,
   #middle-panel-info,
   #right-panel-info {
-    font-size: 0.8rem;
+    font-size: 1rem;
   }
 
   #adv-cancel-button,
   #adv-clear-button,
+  #adv-close-button,
   #adv-search-button {
     max-height: 25px;
     font-size: 0.6rem;

@@ -23,7 +23,6 @@ export const useSearchStore = defineStore(
     const pageCount = ref(0);
 
     const basicQuery = ref("");
-
     const clear = () => {
       googleBookResults.value = [];
       resultPages.value = [];
@@ -278,6 +277,12 @@ export const useSearchStore = defineStore(
             index: 0,
             results: [book],
           });
+        } else {
+          config.FMT_PRINT_DEBUG(
+            "queryApiISBN::isbn",
+            "No results found for the provided ISBN.",
+            true
+          );
         }
 
         pageCount.value = 1;

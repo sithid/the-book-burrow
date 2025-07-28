@@ -12,8 +12,8 @@
     </nav>
   </div>
   <div>
-    <UserPreferencesPanel v-if="user.PrefsPanelOpen" class="prefs-panel">
-    </UserPreferencesPanel>
+    <DataPreferencesPanel v-if="user.PrefsPanelOpen" class="prefs-panel">
+    </DataPreferencesPanel>
   </div>
   <div class="content-panel">
     <RouterView />
@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import UserPreferencesPanel from "./components/UserPreferencesPanel.vue";
+import DataPreferencesPanel from "./components/DataPreferencesPanel.vue";
 import { RouterLink, RouterView } from "vue-router";
 import { useFilterStore } from "./stores/filter.js";
 import { useUserStore } from "./stores/user.js";

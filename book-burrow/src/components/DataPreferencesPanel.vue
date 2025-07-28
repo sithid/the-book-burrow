@@ -27,6 +27,9 @@
       Apply Changes
     </button>
   </div>
+  <div class="user-data-panel">
+    
+  </div>
 </template>
 
 <script setup>
