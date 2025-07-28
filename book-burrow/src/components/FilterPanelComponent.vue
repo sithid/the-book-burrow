@@ -170,14 +170,14 @@ async function queryApiAdvanced() {
     !filter.isbn
   ) {
     filter.errorMsg =
-      "You must include the ISBN or text in at least other field!";
+      "You must include the ISBN or text in at least one other field!";
     return;
   }
 
   if (filter.isbn !== "") {
     if (filter.isbn.length >= 10 && filter.isbn.length <= 13)
       await search.queryApiISBN(filter.isbn);
-    else filter.errorMsg = "The ISBN must be between 10 and 13 digits long.";
+    else filter.errorMsg = "The ISBN must be 10 or 13 digits.";
   } else await search.queryApiAdvanced();
 }
 

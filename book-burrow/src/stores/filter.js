@@ -114,7 +114,8 @@ export const useFilterStore = defineStore(
               errorMsg.value = "";
             }
           } else {
-            errorMsg.value = "You must include text in at least one field!";
+            errorMsg.value =
+              "You must include the ISBN or text in at least one other field!";
           }
         }
       },
