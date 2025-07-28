@@ -1,6 +1,10 @@
 # The Book Burrow 
+![Filter Panel Preview](/docs/FilterPanel.PNG 'Filter Panel Preview')
+![Search Results Preview](/docs/SearchResults.PNG 'Search Results Preview')
 
-![Filter Panel Preview](/docs/FilterPanel.PNG "Filter Panel Preview")
+A preview picture of the filter panel and search results is shown above. The filter panel allows users to refine their book searches, while the search results display the books that match the search criteria. The filter panel preview was taken before the most recent edits, so it may not match the current background artwork.
+
+## Overview
 
 The book burrow is a responsive web app that functions much like Google Books, utilizing the google books api. Users can search for books by either
 using the minimal serach box on the home page to do a broad search for books that have ANY properties which contain the keywords they are search for.
