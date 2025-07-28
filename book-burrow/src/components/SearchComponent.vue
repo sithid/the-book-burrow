@@ -7,9 +7,19 @@
       <button @click="clearClick" class="clear-button">
         <i class="fa fa-cancel" aria-hidden="true"></i>
       </button>
-      <input id="search-input" type="text" v-model="search.basicQuery" @keyup.enter="onSearch" class="search-input"
-        placeholder="Search Terms Required" />
-      <button v-if="!filter.isPanelOpen" @click="onSearch" class="search-button">
+      <input
+        id="search-input"
+        type="text"
+        v-model="search.basicQuery"
+        @keyup.enter="onSearch"
+        class="search-input"
+        placeholder="Search Terms Required"
+      />
+      <button
+        v-if="!filter.isPanelOpen"
+        @click="onSearch"
+        class="search-button"
+      >
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
     </div>
@@ -18,10 +28,12 @@
     </div>
     <div class="component-container">
       <div class="to-read-container">
-        <BookshelfSidePanelComponent :bookshelf="toBeRead"></BookshelfSidePanelComponent>
+        <BookshelfPanelComponent
+          :bookshelf="toBeRead"
+        ></BookshelfPanelComponent>
       </div>
       <div class="result-container">
-        <div v-if="search.resultPages.length > 0">
+        <div v-if="search.resultPages.length > 0" class="paging-container">
           <div class="paging">
             <button @click="prevPage" :disabled="search.currentPageIndex === 0">
               Previous
@@ -33,13 +45,19 @@
               {{ search.googleBookResults.length }} results.
             </h1>
 
-            <button @click="nextPage" :disabled="
+            <button
+              @click="nextPage"
+              :disabled="
                 search.currentPageIndex >= search.resultPages.length - 1
-              ">
+              "
+            >
               Next
             </button>
           </div>
-          <div v-for="book in currentResults" v-if="currentResults && currentResults.length > 0">
+          <div
+            v-for="book in currentResults"
+            v-if="currentResults && currentResults.length > 0"
+          >
             <SearchResultComponent :book="book"></SearchResultComponent>
           </div>
           <p id="no-books" v-else>No books found on this page.</p>
@@ -49,7 +67,9 @@
         </p>
       </div>
       <div class="read-container">
-        <BookshelfSidePanelComponent :bookshelf="alreadyRead"></BookshelfSidePanelComponent>
+        <BookshelfPanelComponent
+          :bookshelf="alreadyRead"
+        ></BookshelfPanelComponent>
       </div>
     </div>
   </div>
@@ -58,7 +78,7 @@
 <script setup>
 import SearchResultComponent from "../components/SearchResultComponent.vue";
 import FilterPanelComponent from "../components/FilterPanelComponent.vue";
-import BookshelfSidePanelComponent from "../components/BookshelfSidePanelComponent.vue";
+import BookshelfPanelComponent from "./BookshelfPanelComponent.vue";
 
 import { computed } from "vue";
 
@@ -130,13 +150,20 @@ function clearClick() {
   flex-direction: row;
 }
 
+.paging-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .paging {
+  box-sizing: content-box;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  margin: 0px 10px 10px 10px;
   height: 50px;
   background-color: var(--color-secondary);
+  border: 10px solid var(--color-offset);
+  border-top: none;
 }
 
 .result-cards {
@@ -167,6 +194,7 @@ function clearClick() {
 }
 
 #page-result-info {
+  color: var(--color-offset);
   margin: 5px;
 }
 
@@ -185,6 +213,15 @@ function clearClick() {
     width: 50%;
   }
 
+  .paging-container {
+    border-top: none;
+  }
+
+  .paging {
+    height: 100%;
+    border-top: none;
+  }
+  
   .to-read-container,
   .read-container {
     display: flex;

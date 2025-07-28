@@ -25,6 +25,10 @@ HTML, CSS, Javascript, Vu3
 I am using Vue3 Composition API with Pinia Stores and local storage to facilitate both reactivity and data persistence. I manage my local storage data with pinia and a plugin for pinia called
 pinia-plugin-persistedstate and its absolutely wonderful. I'm not sure how the plugin works under the hood specifically but once you set up the persist object, which contains a serializer object with serialize (save the current state of the pinia store) and deserialize (load the saved state of the store, custom objects require mapping) functions.
 
+# Images
+
+Webapp artwork is provided by [Unsplash](https://unsplash.com/). All images are free to use under the Unsplash License.
+
 ## Run/Install:
 
 1. **Clone the repository**

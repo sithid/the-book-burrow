@@ -1,6 +1,7 @@
 :root {
   --color-primary: #800000;
   --color-secondary: grey;
+  --color-secondary-transparent: rgba(128, 128, 128, 0.644);
   --color-offset: #1a2738;
   --color-text: #fff;
 }
@@ -35,6 +36,7 @@ body {
   justify-content: center;
   flex-direction: row;
   background-color: var(--color-secondary);
+  background-image: url("../assets/flame-texture.jpg");
 }
 
 .search-input {

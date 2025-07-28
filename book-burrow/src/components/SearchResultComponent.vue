@@ -47,12 +47,9 @@ function onThumbnailClicked() {
 .book-card-mini {
   display: flex;
   flex-direction: column;
-  padding: 10px;
   color: var(--color-offset);
   background-color: var(--color-secondary);
   border: 10px solid var(--color-offset);
-  border-top: none;
-  width: 100vw;
 }
 
 .book-card-mini img {
@@ -106,7 +103,7 @@ function onThumbnailClicked() {
   .book-card-mini {
     padding-left: 10px;
     padding-right: 10px;
-    width: 100%;
+    padding: 20px;
   }
 
   .book-card-mini img {
