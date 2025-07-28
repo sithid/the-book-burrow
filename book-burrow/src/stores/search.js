@@ -23,6 +23,7 @@ export const useSearchStore = defineStore(
     const pageCount = ref(0);
 
     const basicQuery = ref("");
+
     const clear = () => {
       googleBookResults.value = [];
       resultPages.value = [];
@@ -470,8 +471,17 @@ export const useSearchStore = defineStore(
         serialize: (state) => {
           const newState = {
             ...state,
-            googleBookResults: state.googleBookResults,
-            resultPages: state.resultPages,
+            googleBookResults: state.googleBookResults.map((book) => {
+              return utility.getGBookForm(book);
+            }),
+            resultPages: state.resultPages.map((page) => {
+              return {
+                index: page.index,
+                results: page.results.map((book) => {
+                  return utility.getGBookForm(book);
+                }),
+              };
+            }),
           };
 
           return JSON.stringify(newState);
@@ -499,7 +509,10 @@ export const useSearchStore = defineStore(
           }
 
           if (loadedState.resultPages && loadedState.resultPages.length > 0) {
+            loadedState.pageCount = loadedState.resultPages.length;
+          } else {  
             loadedState.currentPageIndex = 0;
+            loadedState.pageCount = 0;
           }
 
           return loadedState;

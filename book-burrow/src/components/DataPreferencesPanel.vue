@@ -5,30 +5,40 @@
     </div>
     <div class="pref-option">
       <label for="max-results" id="max-results-label">Results Per Page</label>
-      <input
-        id="max-results"
-        type="number"
-        min="10"
-        max="40"
-        v-model="maxResults"
-      />
+      <input id="max-results" type="number" min="10" max="40" v-model="maxResults" />
     </div>
     <div class="pref-option">
       <label for="max-pages" id="max-pages-label">Pages</label>
-      <input
-        id="max-pages"
-        type="number"
-        min="1"
-        max="100"
-        v-model="maxPages"
-      />
+      <input id="max-pages" type="number" min="1" max="100" v-model="maxPages" />
+    </div>
+    <div class="pref-option">
+      <label for="language-select" id="language-label">Language</label>
+      <select id="language-select" v-model="defaultLanguage">
+        <option value="any">Any</option>
+        <option value="en">English</option>
+        <option value="es">Spanish</option>
+        <option value="fr">French</option>
+        <option value="de">German</option>
+        <option value="it">Italian</option>
+        <option value="ja">Japanese</option>
+        <option value="ko">Korean</option>
+        <option value="zh">Chinese(Simplified)</option>
+        <option value="zh-Hant">Chinese(Traditional)</option>
+        <option value="pt">Portuguese</option>
+        <option value="ru">Russian</option>
+        <option value="ar">Arabic</option>
+        <option value="nl">Dutch</option>
+        <option value="hi">Hindi</option>
+        <option value="ur">Urdu</option>
+        <option value="id">Indonesian</option>
+        <option value="th">Thai</option>
+        <option value="tr">Turkish</option>
+        <option value="vi">Vietnamese</option>
+      </select>
     </div>
     <button type="button" @click="applyClick" aria-label="Apply Changes">
       Apply Changes
     </button>
-  </div>
-  <div class="user-data-panel">
-    
   </div>
 </template>
 
@@ -39,13 +49,12 @@ import { useUserStore } from "@/stores/user.js";
 const user = useUserStore();
 const maxPages = ref(user.maxPages);
 const maxResults = ref(user.maxResults);
+const defaultLanguage = ref(user.defaultLanguage);
 
 const applyClick = () => {
   user.setMaxPages(maxPages.value);
   user.setMaxResults(maxResults.value);
-
-  maxPages.value = user.maxPages;
-  maxResults.value = user.maxResults;
+  user.setDefaultLanguage(defaultLanguage.value);
 };
 </script>
 
@@ -76,7 +85,7 @@ const applyClick = () => {
 
 #max-results,
 #max-pages {
-  width: 45px;;
+  width: 45px;
   text-align: right;
 }
 

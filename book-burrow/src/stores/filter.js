@@ -19,7 +19,7 @@ export const useFilterStore = defineStore(
     const author = ref(""); // inAuthor:author
     const publisher = ref(""); // inPublisher:publisher
     const subject = ref(""); // subject:subject
-    const language = ref("any"); // &langRestrict=en
+    const language = ref(user.defaultLanguage); // &langRestrict=en
     const isbn = ref(""); // volumes?q=isbn:9781098147907
 
     const errorMsg = ref("");
@@ -41,7 +41,7 @@ export const useFilterStore = defineStore(
       publisher.value = "";
       subject.value = "";
 
-      language.value = "any";
+      language.value = user.defaultLanguage;
       isbn.value = "";
       errorMsg.value = "";
 
@@ -96,7 +96,7 @@ export const useFilterStore = defineStore(
             author.value = "";
             publisher.value = "";
             subject.value = "";
-            language.value = "any";
+            language.value = user.defaultLanguage;
             errorMsg.value = "";
           }
         } else {
@@ -115,7 +115,7 @@ export const useFilterStore = defineStore(
             }
           } else {
             errorMsg.value =
-              "You must include the ISBN or text in at least one other field!";
+              "You must text in at least one field!";
           }
         }
       },

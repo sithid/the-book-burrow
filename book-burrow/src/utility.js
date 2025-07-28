@@ -45,17 +45,60 @@ export const utility = {
     }
   },
 
+  getBookshelfForm: (bookshelf) => {
+    // Convert Bookshelf instance to plain object for serialization
+    return {
+      id: bookshelf.id,
+      name: bookshelf.name,
+      description: bookshelf.description,
+      isDefault: bookshelf.isDefault,
+      books: bookshelf.books.map((book) => utility.getGBookForm(book)),
+    };
+  },
+
   getBookshelfFrom: (plainObject) => {
+
+    let books = [];
+    if (plainObject.books && Array.isArray(plainObject.books)) {
+      books = plainObject.books.map((book) => utility.getGBookFrom(book));
+    }
+
     let newShelf = new Bookshelf(
       plainObject.name,
       plainObject.description,
       plainObject.isDefault,
       plainObject.id,
-      plainObject.books
+      books
     );
 
     config.FMT_PRINT_DEBUG("utility::constructBookshelfFromObject", newShelf);
     return newShelf;
+  },
+
+  getGBookForm: (googleBook) => {
+    // Convert GoogleBook instance to plain object for serialization
+    return {
+      id: googleBook.id,
+      selfLink: googleBook.selfLink,
+      title: googleBook.title,
+      authors: googleBook.authors,
+      subject: googleBook.subject,
+      publisher: googleBook.publisher,
+      publishedDate: googleBook.publishedDate,
+      description: googleBook.description,
+      isbn10: googleBook.isbn10,
+      isbn13: googleBook.isbn13,
+      pageCount: googleBook.pageCount,
+      printedPageCount: googleBook.printedPageCount,
+      averageRating: googleBook.averageRating,
+      ratingCount: googleBook.ratingCount,
+      maturityRating: googleBook.maturityRating,
+      imageLinks: googleBook.imageLinks,
+      language: googleBook.language,
+      infoLink: googleBook.infoLink,
+      canonicalVolumeLink: googleBook.canonicalVolumeLink,
+      saleInfo: googleBook.saleInfo,
+    };
   },
 
   getGBookFrom: (plainObject) => {
@@ -69,27 +112,21 @@ export const utility = {
         publisher: plainObject.publisher, // string
         publishedDate: plainObject.publishedDate, // Date
         description: plainObject.description, // string
-        identifiers: {
-          isbn10: plainObject.isbn10, // string
-          isbn13: plainObject.isbn13, // string
-        },
+        industryIdentifiers: [
+          { type: "ISBN_10", identifier: plainObject.isbn10 },
+          { type: "ISBN_13", identifier: plainObject.isbn13 }
+        ].filter(id => id.identifier), // Only include if identifier exists
         pageCount: plainObject.pageCount, // string
         printedPageCount: plainObject.printedPageCount, // string
         averageRating: plainObject.averageRating, // number
         ratingCount: plainObject.ratingCount, // number
         maturityRating: plainObject.maturityRating, // string
-        imageLinks: {
-          smallThumbnail: plainObject.imageLinks.smallThumbnail, // string
-          thumbnail: plainObject.imageLinks.thumbnail, // string
-          small: plainObject.imageLinks.small, // string
-          medium: plainObject.imageLinks.medium, // string
-          large: plainObject.imageLinks.large, // string
-        },
+        imageLinks: plainObject.imageLinks || {}, // Handle missing imageLinks
         language: plainObject.language, // string
         infoLink: plainObject.infoLink, // string
         canonicalVolumeLink: plainObject.canonicalVolumeLink, // string
-        saleInfo: plainObject.saleInfo, // { saleability, listPrice { amount, currencyCode } } :: { string, { number, string } }
       },
+      saleInfo: plainObject.saleInfo, // Move saleInfo to top level
     };
 
     return new GoogleBook(gbook);

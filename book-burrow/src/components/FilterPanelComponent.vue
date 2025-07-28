@@ -170,7 +170,7 @@ async function queryApiAdvanced() {
     !filter.isbn
   ) {
     filter.errorMsg =
-      "You must include the ISBN or text in at least one other field!";
+      "You must text in at least one field!";
     return;
   }
 

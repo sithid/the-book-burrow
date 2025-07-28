@@ -28,19 +28,12 @@ import DataPreferencesPanel from "./components/DataPreferencesPanel.vue";
 import { RouterLink, RouterView } from "vue-router";
 import { useFilterStore } from "./stores/filter.js";
 import { useUserStore } from "./stores/user.js";
-import { onMounted } from "vue";
 import { config } from "@/config.js";
 
 const user = useUserStore();
 const filter = useFilterStore();
 
 const preferencesBtnOnClick = () => {
-  config.FMT_PRINT_DEBUG(
-    "App::preferencesBtnOnClick",
-    "The preferences button was clicked, but this feature is still being implemented.",
-    false
-  );
-
   user.togglePrefsPanel();
 
   if (user.PrefsPanelOpen) {
