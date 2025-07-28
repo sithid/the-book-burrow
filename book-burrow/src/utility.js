@@ -46,7 +46,15 @@ export const utility = {
   },
 
   getBookshelfForm: (bookshelf) => {
-    // Convert Bookshelf instance to plain object for serialization
+    if (!(bookshelf instanceof Bookshelf)) {
+      config.FMT_PRINT_DEBUG(
+        "utility::getBookshelfForm",
+        "Provided object is not an instance of Bookshelf.",
+        true
+      );
+      return null;
+    }
+
     return {
       id: bookshelf.id,
       name: bookshelf.name,
@@ -57,6 +65,14 @@ export const utility = {
   },
 
   getBookshelfFrom: (plainObject) => {
+    if (!plainObject || !plainObject.name || !plainObject.id) {
+      config.FMT_PRINT_DEBUG(
+        "utility::getBookshelfFrom",
+        "Invalid plain object provided for Bookshelf conversion.",
+        true
+      );
+      return null;
+    }
 
     let books = [];
     if (plainObject.books && Array.isArray(plainObject.books)) {
@@ -76,7 +92,14 @@ export const utility = {
   },
 
   getGBookForm: (googleBook) => {
-    // Convert GoogleBook instance to plain object for serialization
+    if (!(googleBook instanceof GoogleBook)) {
+      config.FMT_PRINT_DEBUG(
+        "utility::getGBookForm",
+        "Provided object is not an instance of GoogleBook.",
+        true
+      );
+      return null;
+    }
     return {
       id: googleBook.id,
       selfLink: googleBook.selfLink,
@@ -115,13 +138,13 @@ export const utility = {
         industryIdentifiers: [
           { type: "ISBN_10", identifier: plainObject.isbn10 },
           { type: "ISBN_13", identifier: plainObject.isbn13 }
-        ].filter(id => id.identifier), // Only include if identifier exists
+        ].filter(id => id.identifier), // if identifier exists
         pageCount: plainObject.pageCount, // string
         printedPageCount: plainObject.printedPageCount, // string
         averageRating: plainObject.averageRating, // number
         ratingCount: plainObject.ratingCount, // number
         maturityRating: plainObject.maturityRating, // string
-        imageLinks: plainObject.imageLinks || {}, // Handle missing imageLinks
+        imageLinks: plainObject.imageLinks || {}, // missing imageLinks
         language: plainObject.language, // string
         infoLink: plainObject.infoLink, // string
         canonicalVolumeLink: plainObject.canonicalVolumeLink, // string

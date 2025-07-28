@@ -1,14 +1,32 @@
 # To Do
-  * implement bookshelfs
+  * implement bookshelfs - partially finished
+    * bookshelfs are a collection of books, and each book can be in multiple bookshelfs - done
+    * bookshelfs are stored in local storage via pinia-plugin-persistedstate - done
+    * bookshelfs can be imported/exported as a base64 encoded string - not started
+    * bookshelfs can be created, deleted, and renamed - partially finished
+      * create bookshelf - done
+      * delete bookshelf - done
+      * combine bookshelfs - done
+    * bookshelfs can have books added/removed from them - done
   * work on home view
   * work on about view
   * book result details view - partially finished
-  * tweak query urls, where possible, to improve on the relavence of the returned books.
-  * preferences option panel
-  * add search by ISBN: https://www.googleapis.com/books/v1/volumes?q=isbn:9781781100486
-    * Harry Potter and the Sorcerer's Stone 
-    * isbn13: 9781781100486
-    * isbn10: 0001781100489
+  * user preferences and data panel - partially finished
+    * user preferences are stored in local storage via pinia-plugin-persistedstate - done
+    * user preferences can be imported/exported as a base64 encoded string - not started
+    * user preferences can be reset to default - not started
+  * search functionality - partially finished
+    * search by general terms - done
+    * search by title, author, publisher, subject - done
+    * search by ISBN: https://www.googleapis.com/books/v1/volumes?q=isbn:9781781100486
+    * filter by language - done
+  * clean up code
+    * remove comments
+      * most of the comments were added as I developed to help remember why or what I was doing
+      * some comments are still relevant, but most of them are not
+    * remove unused imports
+
+
   
 # Data Persistence
   Saving, Loading, Importing, and Exporting Data: Implement import/export of user data (bookshelfs) and preferences.  User data will 
@@ -18,8 +36,7 @@
   express server api.
 
 # To Remember
-  Custom objects require custom ser/deser handling in the stores for persistance to work right but its entirely worth setting up the persist object.
-  Once its set up, its magically delious.
+  Custom objects require custom logic for serialization and deserialization, but its entirely worth setting up the persist object.  Once its set up, its magically delious. Utility functions are a great way to keep the code clean and separate concerns.  I can use utility functions to convert between Bookshelf and GoogleBook instances and plain objects, which reminds me of DTO patterns from when I took the software development pathway with Code:You and had to convert between DTOs to pass information between the server and client.  This is a great way to keep the code clean and maintainable, and it allows me to easily serialize and deserialize the data when saving/loading from local storage.
 
 
 # DISCOVERY
