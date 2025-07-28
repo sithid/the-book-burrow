@@ -52,6 +52,24 @@ export const useFilterStore = defineStore(
       filterPanelOpen.value = !filterPanelOpen.value;
     };
 
+    const anyFilterHasValue = computed(() => {
+      return (
+        allWords.value !== "" ||
+        exactWords.value !== "" ||
+        withoutTheseWords.value !== "" ||
+        atleastOneWord.value !== "" ||
+        title.value !== "" ||
+        author.value !== "" ||
+        publisher.value !== "" ||
+        subject.value !== ""
+      );
+    });
+
+    const isValidISBN = (value) => {
+      const cleanedValue = value.replace(/[- ]/g, "");
+      return /^\d{10}$|^\d{13}$/.test(cleanedValue);
+    };
+
     watch(
       [
         allWords,
@@ -65,17 +83,39 @@ export const useFilterStore = defineStore(
         isbn,
       ],
       (newValues, oldValues) => {
-        const newValueNotEmpty = newValues.some((value) => value !== "");
-        if (isbn.value !== "") {
-          errorMsg.value = "";
-        } else if (newValueNotEmpty) {
-          if (isbn.value.length < 10 || isbn.value.length > 13) {
-            errorMsg.value = "ISBN must be between 10 and 13 characters long.";
-          } else {
+        const newIsbnValue = newValues[8];
+        const oldIsbnValue = oldValues[8];
+
+        if (newIsbnValue && isValidISBN(newIsbnValue)) {
+          if (!isValidISBN(oldIsbnValue) || newIsbnValue !== oldIsbnValue) {
+            allWords.value = "";
+            exactWords.value = "";
+            withoutTheseWords.value = "";
+            atleastOneWord.value = "";
+            title.value = "";
+            author.value = "";
+            publisher.value = "";
+            subject.value = "";
+            language.value = "any";
             errorMsg.value = "";
           }
         } else {
-          errorMsg.value = "You must include text in at least one field!";
+          if (
+            anyFilterHasValue.value ||
+            (newIsbnValue && newIsbnValue !== "")
+          ) {
+            if (
+              newIsbnValue &&
+              newIsbnValue.length > 0 &&
+              !isValidISBN(newIsbnValue)
+            ) {
+              errorMsg.value = "ISBN must be 10 or 13 digits.";
+            } else {
+              errorMsg.value = "";
+            }
+          } else {
+            errorMsg.value = "You must include text in at least one field!";
+          }
         }
       },
       { immediate: true }
