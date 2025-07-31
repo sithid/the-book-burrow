@@ -7,19 +7,9 @@
       <button @click="clearClick" class="clear-button">
         <i class="fa fa-cancel" aria-hidden="true"></i>
       </button>
-      <input
-        id="search-input"
-        type="text"
-        v-model="search.basicQuery"
-        @keyup.enter="onSearch"
-        class="search-input"
-        placeholder="Search Terms Required"
-      />
-      <button
-        v-if="!filter.isPanelOpen"
-        @click="onSearch"
-        class="search-button"
-      >
+      <input id="search-input" type="text" v-model="search.basicQuery" @keyup.enter="onSearch" class="search-input"
+        placeholder="Search Terms Required" />
+      <button v-if="!filter.isPanelOpen" @click="onSearch" class="search-button">
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
     </div>
@@ -28,9 +18,8 @@
     </div>
     <div class="component-container">
       <div class="to-read-container">
-        <BookshelfPanelComponent
-          :bookshelf="toBeRead"
-        ></BookshelfPanelComponent>
+        <SingleBookshelfComponent :bookshelf="toBeRead">
+        </SingleBookshelfComponent>
       </div>
       <div class="result-container">
         <div v-if="search.resultPages.length > 0" class="paging-container">
@@ -45,19 +34,13 @@
               {{ search.googleBookResults.length }} results.
             </h1>
 
-            <button
-              @click="nextPage"
-              :disabled="
+            <button @click="nextPage" :disabled="
                 search.currentPageIndex >= search.resultPages.length - 1
-              "
-            >
+              ">
               Next
             </button>
           </div>
-          <div
-            v-for="book in currentResults"
-            v-if="currentResults && currentResults.length > 0"
-          >
+          <div v-for="book in currentResults" v-if="currentResults && currentResults.length > 0">
             <SearchResultComponent :book="book"></SearchResultComponent>
           </div>
           <p id="no-books" v-else>No books found on this page.</p>
@@ -67,9 +50,8 @@
         </p>
       </div>
       <div class="read-container">
-        <BookshelfPanelComponent
-          :bookshelf="alreadyRead"
-        ></BookshelfPanelComponent>
+        <SingleBookshelfComponent :bookshelf="alreadyRead">
+        </SingleBookshelfComponent>
       </div>
     </div>
   </div>
@@ -78,7 +60,7 @@
 <script setup>
 import SearchResultComponent from "../components/SearchResultComponent.vue";
 import FilterPanelComponent from "../components/FilterPanelComponent.vue";
-import BookshelfPanelComponent from "./BookshelfPanelComponent.vue";
+import SingleBookshelfComponent from "./SingleBookshelfComponent.vue";
 
 import { computed } from "vue";
 
@@ -94,10 +76,11 @@ const toBeRead = user.bookshelfs[0];
 const alreadyRead = user.bookshelfs[1];
 
 const toggleFilterPanel = () => {
+  search.basicQuery = "";
   filter.toggleFilterPanel();
 
   if (filter.isPanelOpen) {
-    if (user.PrefsPanelOpen) {
+    if (user.isPrefsPanelOpen) {
       user.togglePrefsPanel();
     }
   }
@@ -153,6 +136,7 @@ function clearClick() {
 .paging-container {
   display: flex;
   flex-direction: column;
+
 }
 
 .paging {
@@ -203,30 +187,17 @@ function clearClick() {
   color: var(--color-text);
   background-color: var(--secondary);
 }
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   .component-container {
     display: flex;
-    flex-direction: row;
-  }
-
-  .result-container {
-    width: 50%;
-  }
+    flex-direction: row;  }
 
   .paging-container {
     border-top: none;
   }
 
-  .paging {
-    height: 100%;
-    border-top: none;
-  }
-  
-  .to-read-container,
-  .read-container {
-    display: flex;
-    flex-direction: column;
-    width: 25%;
+  #page-result-info {
+    margin: 10px;
   }
 
   .filter-options-panel {
@@ -235,9 +206,15 @@ function clearClick() {
     position: relative;
     background-color: var(--color-secondary);
   }
-
-  #page-result-info {
-    margin: 10px;
+}
+@media (min-width: 1024px) {
+  .paging-container {
+    justify-content: center;
+  }
+  .to-read-container,
+  .read-container {
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>

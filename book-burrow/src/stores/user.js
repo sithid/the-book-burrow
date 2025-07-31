@@ -8,56 +8,13 @@ import { v4 as uuidv4 } from "uuid";
 export const useUserStore = defineStore(
   "user",
   () => {
-    const bookshelfs = ref([
-      new Bookshelf(
-        "To Be Read",
-        "This bookshelf contains books you plan to read.",
-        true,
-        uuidv4()
-      ),
-      new Bookshelf(
-        "Already Read",
-        "This bookshelf contains books you have already read.",
-        true,
-        uuidv4()
-      ),
-      new Bookshelf(
-        "Currently Reading",
-        "This bookshelf contains books you are currently reading.",
-        true,
-        uuidv4()
-      ),
-      new Bookshelf(
-        "Wishlist",
-        "This bookshelf contains books you want to buy in the future.",
-        true,
-        uuidv4()
-      ),
-      new Bookshelf(
-        "Already Owned",
-        "This bookshelf contains books you own.",
-        true,
-        uuidv4()
-      ),
-      new Bookshelf(
-        "Favorites",
-        "This bookshelf contains your favorite books.",
-        true,
-        uuidv4()
-      ),
-    ]);
+    const bookshelfs = ref(getDefaultBookshelfs()); // requires hosting to work properly.
 
-    const activeBookshelf = ref(null);
-    const activeBookshelfId = ref(null);
     const maxResults = ref(40);
     const maxPages = ref(8);
     const defaultLanguage = ref("any");
 
     const isPrefsPanelOpen = ref(false);
-
-    const PrefsPanelOpen = computed(() => {
-      return isPrefsPanelOpen.value;
-    });
 
     const togglePrefsPanel = () => {
       isPrefsPanelOpen.value = !isPrefsPanelOpen.value;
@@ -79,39 +36,9 @@ export const useUserStore = defineStore(
 
     const setDefaultLanguage = (language) => (defaultLanguage.value = language);
 
-    const setActiveBookshelf = (bookshelf) => {
-      if (!bookshelf || !(bookshelf instanceof Bookshelf) || !bookshelf.id) {
-        config.FMT_PRINT_DEBUG(
-          "user::setActiveBookshelf",
-          "Invalid bookshelf provided to setActiveBookshelf.",
-          true
-        );
-        return false;
-      }
-
-      setActiveBookshelfById(bookshelf.id);
-      
-      return true;
-    };
-
-    const setActiveBookshelfById = (id) => {
-      const bookshelf = bookshelfs.value.find((shelf) => shelf.id === id);
-
-      if (bookshelf) {
-        activeBookshelf.value = bookshelf;
-        return true;
-      } else {
-        config.FMT_PRINT_DEBUG(
-          "user::setActiveBookshelfById",
-          `Bookshelf with id ${id} not found.`,
-          true
-        );
-        return false;
-      }
-    };
-
-    const resetBookshelfsToDefault = () => {
-      bookshelfs.value = [
+    function getDefaultBookshelfs() {
+      // Arrow syntax removed. I want this function to be hoisted.
+      return [
         new Bookshelf(
           "To Be Read",
           "This bookshelf contains books you plan to read.",
@@ -149,11 +76,20 @@ export const useUserStore = defineStore(
           uuidv4()
         ),
       ];
-
-      activeBookshelf.value = null;
-      activeBookshelfId.value = null;
     }
-    
+
+    const addBookToBookshelf = (gBook, bookshelfId) => {
+      const bookshelf = bookshelfs.value.find((shelf) => shelf.id === bookshelfId);
+
+      if (bookshelf) {
+        bookshelf.addBook(gBook);
+      }
+    };
+            
+    const resetBookshelfsToDefault = () => {
+      bookshelfs.value = getDefaultBookshelfs();
+    };
+
     const resetAllUserData = () => {
       resetBookshelfsToDefault();
       setMaxResults(40);
@@ -164,20 +100,17 @@ export const useUserStore = defineStore(
 
     return {
       bookshelfs,
-      activeBookshelf,
-      activeBookshelfId,
       maxResults,
       maxPages,
       defaultLanguage,
       isPrefsPanelOpen,
-      PrefsPanelOpen,
 
-      setActiveBookshelf,
-      setActiveBookshelfById,
       setMaxResults,
       setMaxPages,
       setDefaultLanguage,
+      getDefaultBookshelfs,
       togglePrefsPanel,
+      addBookToBookshelf,
       resetBookshelfsToDefault,
       resetAllUserData,
     };
@@ -186,8 +119,6 @@ export const useUserStore = defineStore(
     persist: {
       paths: [
         "bookshelfs",
-        "activeBookshelf",
-        "activeBookshelfId",
         "maxResults",
         "maxPages",
         "isPrefsPanelOpen",
@@ -199,10 +130,6 @@ export const useUserStore = defineStore(
             bookshelfs: state.bookshelfs.map((bookshelf) => {
               return utility.getBookshelfForm(bookshelf);
             }),
-            activeBookshelf: state.activeBookshelf
-              ? utility.getBookshelfForm(state.activeBookshelf)
-              : null,
-            activeBookshelfId: state.activeBookshelfId,
             maxResults: state.maxResults,
             maxPages: state.maxPages,
             isPrefsPanelOpen: state.isPrefsPanelOpen,
@@ -213,18 +140,31 @@ export const useUserStore = defineStore(
         },
         deserialize: (str) => {
           const loadedState = JSON.parse(str);
-          
-          if (loadedState.bookshelfs) {
+
+          if (loadedState.bookshelfs === undefined) {
+            loadedState.bookshelfs = getDefaultBookshelfs();
+          } else {
             loadedState.bookshelfs = loadedState.bookshelfs.map((bookshelf) => {
               return utility.getBookshelfFrom(bookshelf);
             });
           }
-          
-          // Recreate active bookshelf if it exists
-          if (loadedState.activeBookshelf) {
-            loadedState.activeBookshelf = utility.getBookshelfFrom(loadedState.activeBookshelf);
+
+          if (loadedState.maxResults === undefined) {
+            loadedState.maxResults = 40;
           }
-          
+
+          if (loadedState.maxPages === undefined) {
+            loadedState.maxPages = 8;
+          }
+
+          if (loadedState.defaultLanguage === undefined) {
+            loadedState.defaultLanguage = "any";
+          }
+
+          if (loadedState.isPrefsPanelOpen === undefined) {
+            loadedState.isPrefsPanelOpen = false;
+          }
+
           return loadedState;
         },
       },

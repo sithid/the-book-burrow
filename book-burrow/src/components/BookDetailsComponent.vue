@@ -1,8 +1,12 @@
 <template>
   <div class="book-card-large">
     <div class="book-detail-section cover">
-      <img id="thumbnail" :src="`${book.activeBook.fmtThumbnail()}`" :alt="`Thumbnail of ${book.activeBook.title}`"
-        @click="onThumbnailClicked" />
+      <img
+        id="thumbnail"
+        :src="`${book.activeBook.fmtThumbnail()}`"
+        :alt="`Thumbnail of ${book.activeBook.title}`"
+        @click="onThumbnailClicked"
+      />
       <h1 class="title-header">{{ book.activeBook.title }}</h1>
     </div>
     <div class="book-detail-section">
@@ -50,7 +54,7 @@
         <span class="category-text">Printed Page Count</span>
         <span id="printed-page-count">{{
           book.activeBook.printedPageCount
-          }}</span>
+        }}</span>
       </div>
       <div class="info-text" v-if="book.activeBook.language">
         <span class="category-text">Language</span>
@@ -85,11 +89,21 @@
     </div>
     <div class="book-detail-section">
       <h1 class="title-header">Options</h1>
-      <label for="add-to-bookshelf">Add To Bookshelf</label>
-      <select id="add-to-bookshelf">
-        <option v-for="shelf of user.bookshelfs" :value="shelf.name">{{ shelf.name }}</option>
-      </select>
 
+      <div class="ops-group">
+        <label for="add-to-bookshelf" id="add-to-bookshelf-label"
+          >Add To Bookshelf</label
+        >
+        <select id="add-to-bookshelf">
+          <option v-for="shelf in user.bookshelfs" :value="shelf.name">
+            {{ shelf.name }}
+          </option>
+        </select>
+
+        <button id="add-to-bookshelf-button" @click="addBookToBookshelf">
+          Add Book
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -110,6 +124,27 @@ function onThumbnailClicked() {
       "BookDetailsComponent::onThumbnailClicked",
       "No infolink available for this book: " + book.activeBook.title
     );
+}
+
+function addBookToBookshelf() {
+  const selectElement = document.getElementById("add-to-bookshelf");
+  const selectedBookshelfName = selectElement.value;
+  const selectedBookshelf = user.bookshelfs.find(
+    (shelf) => shelf.name === selectedBookshelfName
+  );
+
+  if (selectedBookshelf) {
+    user.addBookToBookshelf(book.activeBook, selectedBookshelf.id);
+    config.FMT_PRINT_DEBUG(
+      "BookDetailsComponent::addBookToBookshelf",
+      `Added book ${book.activeBook.title} to bookshelf ${selectedBookshelf.name}`
+    );
+  } else {
+    config.FMT_PRINT_DEBUG(
+      "BookDetailsComponent::addBookToBookshelf",
+      "Selected bookshelf not found"
+    );
+  }
 }
 </script>
 
@@ -168,6 +203,26 @@ span {
   text-align: justify;
 }
 
+.ops-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.6rem;
+}
+
+#add-to-bookshelf-label {
+  font-size: 0.6rem;
+  margin: 0 10px;
+  color: var(--color-offset);
+}
+
+#add-to-bookshelf,
+#add-to-bookshelf-button {
+  font-size: 0.6rem;
+  color: var(--color-offset);
+}
+
 #thumbnail {
   width: 100%;
   max-width: 250px;
@@ -210,6 +265,20 @@ span {
 
   #description {
     font-size: 0.7rem;
+  }
+
+  .ops-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  #add-to-bookshelf-label,
+  #add-to-bookshelf,
+  #add-to-bookshelf-button {
+    font-size: 0.8rem;
+    margin: auto 10px;
+    color: var(--color-offset);
   }
 }
 </style>

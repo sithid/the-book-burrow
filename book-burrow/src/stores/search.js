@@ -38,7 +38,7 @@ export const useSearchStore = defineStore(
         const trimmedWords = filter.allWords.trim();
         if (trimmedWords) {
           queryParts.push(
-            encodeURIComponent(trimmedWords).replace(/%20/g, "+")
+            encodeURIComponent(trimmedWords).replace(/%20/g, "+") // regex to replace spaces with +
           );
         }
       }

@@ -1,7 +1,7 @@
 <template>
   <div class="bookshelf-panel">
     <div class="bookshelf-content">
-      <h1>{{ props.bookshelf.name }}</h1>
+      <h1 id="bookshelf-name">{{ props.bookshelf.name }}</h1>
       <BookListComponent :books="props.bookshelf.books"></BookListComponent>
     </div>
   </div>
@@ -27,29 +27,36 @@ const props = defineProps({
   display: flex;
   background-size: contain;
   flex-direction: column;
-  background-color: var(--color-secondary);
+  justify-content: center;
+  color: var(--color-offset);
   background-image: url("../assets/bookshelf-art.jpg");
+  padding: 5px;
 }
 
 .bookshelf-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
   background-color: var(--color-secondary-transparent);
+  height: 100vh;
+}
+
+h1 {
+  text-align: center;
+  padding-top: 0;
 }
 
 @media (min-width: 768px) {
   .bookshelf-panel {
-    display: flex;
-    padding: 10px;
-    min-height: 100%;
+    background-image: url("../assets/bookshelf-art.jpg");
+    flex-direction: row;
+    margin: 0 auto;
+    width: 30vw;
+    height: 100%;
   }
+
   .bookshelf-content {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    padding: 20px;
-    margin: 20px;
-    flex-grow: 1;
+    width: 25vw;
+    height: 100%;
   }
 }
 </style>

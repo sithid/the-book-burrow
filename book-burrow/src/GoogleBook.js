@@ -35,6 +35,17 @@ export class GoogleBook {
     this.saleInfo = apiResponseObject.volumeInfo.saleInfo; // { saleability, listPrice { amount, currencyCode } } :: { string, { number, string } }
   }
 
+  fmtTitle() {
+    let shortenedTitle = this.title;
+
+    if (this.title.length > 37)
+    {
+      shortenedTitle = shortenedTitle.slice(0, 34) + "...";
+    }
+
+    return shortenedTitle;
+  }
+
   fmtAuthors() {
     if (!this.authors) return "Unknown Author";
 

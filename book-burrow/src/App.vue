@@ -12,7 +12,7 @@
     </nav>
   </div>
   <div>
-    <DataPreferencesPanel v-if="user.PrefsPanelOpen" class="prefs-panel">
+    <DataPreferencesPanel v-if="user.isPrefsPanelOpen" class="prefs-panel">
     </DataPreferencesPanel>
   </div>
   <div class="content-panel">
@@ -29,6 +29,7 @@ import { RouterLink, RouterView } from "vue-router";
 import { useFilterStore } from "./stores/filter.js";
 import { useUserStore } from "./stores/user.js";
 import { config } from "@/config.js";
+import { onMounted } from "vue";
 
 const user = useUserStore();
 const filter = useFilterStore();
@@ -36,12 +37,13 @@ const filter = useFilterStore();
 const preferencesBtnOnClick = () => {
   user.togglePrefsPanel();
 
-  if (user.PrefsPanelOpen) {
+  if (user.isPrefsPanelOpen) {
     if (filter.isPanelOpen) {
       filter.toggleFilterPanel();
     }
   }
 };
+
 </script>
 
 <style scoped>

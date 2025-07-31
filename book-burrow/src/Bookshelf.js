@@ -27,7 +27,7 @@ export class Bookshelf {
       return false;
     }
 
-    if (!gBook.id || !gBook.title || !gBook.selfLink) {
+    if (!gBook.id || !gBook.title) {
       config.FMT_PRINT_DEBUG(
         "bookshelf::addBook",
         "Book object is missing required properties.",

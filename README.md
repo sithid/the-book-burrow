@@ -1,8 +1,4 @@
-# The Book Burrow 
-![Search Results Preview](/docs/SearchResults.PNG 'Search Results Preview')
-![Filter Panel Preview](/docs/FilterPanel.PNG 'Filter Panel Preview')
-
-## Overview
+# The Book Burrow Overview
 
 The book burrow is a responsive web app that functions much like Google Books, utilizing the google books api. Users can search for books by either
 using the minimal serach box on the home page to do a broad search for books that have ANY properties which contain the keywords they are search for.
