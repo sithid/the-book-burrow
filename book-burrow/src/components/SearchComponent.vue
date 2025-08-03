@@ -7,9 +7,19 @@
       <button @click="clearClick" class="clear-button">
         <i class="fa fa-cancel" aria-hidden="true"></i>
       </button>
-      <input id="search-input" type="text" v-model="search.basicQuery" @keyup.enter="onSearch" class="search-input"
-        placeholder="Search Terms Required" />
-      <button v-if="!filter.isPanelOpen" @click="onSearch" class="search-button">
+      <input
+        id="search-input"
+        type="text"
+        v-model="search.basicQuery"
+        @keyup.enter="onSearch"
+        class="search-input"
+        placeholder="Search Terms Required"
+      />
+      <button
+        v-if="!filter.isPanelOpen"
+        @click="onSearch"
+        class="search-button"
+      >
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
     </div>
@@ -34,13 +44,19 @@
               {{ search.googleBookResults.length }} results.
             </h1>
 
-            <button @click="nextPage" :disabled="
+            <button
+              @click="nextPage"
+              :disabled="
                 search.currentPageIndex >= search.resultPages.length - 1
-              ">
+              "
+            >
               Next
             </button>
           </div>
-          <div v-for="book in currentResults" v-if="currentResults && currentResults.length > 0">
+          <div
+            v-for="book in currentResults"
+            v-if="currentResults && currentResults.length > 0"
+          >
             <SearchResultComponent :book="book"></SearchResultComponent>
           </div>
           <p id="no-books" v-else>No books found on this page.</p>
@@ -136,7 +152,6 @@ function clearClick() {
 .paging-container {
   display: flex;
   flex-direction: column;
-
 }
 
 .paging {
@@ -173,7 +188,6 @@ function clearClick() {
 .filter-options-panel {
   display: flex;
   flex-direction: row;
-  position: relative;
   background-color: var(--color-secondary);
 }
 
@@ -187,10 +201,12 @@ function clearClick() {
   color: var(--color-text);
   background-color: var(--secondary);
 }
+
 @media (min-width: 768px) {
   .component-container {
     display: flex;
-    flex-direction: row;  }
+    flex-direction: row;
+  }
 
   .paging-container {
     border-top: none;
@@ -201,20 +217,25 @@ function clearClick() {
   }
 
   .filter-options-panel {
-    display: flex;
-    flex-direction: row;
-    position: relative;
     background-color: var(--color-secondary);
+    border: 10px solid var(--color-offset);
+    border-top: 0;
+    border-bottom: 0;
+    border-radius: 10px;
   }
 }
+
 @media (min-width: 1024px) {
   .paging-container {
     justify-content: center;
   }
+
   .to-read-container,
   .read-container {
     display: flex;
     flex-direction: column;
+    max-width: 30vw;
+    height: 100%;
   }
 }
 </style>

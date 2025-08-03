@@ -25,11 +25,11 @@ const props = defineProps({
 <style scoped>
 .bookshelf-panel {
   display: flex;
-  background-size: contain;
   flex-direction: column;
   justify-content: center;
-  color: var(--color-offset);
   background-image: url("../assets/bookshelf-art.jpg");
+  background-size: cover;
+  color: var(--color-offset);
   padding: 5px;
 }
 
@@ -37,7 +37,6 @@ const props = defineProps({
   display: flex;
   flex-direction: column;
   background-color: var(--color-secondary-transparent);
-  height: 100vh;
 }
 
 h1 {
@@ -47,15 +46,16 @@ h1 {
 
 @media (min-width: 768px) {
   .bookshelf-panel {
-    background-image: url("../assets/bookshelf-art.jpg");
     flex-direction: row;
+    background-size: contain;
+    width: 100%;
+    height: 100vh;
     margin: 0 auto;
-    width: 30vw;
-    height: 100%;
+    padding: 15px;
   }
 
   .bookshelf-content {
-    width: 25vw;
+    width: 100%;
     height: 100%;
   }
 }

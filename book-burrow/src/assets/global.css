@@ -1,7 +1,7 @@
 :root {
   --color-primary: #800000;
   --color-secondary: grey;
-  --color-secondary-transparent: rgba(128, 128, 128, 0.644);
+  --color-secondary-transparent: rgba(255, 255, 255, 0.4);
   --color-offset: #1a2738;
   --color-text: #fff;
 }
@@ -96,6 +96,11 @@ body {
 @media (min-width: 768px) {
   * {
     font-size: 28px;
+  }
+
+  .search-component {
+    justify-content: center;
+    gap: 10px;
   }
 
   .search-container {

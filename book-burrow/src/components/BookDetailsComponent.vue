@@ -62,8 +62,12 @@
       </div>
       <div class="info-text" v-if="book.activeBook.canonicalVolumeLink">
         <span class="category-text">Canonical Volume Link</span>
-        <span id="book-canonical-link">
-          <a :href="book.activeBook.canonicalVolumeLink" target="_blank">
+        <span >
+          <a
+            class="book-links"
+            :href="book.activeBook.canonicalVolumeLink"
+            target="_blank"
+          >
             Here
           </a>
         </span>
@@ -71,7 +75,7 @@
       <div class="info-text" v-if="book.activeBook.saleInfo" target="_blank">
         <span class="category-text">Sale Info</span>
         <span id="sale-info">
-          <a :href="book.activeBook.saleInfo"> Here </a>
+          <a class="book-links":href="book.activeBook.saleInfo"> Here </a>
         </span>
       </div>
       <div class="info-text" v-if="book.activeBook.isbn13">
@@ -152,13 +156,11 @@ function addBookToBookshelf() {
 span {
   padding-left: 0px;
   font-size: 0.6rem;
-  white-space: nowrap;
 }
 
 .book-card-large {
   display: flex;
   flex-direction: column;
-  align-items: center;
   padding: 20px;
   margin: 20px auto;
   border-radius: 8px;
@@ -169,9 +171,8 @@ span {
 .book-detail-section {
   display: flex;
   flex-direction: column;
-  padding-top: 10px;
+  margin: auto 10px;
   gap: 3px;
-  width: 100%;
   font-size: 0.6rem;
 }
 
@@ -232,9 +233,22 @@ span {
   cursor: pointer;
 }
 
+.book-links {
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: rgb(47, 47, 226);
+}
+
 @media (min-width: 768px) {
   span {
     font-size: 0.8rem;
+  }
+
+  .book-links {
+    font-size: 0.8rem;
+    text-decoration: none;
+    color: rgb(47, 47, 226);
   }
 
   .book-card-large {
@@ -270,7 +284,6 @@ span {
   .ops-group {
     display: flex;
     flex-direction: row;
-    justify-content: center;
   }
 
   #add-to-bookshelf-label,

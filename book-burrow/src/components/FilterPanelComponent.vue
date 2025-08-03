@@ -200,7 +200,6 @@ function clearClick() {
   margin-bottom: 10px;
   padding-left: 2px;
   justify-content: left;
-  width: 100%;
   gap: 10px;
 }
 
@@ -253,7 +252,8 @@ function clearClick() {
 @media (min-width: 768px) {
   .advanced-search-container {
     flex-direction: row;
-    width: 100%;
+    width: 100vw;
+    justify-content: center;
   }
 
   .option-group input {

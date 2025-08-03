@@ -78,14 +78,20 @@ export const useUserStore = defineStore(
       ];
     }
 
+    function getBookshelfByName(name) {
+      return bookshelfs.value.find((shelf) => shelf.name === name);
+    }
+
     const addBookToBookshelf = (gBook, bookshelfId) => {
-      const bookshelf = bookshelfs.value.find((shelf) => shelf.id === bookshelfId);
+      const bookshelf = bookshelfs.value.find(
+        (shelf) => shelf.id === bookshelfId
+      );
 
       if (bookshelf) {
         bookshelf.addBook(gBook);
       }
     };
-            
+
     const resetBookshelfsToDefault = () => {
       bookshelfs.value = getDefaultBookshelfs();
     };
@@ -110,6 +116,7 @@ export const useUserStore = defineStore(
       setDefaultLanguage,
       getDefaultBookshelfs,
       togglePrefsPanel,
+      getBookshelfByName,
       addBookToBookshelf,
       resetBookshelfsToDefault,
       resetAllUserData,

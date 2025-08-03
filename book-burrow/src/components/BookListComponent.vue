@@ -5,7 +5,7 @@
         {{ book.fmtTitle() }}
       </li>
     </ul>
-    <p v-else>No books found in this bookshelf.</p>
+    <p v-else id="no-books">No books found in this bookshelf.</p>
   </div>
 </template>
 
@@ -30,17 +30,27 @@ const props = defineProps({
 }
 
 .list-item {
-  font-size: .9rem;
+  font-size: 0.9rem;
   text-align: left;
-  text-wrap: nowrap;
+  overflow-wrap: break-word;
   color: var(--color-offset);
   font-weight: bold;
 }
 
+#no-books {
+  text-align: center;
+  color: var(--color-offset);
+  font-size: .9rem;
+}
+
 @media (min-width: 768px) {
   .list-item {
-    font-size: .9rem;
+    font-size: 1.2rem;
     text-align: left;
+  }
+
+  #no-books {
+    font-size: 1rem;
   }
 }
 </style>

@@ -5,11 +5,23 @@
     </div>
     <div class="pref-option">
       <label for="max-results" id="max-results-label">Results Per Page</label>
-      <input id="max-results" type="number" min="10" max="40" v-model="maxResults" />
+      <input
+        id="max-results"
+        type="number"
+        min="10"
+        max="40"
+        v-model="maxResults"
+      />
     </div>
     <div class="pref-option">
       <label for="max-pages" id="max-pages-label">Pages</label>
-      <input id="max-pages" type="number" min="1" max="100" v-model="maxPages" />
+      <input
+        id="max-pages"
+        type="number"
+        min="1"
+        max="100"
+        v-model="maxPages"
+      />
     </div>
     <div class="pref-option">
       <label for="language-select" id="language-label">Language</label>
@@ -74,13 +86,13 @@ const applyClick = () => {
   justify-content: space-between;
 }
 
-#max-results-label,
-#max-pages-label {
-  font-size: 0.8rem;
-}
-
 #user-preferences-header {
   text-align: center;
+}
+
+#max-results-label,
+#max-pages-label {
+  font-size: 0.7rem;
 }
 
 #max-results,
@@ -89,15 +101,34 @@ const applyClick = () => {
   text-align: right;
 }
 
+#language-select,
+#language-label {
+  font-size: 0.7rem;
+}
+
 @media (min-width: 768px) {
   .user-preferences-panel {
-    width: 20%;
     margin: 10px auto;
+    border: 10px solid var(--color-offset);
+    border-top: 0;
+    border-bottom: 0;
+    border-radius: 10px;
+  }
+
+  #max-results-label,
+  #max-pages-label {
+    font-size: 0.9rem;
   }
 
   #max-results,
   #max-pages {
+    font-size: 0.9rem;
     width: 70px;
+  }
+
+  #language-select,
+  #language-label {
+    font-size: 0.9rem;
   }
 }
 </style>

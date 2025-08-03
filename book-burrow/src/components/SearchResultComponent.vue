@@ -50,6 +50,8 @@ function onThumbnailClicked() {
   color: var(--color-offset);
   background-color: var(--color-secondary);
   border: 10px solid var(--color-offset);
+
+  max-width: 1200px;
 }
 
 .book-card-mini img {

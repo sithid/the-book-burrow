@@ -36,14 +36,10 @@ export class GoogleBook {
   }
 
   fmtTitle() {
-    let shortenedTitle = this.title;
 
-    if (this.title.length > 37)
-    {
-      shortenedTitle = shortenedTitle.slice(0, 34) + "...";
-    }
+    if (!this.title) return "Unknown Title";
 
-    return shortenedTitle;
+    return this.title;
   }
 
   fmtAuthors() {
