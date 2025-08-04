@@ -30,7 +30,7 @@ export const useFilterStore = defineStore(
       return filterPanelOpen.value;
     });
 
-    const reset = () => {
+    const clearAll = () => {
       allWords.value = "";
       exactWords.value = "";
       withoutTheseWords.value = "";
@@ -138,7 +138,7 @@ export const useFilterStore = defineStore(
       isPanelOpen,
       errorMsg,
 
-      reset,
+      clearAll,
       toggleFilterPanel,
     };
   },

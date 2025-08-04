@@ -5,8 +5,8 @@
     </div>
     <div id="nyt-lists-mobile">
       <h1>New York Times - Best Sellers</h1>
-      <div v-if="nytStore.nytBooklists.length > 0">
-        <div v-for="list in nytStore.nytBooklists" class="nyt-list-item">
+      <div v-if="nyt.nytBooklists.length > 0">
+        <div v-for="list in nyt.nytBooklists" class="nyt-list-item">
           <NYTListMobileComponent :bookList="list"> </NYTListMobileComponent>
         </div>
       </div>
@@ -17,24 +17,26 @@
 <script setup>
 import MinimalSearchComponent from "../components/MinimalSearchComponent.vue";
 import NYTListMobileComponent from "../components/NYTListMobileComponent.vue";
-import { useSearchStore } from "@/stores/search.js";
-import { useNytStore } from "@/stores/nyt.js";
+
 import { onMounted } from "vue";
 import { config } from "@/config.js";
+import { utility } from "@/utility.js";  
 
-const nytStore = useNytStore();
+import { useNytStore } from "@/stores/nyt.js";
+
+const nyt = useNytStore();
 
 onMounted(async () => {
-  if (nytStore.nytBooklists.length === 0) {
-    await nytStore.fetchNytBooklists();
+  if (nyt.nytBooklists.length === 0) {
+    await nyt.fetchNytBooklists();
   } else {
-    if (nytStore.lastFetched) {
-      const lastFetched = nytStore.lastFetched;
+    if (nyt.lastFetched) {
+      const lastFetched = nyt.lastFetched;
       const now = new Date();
       const timeDiff = now - lastFetched;
 
       if (timeDiff > 24 * 60 * 60 * 1000) {
-        nytStore.fetchNytBooklists();
+        nyt.fetchNytBooklists();
       } else {
         config.FMT_PRINT_DEBUG(
           "NYT Store",
@@ -42,7 +44,7 @@ onMounted(async () => {
         );
       }
     } else {
-      await nytStore.fetchNytBooklists();
+      await nyt.fetchNytBooklists();
     }
   }
 });

@@ -17,6 +17,12 @@ export const useNytStore = defineStore(
       activeNytList.value = null;
     };
 
+    const clearAll = () => {
+      clearBooklists();
+      clearActiveNytList();
+      lastFetched.value = null;
+    }
+
     const fetchNytBooklists = async () => {
       try {
         const response = await fetch(
@@ -83,6 +89,7 @@ export const useNytStore = defineStore(
       lastFetched,
       clearBooklists,
       clearActiveNytList,
+      clearAll,
       fetchNytBooklists,
     };
   },

@@ -31,7 +31,7 @@ const router = useRouter();
 
 function clearClick() {
   search.basicQuery = "";
-  search.clear();
+  search.clearAll();
 }
 
 async function searchBtnOnClick() {
@@ -42,6 +42,6 @@ async function searchBtnOnClick() {
 }
 
 onMounted(() => {
-  search.clear();
+  search.clearAll();
 });
 </script>

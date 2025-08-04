@@ -1,5 +1,5 @@
 <template>
-  <section class="book-card-mini">
+  <section v-if="props.book" class="book-card-mini">
     <p id="book-card-title">{{ props.book.title }}</p>
     <div class="book-card-details">
       <img :src="`${props.book.fmtThumbnail()}`" @click="onThumbnailClicked" />

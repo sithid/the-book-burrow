@@ -24,6 +24,10 @@
       />
     </div>
     <div class="pref-option">
+      <label for="clear-data-checkbox" id="clear-data-label">Clear All Data</label>
+      <input id="clear-data-checkbox" type="checkbox" />
+    </div>
+    <div class="pref-option">
       <label for="language-select" id="language-label">Language</label>
       <select id="language-select" v-model="defaultLanguage">
         <option value="any">Any</option>
@@ -56,6 +60,7 @@
 
 <script setup>
 import { ref } from "vue";
+import { utility } from "@/utility.js";
 import { useUserStore } from "@/stores/user.js";
 
 const user = useUserStore();
@@ -67,6 +72,12 @@ const applyClick = () => {
   user.setMaxPages(maxPages.value);
   user.setMaxResults(maxResults.value);
   user.setDefaultLanguage(defaultLanguage.value);
+
+  const clearDataChecked = document.getElementById("clear-data-checkbox").checked;
+
+  if (clearDataChecked) {
+    utility.clearAllData();
+  }
 };
 </script>
 
@@ -103,6 +114,10 @@ const applyClick = () => {
 
 #language-select,
 #language-label {
+  font-size: 0.7rem;
+}
+
+#clear-data-label {
   font-size: 0.7rem;
 }
 

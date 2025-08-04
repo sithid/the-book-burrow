@@ -3,6 +3,12 @@ import { Bookshelf } from "@/Bookshelf.js";
 import { config } from "@/config.js";
 import { v4 as uuidv4 } from "uuid";
 
+import { useSearchStore } from "@/stores/search.js";
+import { useNytStore } from "@/stores/nyt.js";
+import { useUserStore } from "@/stores/user.js";
+import { useFilterStore } from "@/stores/filter.js";
+import { useBookStore } from "@/stores/book.js";
+
 /*
  * Feature: Create a function that accepts two or more input parameters and
  * returns a value that is calculated or determined by the inputs.
@@ -44,6 +50,20 @@ export const utility = {
         combinedBooks
       );
     }
+  },
+
+  clearAllData() {
+    const search = useSearchStore();
+    const nyt = useNytStore();
+    const user = useUserStore();
+    const filter = useFilterStore();
+    const book = useBookStore();
+    
+    search.clearAll();
+    nyt.clearAll();
+    user.clearAll();
+    filter.clearAll();
+    book.clearAll();
   },
 
   getBookshelfForm: (bookshelf) => {

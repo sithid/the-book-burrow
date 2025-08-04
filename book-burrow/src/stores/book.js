@@ -15,10 +15,15 @@ export const useBookStore = defineStore(
       activeBook.value = null;
     };
 
+    const clearAll = () => {
+      clearActiveBook();
+    };
+
     return {
       activeBook,
       setActiveBook,
       clearActiveBook,
+      clearAll,
     };
   },
   {

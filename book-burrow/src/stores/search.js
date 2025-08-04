@@ -25,7 +25,7 @@ export const useSearchStore = defineStore(
 
     const basicQuery = ref("");
 
-    const clear = () => {
+    const clearAll = () => {
       googleBookResults.value = [];
       resultPages.value = [];
       pageCount.value = 0;
@@ -175,7 +175,7 @@ export const useSearchStore = defineStore(
     });
 
     async function queryApiBasic(params) {
-      clear();
+      clearAll();
 
       isLoading.value = true;
 
@@ -238,7 +238,7 @@ export const useSearchStore = defineStore(
     }
 
     async function queryApiISBN(isbn) {
-      clear();
+      clearAll();
 
       isLoading.value = true;
 
@@ -421,7 +421,7 @@ export const useSearchStore = defineStore(
     }
 
     async function loadResultsFromSource(books) {
-      clear();
+      clearAll();
 
       isLoading.value = true;
 
@@ -504,7 +504,7 @@ export const useSearchStore = defineStore(
       formatAdditionalOptions,
       advancedQueryUrl,
 
-      clear,
+      clearAll,
       queryApiBasic,
       queryApiAdvanced,
       queryApiISBN,
