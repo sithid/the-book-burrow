@@ -4,30 +4,6 @@
       <h1 id="user-preferences-header">User Preferences & Data</h1>
     </div>
     <div class="pref-option">
-      <label for="max-results" id="max-results-label">Results Per Page</label>
-      <input
-        id="max-results"
-        type="number"
-        min="10"
-        max="40"
-        v-model="maxResults"
-      />
-    </div>
-    <div class="pref-option">
-      <label for="max-pages" id="max-pages-label">Pages</label>
-      <input
-        id="max-pages"
-        type="number"
-        min="1"
-        max="100"
-        v-model="maxPages"
-      />
-    </div>
-    <div class="pref-option">
-      <label for="clear-data-checkbox" id="clear-data-label">Clear All Data</label>
-      <input id="clear-data-checkbox" type="checkbox" />
-    </div>
-    <div class="pref-option">
       <label for="language-select" id="language-label">Language</label>
       <select id="language-select" v-model="defaultLanguage">
         <option value="any">Any</option>
@@ -52,6 +28,32 @@
         <option value="vi">Vietnamese</option>
       </select>
     </div>
+    <div class="pref-option">
+      <label for="max-results" id="max-results-label">Results Per Page</label>
+      <input
+        id="max-results"
+        type="number"
+        min="10"
+        max="40"
+        v-model="maxResults"
+      />
+    </div>
+    <div class="pref-option">
+      <label for="max-pages" id="max-pages-label">Pages</label>
+      <input
+        id="max-pages"
+        type="number"
+        min="1"
+        max="100"
+        v-model="maxPages"
+      />
+    </div>
+    <div class="pref-option">
+      <label for="clear-data-checkbox" id="clear-data-label"
+        >Clear All Data</label
+      >
+      <input id="clear-data-checkbox" type="checkbox" />
+    </div>
     <button type="button" @click="applyClick" aria-label="Apply Changes">
       Apply Changes
     </button>
@@ -73,11 +75,15 @@ const applyClick = () => {
   user.setMaxResults(maxResults.value);
   user.setDefaultLanguage(defaultLanguage.value);
 
-  const clearDataChecked = document.getElementById("clear-data-checkbox").checked;
+  const clearDataChecked = document.getElementById(
+    "clear-data-checkbox"
+  ).checked;
 
   if (clearDataChecked) {
     utility.clearAllData();
   }
+
+  user.togglePrefsPanel();
 };
 </script>
 

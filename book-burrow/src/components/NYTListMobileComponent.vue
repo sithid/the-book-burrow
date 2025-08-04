@@ -23,7 +23,7 @@ const props = defineProps({
 const onListClick = async () => {
   nytStore.activeNytList = props.bookList;
   router.push("/search");
-  
+
   await search.loadNYTResults(props.bookList);
 };
 </script>
@@ -33,11 +33,12 @@ const onListClick = async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--color-secondary);
+  padding: 0 10px 0 10px;
+  background-color: var(--color-primary);
   border: 10px solid var(--color-offset);
   border-radius: 10px;
 }
-
-@media (min-width: 768px) {
+.nyt-list-component:hover {
+  background-color: var(--color-secondary);
 }
 </style>

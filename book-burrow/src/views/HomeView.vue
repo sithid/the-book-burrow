@@ -11,16 +11,26 @@
         </div>
       </div>
     </div>
+    <div id="nyt-lists-desktop">
+      <h1>New York Times - Best Sellers</h1>
+      <div v-if="nyt.nytBooklists.length > 0">
+        <NYTListDesktopComponent></NYTListDesktopComponent>
+      </div>
+      <div v-else>
+        <p>No NYT book lists available.</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
 import MinimalSearchComponent from "../components/MinimalSearchComponent.vue";
 import NYTListMobileComponent from "../components/NYTListMobileComponent.vue";
+import NYTListDesktopComponent from "@/components/NYTListDesktopComponent.vue";
 
 import { onMounted } from "vue";
 import { config } from "@/config.js";
-import { utility } from "@/utility.js";  
+import { utility } from "@/utility.js";
 
 import { useNytStore } from "@/stores/nyt.js";
 
@@ -78,11 +88,27 @@ onMounted(async () => {
 
 #nyt-lists-mobile h1 {
   font-size: 1.5rem;
+  text-align: center;
 }
 
-@media (min-width: 768px) {
-  #nyt-lists-mobile {
+#nyt-lists-desktop {
+  display: none;
+}
 
+@media (min-width: 1024px) {
+  #nyt-lists-mobile {
+    display: none;
+  }
+
+  #nyt-lists-desktop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #nyt-lists-desktop h1 {
+    font-size: 1.5rem;
+    text-align: center;
   }
 }
 </style>

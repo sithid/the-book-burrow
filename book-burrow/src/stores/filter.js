@@ -68,7 +68,7 @@ export const useFilterStore = defineStore(
      * This function validates an ISBN number, allowing both 10-digit and 13-digit formats.
      */
     const isValidISBN = (value) => {
-      const cleanedValue = value.replace(/[- ]/g, "");
+      const cleanedValue = value.replace(/[- ]/g, "").replace(/[a-zA-Z]/g, "");
       return /^\d{10}$|^\d{13}$/.test(cleanedValue);
     };
 
