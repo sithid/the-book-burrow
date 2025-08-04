@@ -44,8 +44,6 @@ export const useFilterStore = defineStore(
       language.value = user.defaultLanguage;
       isbn.value = "";
       errorMsg.value = "";
-
-      console.clear();
     };
 
     const toggleFilterPanel = () => {
@@ -65,6 +63,10 @@ export const useFilterStore = defineStore(
       );
     });
 
+    /*
+     * Feature: Use a regular expression to validate user input and either prevent the invalid input or inform the user about it.
+     * This function validates an ISBN number, allowing both 10-digit and 13-digit formats.
+     */
     const isValidISBN = (value) => {
       const cleanedValue = value.replace(/[- ]/g, "");
       return /^\d{10}$|^\d{13}$/.test(cleanedValue);
@@ -114,8 +116,7 @@ export const useFilterStore = defineStore(
               errorMsg.value = "";
             }
           } else {
-            errorMsg.value =
-              "You must text in at least one field!";
+            errorMsg.value = "You must text in at least one field!";
           }
         }
       },

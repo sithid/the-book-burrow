@@ -93,6 +93,8 @@ export const utility = {
   },
 
   getGBookForm: (googleBook) => {
+    // here we're turning the GoogleBook instance into a plain object.
+    // this is useful for sending the book data to the backend or storing it.
     if (!(googleBook instanceof GoogleBook)) {
       config.FMT_PRINT_DEBUG(
         "utility::getGBookForm",
@@ -126,6 +128,8 @@ export const utility = {
   },
 
   getGBookFrom: (plainObject) => {
+    // the GoogleBook constructor expects an object that matches the Google Books API response structure.
+    // build a plain object that matches the expected structure from the plain object that was passed.
     const gbook = {
       id: plainObject.id, // string
       selfLink: plainObject.selfLink, // string
@@ -138,8 +142,8 @@ export const utility = {
         description: plainObject.description, // string
         industryIdentifiers: [
           { type: "ISBN_10", identifier: plainObject.isbn10 },
-          { type: "ISBN_13", identifier: plainObject.isbn13 }
-        ].filter(id => id.identifier), // if identifier exists
+          { type: "ISBN_13", identifier: plainObject.isbn13 },
+        ].filter((id) => id.identifier), // if identifier exists
         pageCount: plainObject.pageCount, // string
         printedPageCount: plainObject.printedPageCount, // string
         averageRating: plainObject.averageRating, // number

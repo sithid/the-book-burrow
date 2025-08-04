@@ -21,6 +21,7 @@ export const useSearchStore = defineStore(
     const resultPages = ref([]);
     const currentPageIndex = ref(0);
     const pageCount = ref(0);
+    const isLoading = ref(false);
 
     const basicQuery = ref("");
 
@@ -29,6 +30,8 @@ export const useSearchStore = defineStore(
       resultPages.value = [];
       pageCount.value = 0;
       currentPageIndex.value = 0;
+      isLoading.value = false;
+      basicQuery.value = "";
     };
 
     const formatFindResultsOptions = computed(() => {
@@ -142,6 +145,8 @@ export const useSearchStore = defineStore(
     });
 
     const advancedQueryUrl = computed(() => {
+      isLoading.value = true;
+
       let queryString = `${config.API_URL}?q=`;
 
       const words = formatFindResultsOptions.value;
@@ -164,11 +169,15 @@ export const useSearchStore = defineStore(
         queryString += `${additionalOptions}`;
       }
 
+      isLoading.value = false;
+
       return queryString;
     });
 
     async function queryApiBasic(params) {
       clear();
+
+      isLoading.value = true;
 
       const requestHeaders = new Headers();
       requestHeaders.append("Content-Type", "application/json");
@@ -224,10 +233,14 @@ export const useSearchStore = defineStore(
 
         currentPageIndex.value = 0;
       }
+
+      isLoading.value = false;
     }
 
     async function queryApiISBN(isbn) {
       clear();
+
+      isLoading.value = true;
 
       if (!isbn || isbn.trim() === "") {
         config.FMT_PRINT_DEBUG(
@@ -290,9 +303,12 @@ export const useSearchStore = defineStore(
       }
 
       currentPageIndex.value = 0;
+
+      isLoading.value = false;
     }
 
     async function queryApiAdvanced() {
+      isLoading.value = true;
       googleBookResults.value = [];
       resultPages.value = [];
 
@@ -352,11 +368,11 @@ export const useSearchStore = defineStore(
 
         currentPageIndex.value = 0;
       }
+
+      isLoading.value = false;
     }
 
     async function queryForRecommended(isbn) {
-      clear();
-
       if (!isbn || isbn.trim() === "") {
         config.FMT_PRINT_DEBUG(
           "queryForRecommended::isbn",
@@ -398,13 +414,16 @@ export const useSearchStore = defineStore(
 
         if (data.items && data.items.length > 0) {
           const book = new GoogleBook(data.items[0]);
+          console.log(book);
           return book;
         }
       }
     }
 
-    const loadResultsFromSource = (books) => {
+    async function loadResultsFromSource(books) {
       clear();
+
+      isLoading.value = true;
 
       if (!books || books.length === 0) {
         config.FMT_PRINT_DEBUG(
@@ -436,15 +455,50 @@ export const useSearchStore = defineStore(
         "loadBooksIntoStore",
         `Loaded ${books.length} books into ${pageCount.value} pages.`
       );
-    };
 
+      isLoading.value = false;
+    }
+
+    async function loadNYTResults(bookList) {
+      isLoading.value = true;
+
+      const books = [];
+
+      for (let i = 0; i < bookList.books.length; i++) {
+        const isbn10 = bookList.books[i].isbns[0].isbn10;
+        const isbn13 = bookList.books[i].isbns[0].isbn13;
+
+        const isbn = isbn13 ? isbn13 : isbn10 ? isbn10 : null;
+
+        if (!isbn) {
+          config.FMT_PRINT_DEBUG(
+            "loadNYTResults",
+            `No valid ISBN found for book: ${bookList.books[i].title}`,
+            true
+          );
+          continue;
+        }
+
+        config.FMT_PRINT_DEBUG(
+          "loadNYTResults",
+          `Loading book with ISBN: ${isbn}`
+        );
+
+        const book = await queryForRecommended(isbn);
+
+        books.push(book);
+      }
+
+      await loadResultsFromSource(books);
+    }
     return {
       googleBookResults,
       pageCount,
       basicQuery,
       resultPages,
       currentPageIndex,
-
+      isLoading,
+      
       formatFindResultsOptions,
       formatFilterByOptions,
       formatAdditionalOptions,
@@ -456,6 +510,7 @@ export const useSearchStore = defineStore(
       queryApiISBN,
       queryForRecommended,
       loadResultsFromSource,
+      loadNYTResults,
     };
   },
   {
@@ -510,7 +565,7 @@ export const useSearchStore = defineStore(
 
           if (loadedState.resultPages && loadedState.resultPages.length > 0) {
             loadedState.pageCount = loadedState.resultPages.length;
-          } else {  
+          } else {
             loadedState.currentPageIndex = 0;
             loadedState.pageCount = 0;
           }
