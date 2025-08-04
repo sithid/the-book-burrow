@@ -1,4 +1,4 @@
-# The Book Burrow Overview
+# The Book Burrow Overview  
 
 The book burrow is a responsive web app that functions much like Google Books, utilizing the google books api. Users can search for books by either
 using the minimal serach box on the home page to do a broad search for books that have ANY properties which contain the keywords they are search for.
@@ -16,48 +16,53 @@ Users will also be able to save user preferences. There is no login required(or 
 and refresh will be stored using local storage. I am planning an export data feature, that will allow a user to export the json for their data (user preferences, bookshelfs) so they can import
 it on a different device and not have to build their bookshelfs all over again.
 
-## Tech Used
+## Tech Used  
 
 HTML, CSS, Javascript, Vu3
 
 I am using Vue3 Composition API with Pinia Stores and local storage to facilitate both reactivity and data persistence. I manage my local storage data with pinia and a plugin for pinia called
 pinia-plugin-persistedstate and its absolutely wonderful. I'm not sure how the plugin works under the hood specifically but once you set up the persist object, which contains a serializer object with serialize (save the current state of the pinia store) and deserialize (load the saved state of the store, custom objects require mapping) functions.
 
-# Images
+# Images  
 
 Webapp artwork is provided by [Unsplash](https://unsplash.com/). All images are free to use under the Unsplash License.
 
-## Run/Install:
+## Run/Install:  
 
-1. **Clone the repository**
+1. **Clone the repository**  
+   Navigate to the directory where you want to clone the repository and run the following commands:
+
    ```bash
-   git clone https://github.com/yourusername/the-book-burrow.git
+   git clone https://github.com/sithid/the-book-burrow.git
    cd the-book-burrow/book-burrow
    ```
-2. **Install dependencies**
+2. **Install dependencies**  
+   Make sure you have [Node.js](https://nodejs.org/) installed. Then, run the following command to install the necessary dependencies:  
    ```bash
    npm install
    ```
-3. **Set up environment variables**
-
+3. **Set up environment variables**  
+   Next, create a `.env` file in the root of the project directory and add your API keys. You can use the following commands to create the file and add the keys:
    ```bash
    echo "VITE_GOOGLE_API_KEY=YOUR_GOOGLE_BOOKS_API_KEY_HERE" > .env
    echo "VITE_NYT_API_KEY=YOUR_NYT_API_KEY_HERE" >> .env
    ```
 
    I will be providing API keys to the testers/reviewers who need them. If you are testing this project, please contact me for the API keys.
-
-4. **Run the development server**
+4. **Run the development server**  
+   To start the development server, run the following command:
    ```bash
    npm run dev
    ```
-5. **Build for production**
+5. **Build for production**  
+   If you want to build the project for production, run the following command:
    ```bash
    npm run build
    ```
-6. **Debug Output**
+6. **Open the application**  
+   Open your web browser and navigate to `http://localhost:5173` to view the application.
+7. **Debug Output**  
    You can enable/disable debug output to the console by changing config.DEBUG from `./src/config.js`.
-
    ```js
    export const config = {
      DEBUG: true,

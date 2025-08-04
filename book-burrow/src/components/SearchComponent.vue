@@ -200,6 +200,8 @@ function clearClick() {
 #perform-search {
   color: var(--color-text);
   background-color: var(--secondary);
+  padding: 10px;
+  margin: 10px;
 }
 
 @media (min-width: 768px) {
