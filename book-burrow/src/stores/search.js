@@ -22,7 +22,7 @@ export const useSearchStore = defineStore(
     const currentPageIndex = ref(0);
     const pageCount = ref(0);
     const isLoading = ref(false);
-
+    const minimizeApiRequests = ref(true);
     const basicQuery = ref("");
 
     const clearAll = () => {
@@ -309,6 +309,7 @@ export const useSearchStore = defineStore(
 
     async function queryApiAdvanced() {
       isLoading.value = true;
+
       googleBookResults.value = [];
       resultPages.value = [];
 
@@ -373,6 +374,8 @@ export const useSearchStore = defineStore(
     }
 
     async function queryForRecommended(isbn) {
+      isLoading.value = true;
+
       if (!isbn || isbn.trim() === "") {
         config.FMT_PRINT_DEBUG(
           "queryForRecommended::isbn",
@@ -418,6 +421,8 @@ export const useSearchStore = defineStore(
           return book;
         }
       }
+
+      isLoading.value = false;
     }
 
     async function loadResultsFromSource(books) {
@@ -431,6 +436,7 @@ export const useSearchStore = defineStore(
           "No books provided to load.",
           true
         );
+        isLoading.value = false;
         return;
       }
 
@@ -442,7 +448,7 @@ export const useSearchStore = defineStore(
         const pageBooks = books.slice(i, i + pageSize);
 
         resultPages.value.push({
-          index: resultPages.value.length - 1,
+          index: resultPages.value.length,
           results: pageBooks,
         });
       }
@@ -484,14 +490,36 @@ export const useSearchStore = defineStore(
           `Loading book with ISBN: ${isbn}`
         );
 
-        const book = await queryForRecommended(isbn);
+        if (minimizeApiRequests.value) {
+          const nytBook = utility.convertFromNytToGBook(bookList.books[i]);
 
-        if (book) {
-          books.push(book);
+          if (nytBook) {
+            config.FMT_PRINT_DEBUG(
+              "loadNYTResults",
+              `Converted NYT book to GoogleBook for ISBN: ${nytBook.title}`
+            );
+
+            books.push(nytBook);
+          } else {
+            config.FMT_PRINT_DEBUG(
+              "loadNYTResults",
+              `Failed to convert NYT book to GoogleBook: ${nytBook.title}`,
+              true
+            );
+          }
+
+        } else {
+          const book = await queryForRecommended(isbn);
+
+          if (book) {
+            books.push(book);
+          }
         }
       }
 
       await loadResultsFromSource(books);
+
+      isLoading.value = false;
     }
     return {
       googleBookResults,
@@ -500,7 +528,7 @@ export const useSearchStore = defineStore(
       resultPages,
       currentPageIndex,
       isLoading,
-
+      minimizeApiRequests,
       formatFindResultsOptions,
       formatFilterByOptions,
       formatAdditionalOptions,
@@ -523,9 +551,16 @@ export const useSearchStore = defineStore(
         "basicQuery",
         "resultPages",
         "currentPageIndex",
+        "isLoading",
+        "minimizeApiRequests",
       ],
       serializer: {
         serialize: (state) => {
+          config.FMT_PRINT_DEBUG(
+            "Search Store",
+            `Serializing search state - googleBookResults: ${state.googleBookResults.length}, resultPages: ${state.resultPages.length}`
+          );
+
           const newState = {
             ...state,
             googleBookResults: state.googleBookResults.map((book) => {
@@ -544,6 +579,11 @@ export const useSearchStore = defineStore(
           return JSON.stringify(newState);
         },
         deserialize: (str) => {
+          config.FMT_PRINT_DEBUG(
+            "Search Store",
+            `Deserializing search state: ${str.substring(0, 200)}...`
+          );
+
           const loadedState = JSON.parse(str);
 
           if (loadedState.googleBookResults) {
@@ -571,6 +611,13 @@ export const useSearchStore = defineStore(
             loadedState.currentPageIndex = 0;
             loadedState.pageCount = 0;
           }
+
+          config.FMT_PRINT_DEBUG(
+            "Search Store",
+            `Deserialized search state - googleBookResults: ${
+              loadedState.googleBookResults?.length || 0
+            }, resultPages: ${loadedState.resultPages?.length || 0}`
+          );
 
           return loadedState;
         },

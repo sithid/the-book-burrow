@@ -149,6 +149,15 @@ export const utility = {
   getGBookFrom: (plainObject) => {
     // the GoogleBook constructor expects an object that matches the Google Books API response structure.
     // build a plain object that matches the expected structure from the plain object that was passed.
+    if (!plainObject || !plainObject.id) {
+      config.FMT_PRINT_DEBUG(
+        "utility::getGBookFrom",
+        "Invalid plain object provided for GoogleBook conversion.",
+        true
+      );
+      return null;
+    }
+
     const gbook = {
       id: plainObject.id, // string
       selfLink: plainObject.selfLink, // string
@@ -178,4 +187,44 @@ export const utility = {
 
     return new GoogleBook(gbook);
   },
-};
+
+  convertFromNytToGBook: (nytBook) => {
+    if (!nytBook || !nytBook.title) {
+      config.FMT_PRINT_DEBUG(
+        "utility::convertFromNytToGBook",
+        "Invalid NYT book object provided for conversion.",
+        true
+      );
+      return null;
+    }
+
+    // Create a GoogleBook-like object from the NYT book data
+    const gbookData = {
+      id: uuidv4(),
+      selfLink: nytBook.buy_links[0].url || "",
+      volumeInfo: {
+        title: nytBook.title || "Unknown Title",
+        authors: nytBook.author ? [nytBook.author] : ["Unknown Author"],
+        subject: nytBook.category ? [nytBook.category] : [],
+        publisher: nytBook.publisher || "Unknown Publisher",
+        publishedDate: nytBook.published_date || "Unknown Date",
+        description: nytBook.description || "No description available.",
+        industryIdentifiers: [
+          { type: "ISBN_10", identifier: nytBook.primary_isbn10 || "" },
+          { type: "ISBN_13", identifier: nytBook.primary_isbn13 || "" },
+        ],
+        pageCount: 0,
+        printedPageCount: 0,
+        averageRating: 0,
+        ratingCount: 0,
+        maturityRating: "NOT_MATURE",
+        infoLink: nytBook.buy_links[0].url || "",
+        imageLinks: {
+          thumbnail: nytBook.book_image || "",
+        },
+      },
+    };
+
+    return new GoogleBook(gbookData);
+  },
+}

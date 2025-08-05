@@ -20,7 +20,6 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useSearchStore } from "@/stores/search";
 import { useUserStore } from "@/stores/user";
@@ -40,8 +39,4 @@ async function searchBtnOnClick() {
     await search.queryApiBasic(search.basicQuery);
   }
 }
-
-onMounted(() => {
-  search.clearAll();
-});
 </script>

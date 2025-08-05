@@ -183,13 +183,13 @@ async function queryApiAdvanced() {
 
 function cancelClick() {
   filter.toggleFilterPanel();
-  filter.reset();
-  search.clear();
+  filter.clearAll();
+  search.clearAll();
 }
 
 function clearClick() {
-  filter.reset();
-  search.clear();
+  filter.clearAll();
+  search.clearAll();
 }
 </script>
 

@@ -97,11 +97,25 @@ export const useNytStore = defineStore(
     persist: {
       paths: ["nytBooklists", "activeNytList", "lastFetched"],
       serializer: {
-        serialize: (newState) => {
-          config.FMT_PRINT_DEBUG(
-            "NYT Store",
-            `Serializing state: ${JSON.stringify(newState)}`
-          );
+        serialize: (state) => {
+          const newState = {
+            ...state,
+            nytBooklists: state.nytBooklists.map(list => {
+              return {
+                ...list,
+                fmtTitle: () => {
+                  return `${list.display_name} (${list.list_name})`;
+                }
+              };
+            }),
+            activeNytList: state.activeNytList ? {
+              ...state.activeNytList,
+              fmtTitle: () => {
+                return `${state.activeNytList.display_name} (${state.activeNytList.list_name})`;
+              }
+            } : null,
+            lastFetched: state.lastFetched ? state.lastFetched.toISOString() : null,
+          }
           
           return JSON.stringify(newState);
         },
@@ -110,7 +124,29 @@ export const useNytStore = defineStore(
             "NYT Store",
             `Deserializing state: ${oldState}`
           );
-          return JSON.parse(oldState);
+          
+          const state = JSON.parse(oldState);
+
+          const loadedState = {
+            ...state,
+            nytBooklists: state.nytBooklists.map(list => {
+              return {
+                ...list,
+                fmtTitle: () => {
+                  return `${list.display_name} (${list.list_name})`;
+                }
+              };
+            }),
+            activeNytList: state.activeNytList ? {
+              ...state.activeNytList,
+              fmtTitle: () => {
+                return `${state.activeNytList.display_name} (${state.activeNytList.list_name})`;
+              }
+            } : null,
+            lastFetched: state.lastFetched ? new Date(state.lastFetched) : null,
+          };
+
+          return loadedState;
         },
       },
     },

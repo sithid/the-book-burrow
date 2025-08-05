@@ -1,6 +1,6 @@
 import { config } from "@/config.js";
 import { v4 as uuidv4 } from "uuid";
-import { GoogleBook } from "./GoogleBook";
+import { GoogleBook } from "./GoogleBook.js";
 
 export class Bookshelf {
   constructor(

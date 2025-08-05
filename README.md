@@ -48,7 +48,10 @@ Webapp artwork is provided by [Unsplash](https://unsplash.com/). All images are 
    echo "VITE_NYT_API_KEY=YOUR_NYT_API_KEY_HERE" >> .env
    ```
 
-   I will be providing API keys to the testers/reviewers who need them. If you are testing this project, please contact me for the API keys.
+   I will be providing API keys to the testers/reviewers who need them. If you are testing this project, please contact me for the API keys.  If you are a tester/reviewer, please
+   do not share the API keys with anyone else. The keys are provided for testing purposes only and should not be used in production environments.  When testing, you are free to
+   test but please do not spam the 'view full results' button on the home page. The google books API has a limit of 1000 requests per day and I do not want to hit that limit while testing.
+   Until I can change the way the book information is stored from the NYT lists, whenever you view all results, it sends a request to the google books api for EACH book in the list. This is not ideal and I will be changing this in the future but may not have time before the deadline. 
 4. **Run the development server**  
    To start the development server, run the following command:
    ```bash

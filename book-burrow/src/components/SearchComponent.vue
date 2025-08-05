@@ -7,19 +7,9 @@
       <button @click="clearClick" class="clear-button">
         <i class="fa fa-cancel" aria-hidden="true"></i>
       </button>
-      <input
-        id="search-input"
-        type="text"
-        v-model="search.basicQuery"
-        @keyup.enter="onSearch"
-        class="search-input"
-        placeholder="Search Terms Required"
-      />
-      <button
-        v-if="!filter.isPanelOpen"
-        @click="onSearch"
-        class="search-button"
-      >
+      <input id="search-input" type="text" v-model="search.basicQuery" @keyup.enter="onSearch" class="search-input"
+        placeholder="Search Terms Required" />
+      <button v-if="!filter.isPanelOpen" @click="onSearch" class="search-button">
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
     </div>
@@ -38,25 +28,20 @@
               Previous
             </button>
 
-            <h1 id="page-result-info">
+            <h1 v-if="!search.isLoading" id="page-result-info">
               Displaying page {{ search.currentPageIndex + 1 }} of
               {{ search.resultPages.length }} for
               {{ search.googleBookResults.length }} results.
             </h1>
+            <h1 v-else id="page-result-info">Results Still Loading...</h1>
 
-            <button
-              @click="nextPage"
-              :disabled="
+            <button @click="nextPage" :disabled="
                 search.currentPageIndex >= search.resultPages.length - 1
-              "
-            >
+              ">
               Next
             </button>
           </div>
-          <div
-            v-for="book in currentResults"
-            v-if="currentResults && currentResults.length > 0"
-          >
+          <div v-for="book of currentResults" v-if="currentResults && currentResults.length > 0">
             <SearchResultComponent v-if="book" :book="book"></SearchResultComponent>
           </div>
           <p id="no-books" v-else>No books found on this page.</p>
@@ -135,7 +120,7 @@ async function onSearch() {
 
 function clearClick() {
   search.basicQuery = "";
-  search.clear();
+  search.clearAll();
 }
 </script>
 

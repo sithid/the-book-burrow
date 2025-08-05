@@ -23,8 +23,7 @@ const props = defineProps({
 const onListClick = async () => {
   nytStore.activeNytList = props.bookList;
   router.push("/search");
-
-  await search.loadNYTResults(props.bookList);
+  await search.loadNYTResults(nytStore.activeNytList);
 };
 </script>
 
