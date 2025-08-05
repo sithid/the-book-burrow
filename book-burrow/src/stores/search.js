@@ -434,7 +434,7 @@ export const useSearchStore = defineStore(
         return;
       }
 
-      googleBookResults.value = [...books];
+      googleBookResults.value = books;
 
       const pageSize = user.maxResults;
 
@@ -442,7 +442,7 @@ export const useSearchStore = defineStore(
         const pageBooks = books.slice(i, i + pageSize);
 
         resultPages.value.push({
-          index: resultPages.value.length,
+          index: resultPages.value.length - 1,
           results: pageBooks,
         });
       }
@@ -486,7 +486,9 @@ export const useSearchStore = defineStore(
 
         const book = await queryForRecommended(isbn);
 
-        books.push(book);
+        if (book) {
+          books.push(book);
+        }
       }
 
       await loadResultsFromSource(books);
@@ -498,7 +500,7 @@ export const useSearchStore = defineStore(
       resultPages,
       currentPageIndex,
       isLoading,
-      
+
       formatFindResultsOptions,
       formatFilterByOptions,
       formatAdditionalOptions,

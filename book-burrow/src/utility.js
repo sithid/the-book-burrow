@@ -67,10 +67,10 @@ export const utility = {
   },
 
   getBookshelfForm: (bookshelf) => {
-    if (!(bookshelf instanceof Bookshelf)) {
+    if (!bookshelf) {
       config.FMT_PRINT_DEBUG(
         "utility::getBookshelfForm",
-        "Provided object is not an instance of Bookshelf.",
+        "Provided object is undefined or null.",
         true
       );
       return null;
@@ -113,16 +113,15 @@ export const utility = {
   },
 
   getGBookForm: (googleBook) => {
-    // here we're turning the GoogleBook instance into a plain object.
-    // this is useful for sending the book data to the backend or storing it.
-    if (!(googleBook instanceof GoogleBook)) {
+    if (!googleBook || !googleBook.id) {
       config.FMT_PRINT_DEBUG(
         "utility::getGBookForm",
-        "Provided object is not an instance of GoogleBook.",
+        "Invalid GoogleBook object provided for conversion.",
         true
       );
       return null;
     }
+     
     return {
       id: googleBook.id,
       selfLink: googleBook.selfLink,

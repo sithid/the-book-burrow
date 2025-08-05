@@ -1,7 +1,12 @@
 <template>
   <div class="book-list-container">
     <ul id="book-list" v-if="books && books.length > 0">
-      <li v-for="book in books" :key="book.id" class="list-item">
+      <li
+        @click="onBookClicked(book)"
+        v-for="book in books"
+        :key="book.id"
+        class="list-item"
+      >
         {{ book.fmtTitle() }}
       </li>
     </ul>
@@ -10,9 +15,12 @@
 </template>
 
 <script setup>
-import { useUserStore } from "@/stores/user.js";
+import { useBookStore } from "@/stores/book.js";
+import { useRouter } from "vue-router";
+import { config } from "../config.js";
 
-const user = useUserStore();
+const bookStore = useBookStore();
+const router = useRouter();
 
 const props = defineProps({
   books: {
@@ -20,6 +28,16 @@ const props = defineProps({
     required: true,
   },
 });
+
+const onBookClicked = (book) => {
+  bookStore.setActiveBook(book);
+  config.FMT_PRINT_DEBUG(
+    "BookListComponent::onBookClicked",
+    `Selected book: ${book.title}`
+  );
+
+  router.push("/details");
+};
 </script>
 
 <style scoped>
@@ -40,7 +58,7 @@ const props = defineProps({
 #no-books {
   text-align: center;
   color: var(--color-offset);
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 
 @media (min-width: 768px) {
@@ -51,6 +69,11 @@ const props = defineProps({
 
   #no-books {
     font-size: 1rem;
+  }
+
+  li:hover {
+    cursor: pointer;
+    color: var(--color-primary);
   }
 }
 </style>

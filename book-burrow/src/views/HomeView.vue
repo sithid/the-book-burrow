@@ -95,7 +95,7 @@ onMounted(async () => {
   display: none;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   #nyt-lists-mobile {
     display: none;
   }

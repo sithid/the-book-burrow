@@ -1,12 +1,8 @@
 <template>
   <div class="book-card-large">
     <div class="book-detail-section cover">
-      <img
-        id="thumbnail"
-        :src="`${book.activeBook.fmtThumbnail()}`"
-        :alt="`Thumbnail of ${book.activeBook.title}`"
-        @click="onThumbnailClicked"
-      />
+      <img id="thumbnail" :src="`${book.activeBook.fmtThumbnail()}`" :alt="`Thumbnail of ${book.activeBook.title}`"
+        @click="onThumbnailClicked" />
       <h1 class="title-header">{{ book.activeBook.title }}</h1>
     </div>
     <div class="book-detail-section">
@@ -54,7 +50,7 @@
         <span class="category-text">Printed Page Count</span>
         <span id="printed-page-count">{{
           book.activeBook.printedPageCount
-        }}</span>
+          }}</span>
       </div>
       <div class="info-text" v-if="book.activeBook.language">
         <span class="category-text">Language</span>
@@ -62,12 +58,8 @@
       </div>
       <div class="info-text" v-if="book.activeBook.canonicalVolumeLink">
         <span class="category-text">Canonical Volume Link</span>
-        <span >
-          <a
-            class="book-links"
-            :href="book.activeBook.canonicalVolumeLink"
-            target="_blank"
-          >
+        <span>
+          <a class="book-links" :href="book.activeBook.canonicalVolumeLink" target="_blank">
             Here
           </a>
         </span>
@@ -75,7 +67,7 @@
       <div class="info-text" v-if="book.activeBook.saleInfo" target="_blank">
         <span class="category-text">Sale Info</span>
         <span id="sale-info">
-          <a class="book-links":href="book.activeBook.saleInfo"> Here </a>
+          <a class="book-links" :href="book.activeBook.saleInfo"> Here </a>
         </span>
       </div>
       <div class="info-text" v-if="book.activeBook.isbn13">
@@ -93,11 +85,8 @@
     </div>
     <div class="book-detail-section">
       <h1 class="title-header">Options</h1>
-
       <div class="ops-group">
-        <label for="add-to-bookshelf" id="add-to-bookshelf-label"
-          >Add To Bookshelf</label
-        >
+        <label for="add-to-bookshelf" id="add-to-bookshelf-label">Add To Bookshelf</label>
         <select id="add-to-bookshelf">
           <option v-for="shelf in user.bookshelfs" :value="shelf.name">
             {{ shelf.name }}
@@ -106,6 +95,18 @@
 
         <button id="add-to-bookshelf-button" @click="addBookToBookshelf">
           Add Book
+        </button>
+      </div>
+      <div class="ops-group">
+        <label for="remove-from-bookshelf" id="remove-from-bookshelf-label">Remove From Bookshelf</label>
+        <select id="remove-from-bookshelf">
+          <option v-for="shelf in user.bookshelfs" :value="shelf.name">
+            {{ shelf.name }}
+          </option>
+        </select>
+
+        <button id="remove-from-bookshelf-button" @click="removeBookFromBookshelf">
+          Remove Book
         </button>
       </div>
     </div>
@@ -128,6 +129,27 @@ function onThumbnailClicked() {
       "BookDetailsComponent::onThumbnailClicked",
       "No infolink available for this book: " + book.activeBook.title
     );
+}
+
+function removeBookFromBookshelf() {
+  const selectElement = document.getElementById("remove-from-bookshelf");
+  const selectedBookshelfName = selectElement.value;
+  const selectedBookshelf = user.bookshelfs.find(
+    (shelf) => shelf.name === selectedBookshelfName
+  );
+
+  if (selectedBookshelf) {
+    user.removeBookFromBookshelf(book.activeBook.id, selectedBookshelf.id);
+    config.FMT_PRINT_DEBUG(
+      "BookDetailsComponent::removeBookFromBookshelf",
+      `Removed book ${book.activeBook.title} from bookshelf ${selectedBookshelf.name}`
+    );
+  } else {
+    config.FMT_PRINT_DEBUG(
+      "BookDetailsComponent::removeBookFromBookshelf",
+      "Selected bookshelf not found"
+    );
+  }
 }
 
 function addBookToBookshelf() {

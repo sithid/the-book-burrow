@@ -15,9 +15,7 @@
     <div class="details-panel">
       <div v-if="selectedList" class="list-details">
         <h2>{{ selectedList.display_name }}</h2>
-        <p class="list-description">{{ selectedList.list_name }}</p>
         <div v-if="selectedList.books && selectedList.books.length > 0" class="books-preview">
-          <h3>Top Books:</h3>
           <div v-for="book in selectedList.books" class="book-item">
             <span class="rank">{{ book.rank }}.</span>
             <span class="title">{{ book.title }}</span>
@@ -62,7 +60,7 @@ const viewFullList = async () => {
   if (selectedList.value) {
     nytStore.activeNytList = selectedList.value;
     router.push("/search");
-    await search.loadNYTResults(selectedList.value);
+    await search.loadNYTResults(nytStore.activeNytList);
   }
 };
 </script>
@@ -72,7 +70,7 @@ const viewFullList = async () => {
   display: none;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   .nyt-list-component {
     display: flex;
     flex-direction: row;
@@ -136,13 +134,6 @@ const viewFullList = async () => {
     margin: 0 0 10px 0;
     color: var(--color-text);
     font-size: 1.4rem;
-  }
-
-  .list-description {
-    color: var(--color-text);
-    font-style: italic;
-    margin-bottom: 20px;
-    opacity: 0.8;
   }
 
   .books-preview h3 {

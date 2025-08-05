@@ -57,7 +57,7 @@
             v-for="book in currentResults"
             v-if="currentResults && currentResults.length > 0"
           >
-            <SearchResultComponent :book="book"></SearchResultComponent>
+            <SearchResultComponent v-if="book" :book="book"></SearchResultComponent>
           </div>
           <p id="no-books" v-else>No books found on this page.</p>
         </div>

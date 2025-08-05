@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { Bookshelf } from "@/Bookshelf.js";
-import { config } from "@/config.js";
 import { utility } from "@/utility.js";
 import { v4 as uuidv4 } from "uuid";
 
@@ -92,6 +91,16 @@ export const useUserStore = defineStore(
       }
     };
 
+    const removeBookFromBookshelf = (bookId, bookshelfId) => {
+      const bookshelf = bookshelfs.value.find(
+        (shelf) => shelf.id === bookshelfId
+      );
+
+      if (bookshelf) {
+        bookshelf.removeBook(bookId);
+      }
+    };
+
     const resetBookshelfsToDefault = () => {
       bookshelfs.value = getDefaultBookshelfs();
     };
@@ -118,6 +127,7 @@ export const useUserStore = defineStore(
       togglePrefsPanel,
       getBookshelfByName,
       addBookToBookshelf,
+      removeBookFromBookshelf,
       resetBookshelfsToDefault,
       clearAll,
     };
