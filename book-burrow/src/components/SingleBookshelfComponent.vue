@@ -3,16 +3,15 @@
     <div class="bookshelf-content">
       <h1 id="bookshelf-name">{{ props.bookshelf.name }}</h1>
       <BookListComponent :books="props.bookshelf.books"></BookListComponent>
+      <button @click="clearAllBooks">Clear All Books</button>
     </div>
+
   </div>
 </template>
 
 <script setup>
 import BookListComponent from "./BookListComponent.vue";
 import { Bookshelf } from "@/Bookshelf.js";
-import { useUserStore } from "@/stores/user.js";
-
-const user = useUserStore();
 
 const props = defineProps({
   bookshelf: {
@@ -20,6 +19,14 @@ const props = defineProps({
     required: true,
   },
 });
+
+const clearAllBooks = () => {
+  props.bookshelf.clearBooks();
+  config.FMT_PRINT_DEBUG(
+    "SingleBookshelfComponent::clearAllBooks",
+    `Cleared all books from bookshelf: ${props.bookshelf.name}`
+  );
+};
 </script>
 
 <style scoped>
@@ -28,6 +35,7 @@ const props = defineProps({
   flex-direction: column;
   justify-content: center;
   background-image: url("../assets/bookshelf-art.jpg");
+  background-color: var(--color-primary);
   background-size: cover;
   color: var(--color-offset);
   padding: 5px;
@@ -36,10 +44,10 @@ const props = defineProps({
 .bookshelf-content {
   display: flex;
   flex-direction: column;
-  background-color: var(--color-secondary-transparent);
 }
 
 h1 {
+  background-color: var(--color-secondary);
   text-align: center;
   padding-top: 0;
 }

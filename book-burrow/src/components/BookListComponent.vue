@@ -1,12 +1,7 @@
 <template>
   <div class="book-list-container">
     <ul id="book-list" v-if="books && books.length > 0">
-      <li
-        @click="onBookClicked(book)"
-        v-for="book in books"
-        :key="book.id"
-        class="list-item"
-      >
+      <li @click="onBookClicked(book)" v-for="book in books" :key="book.id" class="list-item">
         {{ book.fmtTitle() }}
       </li>
     </ul>
@@ -47,12 +42,22 @@ const onBookClicked = (book) => {
   justify-content: right;
 }
 
+#book-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
 .list-item {
   font-size: 0.9rem;
-  text-align: left;
   overflow-wrap: break-word;
   color: var(--color-offset);
   font-weight: bold;
+  background-color: var(--color-secondary);
 }
 
 #no-books {
@@ -64,11 +69,13 @@ const onBookClicked = (book) => {
 @media (min-width: 768px) {
   .list-item {
     font-size: 1.2rem;
-    text-align: left;
+    text-align: center;
+    width: 100%;
   }
 
   #no-books {
     font-size: 1rem;
+    background-color: var(--color-secondary);
   }
 
   li:hover {

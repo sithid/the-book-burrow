@@ -64,11 +64,13 @@
 import { ref } from "vue";
 import { utility } from "@/utility.js";
 import { useUserStore } from "@/stores/user.js";
+import { useRouter } from "vue-router";
 
 const user = useUserStore();
 const maxPages = ref(user.maxPages);
 const maxResults = ref(user.maxResults);
 const defaultLanguage = ref(user.defaultLanguage);
+const router = useRouter();
 
 const applyClick = () => {
   user.setMaxPages(maxPages.value);
@@ -84,6 +86,7 @@ const applyClick = () => {
   }
 
   user.togglePrefsPanel();
+  router.go(0);
 };
 </script>
 

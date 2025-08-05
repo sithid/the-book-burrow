@@ -30,7 +30,6 @@ import NYTListDesktopComponent from "@/components/NYTListDesktopComponent.vue";
 
 import { onMounted } from "vue";
 import { config } from "@/config.js";
-import { utility } from "@/utility.js";
 
 import { useNytStore } from "@/stores/nyt.js";
 

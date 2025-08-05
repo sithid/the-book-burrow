@@ -1,8 +1,12 @@
 <template>
   <div class="book-card-large">
     <div class="book-detail-section cover">
-      <img id="thumbnail" :src="`${book.activeBook.fmtThumbnail()}`" :alt="`Thumbnail of ${book.activeBook.title}`"
-        @click="onThumbnailClicked" />
+      <img
+        id="thumbnail"
+        :src="`${book.activeBook.fmtThumbnail()}`"
+        :alt="`Thumbnail of ${book.activeBook.title}`"
+        @click="onThumbnailClicked"
+      />
       <h1 class="title-header">{{ book.activeBook.title }}</h1>
     </div>
     <div class="book-detail-section">
@@ -50,7 +54,7 @@
         <span class="category-text">Printed Page Count</span>
         <span id="printed-page-count">{{
           book.activeBook.printedPageCount
-          }}</span>
+        }}</span>
       </div>
       <div class="info-text" v-if="book.activeBook.language">
         <span class="category-text">Language</span>
@@ -59,7 +63,11 @@
       <div class="info-text" v-if="book.activeBook.canonicalVolumeLink">
         <span class="category-text">Canonical Volume Link</span>
         <span>
-          <a class="book-links" :href="book.activeBook.canonicalVolumeLink" target="_blank">
+          <a
+            class="book-links"
+            :href="book.activeBook.canonicalVolumeLink"
+            target="_blank"
+          >
             Here
           </a>
         </span>
@@ -86,7 +94,9 @@
     <div class="book-detail-section">
       <h1 class="title-header">Options</h1>
       <div class="ops-group">
-        <label for="add-to-bookshelf" id="add-to-bookshelf-label">Add To Bookshelf</label>
+        <label for="add-to-bookshelf" id="add-to-bookshelf-label"
+          >Add To Bookshelf</label
+        >
         <select id="add-to-bookshelf">
           <option v-for="shelf in user.bookshelfs" :value="shelf.name">
             {{ shelf.name }}
@@ -98,14 +108,19 @@
         </button>
       </div>
       <div class="ops-group">
-        <label for="remove-from-bookshelf" id="remove-from-bookshelf-label">Remove From Bookshelf</label>
+        <label for="remove-from-bookshelf" id="remove-from-bookshelf-label"
+          >Remove From Bookshelf</label
+        >
         <select id="remove-from-bookshelf">
           <option v-for="shelf in user.bookshelfs" :value="shelf.name">
             {{ shelf.name }}
           </option>
         </select>
 
-        <button id="remove-from-bookshelf-button" @click="removeBookFromBookshelf">
+        <button
+          id="remove-from-bookshelf-button"
+          @click="removeBookFromBookshelf"
+        >
           Remove Book
         </button>
       </div>
@@ -245,6 +260,17 @@ span {
   font-size: 0.6rem;
   color: var(--color-offset);
 }
+#remove-from-bookshelf-label {
+  font-size: 0.6rem;
+  margin: 0 10px;
+  color: var(--color-offset);
+}
+
+#remove-from-bookshelf,
+#remove-from-bookshelf-button {
+  font-size: 0.6rem;
+  color: var(--color-offset);
+}
 
 #thumbnail {
   width: 100%;
@@ -311,6 +337,14 @@ span {
   #add-to-bookshelf-label,
   #add-to-bookshelf,
   #add-to-bookshelf-button {
+    font-size: 0.8rem;
+    margin: auto 10px;
+    color: var(--color-offset);
+  }
+
+  #remove-from-bookshelf-label,
+  #remove-from-bookshelf,
+  #remove-from-bookshelf-button {
     font-size: 0.8rem;
     margin: auto 10px;
     color: var(--color-offset);

@@ -97,8 +97,21 @@ export const useNytStore = defineStore(
     persist: {
       paths: ["nytBooklists", "activeNytList", "lastFetched"],
       serializer: {
-        serialize: (data) => JSON.stringify(data),
-        deserialize: (data) => JSON.parse(data),
+        serialize: (newState) => {
+          config.FMT_PRINT_DEBUG(
+            "NYT Store",
+            `Serializing state: ${JSON.stringify(newState)}`
+          );
+          
+          return JSON.stringify(newState);
+        },
+        deserialize: (oldState) => {
+          config.FMT_PRINT_DEBUG(
+            "NYT Store",
+            `Deserializing state: ${oldState}`
+          );
+          return JSON.parse(oldState);
+        },
       },
     },
   }

@@ -62,7 +62,7 @@
           <p id="no-books" v-else>No books found on this page.</p>
         </div>
         <div id="is-loading" v-else-if="search.isLoading">
-          Results from the New York Times Best Sellers list is loading, please wait.
+          Results are loading, please wait.
         </div>
         <p id="perform-search" v-else>
           No Results found. Please perform a search to see results.
