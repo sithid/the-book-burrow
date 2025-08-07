@@ -163,22 +163,49 @@ const tmpIsbn = ref(filter.isbn);
 
 async function queryApiAdvanced() {
   if (!filter.anyFilterHasValue && !filter.isValidISBN(tmpIsbn.value)) {
+    filter.errorMsg = "Please provide at least one filter or a valid ISBN.";
+
     config.FMT_PRINT_DEBUG(
       "FilterPanelComponent::queryApiAdvanced",
       `No filter values provided or invalid ISBN: ${tmpIsbn.value}`
     );
-  } else if (filter.isValidISBN(tmpIsbn.value)) {
-    filter.toggleFilterPanel();
-    filter.clearAll();
-    filter.isbn = tmpIsbn.value;
-    await search.queryApiISBN(filter.isbn);
 
+    return;
+  }
+
+  if (tmpIsbn.value) {
+    if (filter.isValidISBN(tmpIsbn.value)) {
+      filter.errorMsg = "Querying API with ISBN: " + tmpIsbn.value;
+      await search.queryApiISBN(tmpIsbn.value);
+    } else {
+      filter.errorMsg = "Invalid ISBN provided.";
+
+      config.FMT_PRINT_DEBUG(
+        "FilterPanelComponent::queryApiAdvanced",
+        `Invalid ISBN provided: ${tmpIsbn.value}`
+      );
+    }
   } else {
-    filter.toggleFilterPanel();
-    tmpIsbn.value = "";
-    filter.isbn = "";
-    
-    await search.queryApiAdvanced();
+    if (filter.anyFilterHasValue) {
+      filter.toggleFilterPanel();
+      filter.errorMsg = "Querying API with advanced filters.";
+      tmpIsbn.value = "";
+      filter.isbn = tmpIsbn.value;
+
+      config.FMT_PRINT_DEBUG(
+        "FilterPanelComponent::queryApiAdvanced",
+        "Querying API with advanced filters"
+      );
+
+      await search.queryApiAdvanced();
+    } else {
+      filter.errorMsg = "No filters provided, skipping API query";
+
+      config.FMT_PRINT_DEBUG(
+        "FilterPanelComponent::queryApiAdvanced",
+        "No filters provided, skipping API query"
+      );
+    }
   }
 }
 
@@ -189,6 +216,7 @@ function cancelClick() {
 }
 
 function clearClick() {
+  filter.errorMsg = "Please provide at least one filter or a valid ISBN.";
   tmpIsbn.value = "";
   filter.clearAll();
   search.clearAll();

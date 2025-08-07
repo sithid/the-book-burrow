@@ -43,7 +43,6 @@ export const useFilterStore = defineStore(
 
       language.value = user.defaultLanguage;
       isbn.value = "";
-      errorMsg.value = "";
     };
 
     const toggleFilterPanel = () => {
@@ -72,6 +71,7 @@ export const useFilterStore = defineStore(
       return /^\d{10}$|^\d{13}$/.test(cleanedValue);
     };
 
+    /*
     watch(
       [
         allWords,
@@ -82,11 +82,11 @@ export const useFilterStore = defineStore(
         author,
         publisher,
         subject,
-        isbn,
+        isbn, // index 8
       ],
       (newValues, oldValues) => {
-        const newIsbnValue = newValues[8];
-        const oldIsbnValue = oldValues[8];
+        const newIsbnValue = newValues[9];
+        const oldIsbnValue = oldValues[9];
 
         if (newIsbnValue && isValidISBN(newIsbnValue)) {
           if (!isValidISBN(oldIsbnValue) || newIsbnValue !== oldIsbnValue) {
@@ -102,19 +102,12 @@ export const useFilterStore = defineStore(
             errorMsg.value = "";
           }
         } else {
-          if (
-            anyFilterHasValue.value ||
-            (newIsbnValue && newIsbnValue !== "")
-          ) {
-            if (
-              newIsbnValue &&
-              newIsbnValue.length > 0 &&
-              !isValidISBN(newIsbnValue)
-            ) {
-              errorMsg.value = "ISBN must be 10 or 13 digits.";
-            } else {
-              errorMsg.value = "";
-            }
+          if (anyFilterHasValue.value) {
+            errorMsg.value = "Your filter values have been updated!";
+          } else if (newIsbnValue && isValidISBN(newIsbnValue)) {
+            errorMsg.value = "You have entered a valid ISBN!";
+          } else if (!anyFilterHasValue.value && (!newIsbnValue || !isValidISBN(newIsbnValue))) {
+            errorMsg.value = "You must a valid ISBN between 10 and 13 digits!";
           } else {
             errorMsg.value = "You must have text in at least one field!";
           }
@@ -122,6 +115,7 @@ export const useFilterStore = defineStore(
       },
       { immediate: true }
     );
+    */
     return {
       allWords,
       exactWords,

@@ -10,7 +10,7 @@ Users can also do an more advanced search but opening up the filters panel from 
 
 The first group, Find Results, are inputs for broad searches (meaning, any field that has values that match, or in some cases do not match, these terms ). The second group, Filter By, allows you to filter by title, author, subject, and publisher. Author and publisher are fairly basic and you usually wont want to enter multiple authors but you should be able to just fine. The title option will separate the terms into individual words and add each to the url (intitle:harry+intitle:potter). When filtering by 'subject' please remember that subject is NOT a direct translation of genre, it's listed as category from the google books API. You will need to try various options. Subjects should be separated by semicolons and each 'word' created from splitting the input by semicolon will be added to the url (subject:"young adult"+subject:"science fiction"). Subject is NOT a direct translation of genre, it's listed as category from the google books API. You will need to try various options.
 
-Additionally, users have what are called Bookshelfs. These bookshelfs allow users to organize and save different collections of books. Default options include 'To Be Read', 'Already Read', 'Already Owned', and 'To Be Owned'. An option for custom bookshelfs is planned and should be implemented by the capstone due date.
+Additionally, users have what are called Bookshelfs. These bookshelfs allow users to organize and save different collections of books. Default options include 'To Be Read', 'Already Read', 'Already Owned', and 'To Be Owned'. An option for custom bookshelfs is planned but will not be implemented by the capstone due date.
 
 Users will also be able to save user preferences. There is no login required(or available for that matter), all usage is anonymous. All data intended to persist across multiple sessions
 and refresh will be stored using local storage. I am planning an export data feature, that will allow a user to export the json for their data (user preferences, bookshelfs) so they can import
@@ -72,6 +72,12 @@ Webapp artwork is provided by [Unsplash](https://unsplash.com/). All images are 
    ...
    }
    ```
+
+## Misc Information
+
+From the user preferences panel, there is an option to enable/disable minimizing google api usage.  When this is enabled, instead of querying the google
+books api for every book on the NYT lists (using the ISBN returned from NYT), it will instead attempt to create a google book object from the data returned from the NYT API.  Sometimes there will be missing data, such as the genre or description, but this is a trade off to minimize the number of requests made to the google books api. This is not ideal but it does work for not for testing. In the future, I will be adding a way for users to add their own google api key and then the app will use that key instead of the one hard coded in the .env file. To run it in its current state in full production you would need to request google increase your api quota up from 1000 requests per day, 100 requests per minute.
+
 
 ## Web Development Project Requirements
 

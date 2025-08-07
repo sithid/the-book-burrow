@@ -45,7 +45,7 @@
     <hr />
     <div class="pref-option">
       <label for="minimize-usage-checkbox" id="minimize-usage-label"
-        >Minimize API Usage - Use NYT Data</label
+        >Minimize Google API Usage - Use NYT Data</label
       >
       <input id="minimize-usage-checkbox" type="checkbox" />
     </div>

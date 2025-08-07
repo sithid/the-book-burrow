@@ -188,6 +188,24 @@ export const utility = {
     return new GoogleBook(gbook);
   },
 
+  formatNYTTitle: (title) => {
+    if (!title) {
+      config.FMT_PRINT_DEBUG(
+        "utility::formatNYTTitle",
+        "Invalid title provided for formatting.",
+        true
+      );
+      return title;
+    }
+
+    // the nyt titles are all uppercase so we need to convert them to the title case
+    title = title.toLowerCase().trim();
+
+    return title.replace(/\w\S*/g, (txt) => {
+      return txt.charAt(0).toUpperCase() + txt.substr(1);
+    });
+  },
+
   convertFromNytToGBook: (nytBook) => {
     if (!nytBook || !nytBook.title) {
       config.FMT_PRINT_DEBUG(
@@ -266,7 +284,7 @@ export const utility = {
       id: bookId,
       selfLink: selfLink,
       volumeInfo: {
-        title: nytBook.title || "Unknown Title",
+        title: utility.formatNYTTitle(nytBook.title) || "Unknown Title",
         authors: authors,
         categories: categories,
         publisher: nytBook.publisher || "Unknown Publisher",
