@@ -36,7 +36,6 @@ export const useUserStore = defineStore(
     const setDefaultLanguage = (language) => (defaultLanguage.value = language);
 
     function getDefaultBookshelfs() {
-      // Arrow syntax removed. I want this function to be hoisted.
       return [
         new Bookshelf(
           "To Be Read",
