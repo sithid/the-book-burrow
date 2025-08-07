@@ -189,6 +189,7 @@ function cancelClick() {
 }
 
 function clearClick() {
+  tmpIsbn.value = "";
   filter.clearAll();
   search.clearAll();
 }

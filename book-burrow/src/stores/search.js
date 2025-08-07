@@ -152,8 +152,6 @@ export const useSearchStore = defineStore(
       const words = formatFindResultsOptions.value;
       const filters = formatFilterByOptions.value;
       const additionalOptions = formatAdditionalOptions.value;
-
-      basicQuery.value = words + filters;
       
       if (words) {
         queryString += `${words}`;
@@ -239,11 +237,8 @@ export const useSearchStore = defineStore(
       isLoading.value = false;
     }
 
-    async function queryApiISBN(isbn, updateQString = false ) {
+    async function queryApiISBN(isbn) {
       clearAll();
-
-      if( updateQString ) 
-        basicQuery.value = `isbn:${isbn}`;
       
       isLoading.value = true;
 
