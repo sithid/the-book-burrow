@@ -76,7 +76,8 @@ Webapp artwork is provided by [Unsplash](https://unsplash.com/). All images are 
 ## Misc Information
 
 From the user preferences panel, there is an option to enable/disable minimizing google api usage.  When this is enabled, instead of querying the google
-books api for every book on the NYT lists (using the ISBN returned from NYT), it will instead attempt to create a google book object from the data returned from the NYT API.  Sometimes there will be missing data, such as the genre or description, but this is a trade off to minimize the number of requests made to the google books api. This is not ideal but it does work for not for testing. In the future, I will be adding a way for users to add their own google api key and then the app will use that key instead of the one hard coded in the .env file. To run it in its current state in full production you would need to request google increase your api quota up from 1000 requests per day, 100 requests per minute.
+books api for every book on the NYT lists (using the ISBN returned from NYT), it will instead attempt to create a google book object from the data returned from the NYT API.  Sometimes there will be missing data, such as the genre or description, but this is a trade off to minimize the number of requests made to the google books api. This is not ideal but it works and should allow testers to stay within api quota limits. In the future, I will be adding a way for users to add their own google api key and then the app will use that key instead of the one hard coded in the .env file. To run it in its current state in full production you would need to request google increase your api quota up from 1000 requests per day, 100 requests per minute to something higher to avoid
+someone purposly spamming the api and using up all the requests.
 
 
 ## Web Development Project Requirements
