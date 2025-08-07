@@ -226,7 +226,7 @@ function clearClick() {
   .read-container {
     display: flex;
     flex-direction: column;
-    max-width: 30vw;
+    min-width: 30vw;
     height: 100%;
   }
 }

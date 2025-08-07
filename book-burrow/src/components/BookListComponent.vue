@@ -1,7 +1,12 @@
 <template>
   <div class="book-list-container">
     <ul id="book-list" v-if="books && books.length > 0">
-      <li @click="onBookClicked(book)" v-for="book in books" :key="book.id" class="list-item">
+      <li
+        @click="onBookClicked(book)"
+        v-for="book in books"
+        :key="book.id"
+        class="list-item"
+      >
         {{ book.fmtTitle() }}
       </li>
     </ul>
@@ -57,6 +62,8 @@ const onBookClicked = (book) => {
   overflow-wrap: break-word;
   color: var(--color-offset);
   font-weight: bold;
+  width: 100%;
+  text-align: center;
   background-color: var(--color-secondary);
 }
 
@@ -69,8 +76,6 @@ const onBookClicked = (book) => {
 @media (min-width: 768px) {
   .list-item {
     font-size: 1.2rem;
-    text-align: center;
-    width: 100%;
   }
 
   #no-books {

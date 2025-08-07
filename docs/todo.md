@@ -33,7 +33,7 @@
   persist on the local machine via local storage but if they use a different device they are not going to want to rebuild their bookshelfs.
   Google Books API provides a means of using 0Auth to access user bookshelf data but I dont want data imported from google books api, I just
   want the search responses.  Beyond local storage, one option is an import/export system that stringifys the json object, and then base64 encodes it and outputs the base64 encoding to the user who can then import it on a different device. I do not want to roll my own api, even if its a basic
-  express server api.
+  express server api. - Partially Started, wont be done for the deadline.  Planned future feature.
 
 # To Remember
   Custom objects require custom logic for serialization and deserialization, but its entirely worth setting up the persist object.  Once its set up, its magically delious. Utility functions are a great way to keep the code clean and separate concerns.  I can use utility functions to convert between Bookshelf and GoogleBook instances and plain objects, which reminds me of DTO patterns from when I took the software development pathway with Code:You and had to convert between DTOs to pass information between the server and client.  This is a great way to keep the code clean and maintainable, and it allows me to easily serialize and deserialize the data when saving/loading from local storage.

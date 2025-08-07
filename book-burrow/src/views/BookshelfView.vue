@@ -66,6 +66,7 @@ const nextBookshelf = () => {
   display: flex;
   margin: 0 10px;
   flex-direction: row;
+  justify-content: space-between;
   height: 50px;
   background-color: var(--color-secondary);
   border: 10px solid var(--color-offset);

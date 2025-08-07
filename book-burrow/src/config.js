@@ -8,6 +8,9 @@ export const config = {
 
     const timestamp = new Date().toISOString();
     const prefix = isError ? "[ERROR]" : "[DEBUG]";
-    console.log(`${prefix} [${timestamp}] ${source}: ${message}`);
-  }
+
+    if (isError)
+      console.warn(`${prefix} [${timestamp}] ${source}: ${message}`);
+    else console.log(`${prefix} [${timestamp}] ${source}: ${message}`);
+  },
 };
