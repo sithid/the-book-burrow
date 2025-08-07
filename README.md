@@ -14,7 +14,7 @@ Additionally, users have what are called Bookshelfs. These bookshelfs allow user
 
 Users will also be able to save user preferences. There is no login required(or available for that matter), all usage is anonymous. All data intended to persist across multiple sessions
 and refresh will be stored using local storage. I am planning an export data feature, that will allow a user to export the json for their data (user preferences, bookshelfs) so they can import
-it on a different device and not have to build their bookshelfs all over again.
+it on a different device and not have to build their bookshelfs all over again.  Currently this feature is not finished.
 
 ## Tech Used  
 
@@ -63,7 +63,7 @@ Webapp artwork is provided by [Unsplash](https://unsplash.com/). All images are 
    npm run build
    ```
 6. **Open the application**  
-   Open your web browser and navigate to `http://localhost:5173` to view the application.
+   Open your web browser and navigate to `http://localhost:5173`.
 7. **Debug Output**  
    You can enable/disable debug output to the console by changing config.DEBUG from `./src/config.js`.
    ```js

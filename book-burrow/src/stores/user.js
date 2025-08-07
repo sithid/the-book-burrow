@@ -10,7 +10,7 @@ export const useUserStore = defineStore(
     const bookshelfs = ref(getDefaultBookshelfs()); // requires hosting to work properly.
 
     const maxResults = ref(40);
-    const maxPages = ref(8);
+    const maxPages = ref(10);
     const defaultLanguage = ref("any");
 
     const isPrefsPanelOpen = ref(false);
@@ -28,7 +28,7 @@ export const useUserStore = defineStore(
 
     const setMaxPages = (value) => {
       if (value < 1) value = 1;
-      if (value > 100) value = 100;
+      if (value > 10) value = 10;
 
       maxPages.value = value;
     };

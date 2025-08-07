@@ -18,7 +18,7 @@ export class GoogleBook {
 
     const isbn10Identifier = identifiers?.find((id) => id.type === "ISBN_10");
     this.isbn10 = isbn10Identifier?.identifier;
-    
+
     const isbn13Identifier = identifiers?.find((id) => id.type === "ISBN_13");
     this.isbn13 = isbn13Identifier?.identifier;
 
@@ -36,7 +36,6 @@ export class GoogleBook {
   }
 
   fmtTitle() {
-
     if (!this.title) return "Unknown Title";
 
     return this.title;
@@ -54,6 +53,7 @@ export class GoogleBook {
 
     return this.publisher;
   }
+
   fmtDescription() {
     if (this.description) {
       return this.description;
@@ -71,7 +71,7 @@ export class GoogleBook {
       } else if (this.imageLinks.small != undefined) {
         return this.imageLinks.small;
       } else if (this.imageLinks.medium != undefined) {
-        return this.imageLinks.medium; 
+        return this.imageLinks.medium;
       } else if (this.imageLinks.large != undefined) {
         return this.imageLinks.large;
       } else {
@@ -85,24 +85,42 @@ export class GoogleBook {
   fmtPublishedDate() {
     if (!this.publishedDate) return "Unknown Publish Date";
 
-    const text = this.publishedDate.split("-");
+    // NYT books have a different format for publishedDate.
+    // everything after the T can be ignored, its just the time
+    // but we only really need the date.
+    if (this.publishedDate.split("T").length > 1) {
+      const text = this.publishedDate.split("T")[0];
 
-    if (!text) {
-      return "Unknown Publish Date";
-    } else if (text.length != 3) {
-      if (text.length === 2) {
-        const year = text[0];
-        const month = this.fmtMonth(Number(text[1]));
-
-        return `${month}, ${year}`;
+      if (!text) {
+        return "Unknown Publish Date";
+      } else if (text.length != 10) {
+        return text;
       } else {
-        return text[0];
+        const year = text.slice(0, 4);
+        const month = this.fmtMonth(Number(text.slice(5, 7)));
+        const day = text.slice(8, 10);
+        return `${month} ${day}, ${year}`;
       }
     } else {
-      const year = text[0];
-      const month = this.fmtMonth(Number(text[1]));
-      const day = text[2];
-      return `${month} ${day}, ${year}`;
+      const text = this.publishedDate.split("-");
+
+      if (!text) {
+        return "Unknown Publish Date";
+      } else if (text.length != 3) {
+        if (text.length === 2) {
+          const year = text[0];
+          const month = this.fmtMonth(Number(text[1]));
+
+          return `${month}, ${year}`;
+        } else {
+          return text[0];
+        }
+      } else {
+        const year = text[0];
+        const month = this.fmtMonth(Number(text[1]));
+        const day = text[2];
+        return `${month} ${day}, ${year}`;
+      }
     }
   }
 

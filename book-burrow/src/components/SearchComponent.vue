@@ -121,6 +121,7 @@ async function onSearch() {
 function clearClick() {
   search.basicQuery = "";
   search.clearAll();
+  filter.clearAll();
 }
 </script>
 

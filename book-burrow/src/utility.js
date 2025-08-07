@@ -58,7 +58,7 @@ export const utility = {
     const user = useUserStore();
     const filter = useFilterStore();
     const book = useBookStore();
-    
+
     search.clearAll();
     nyt.clearAll();
     user.clearAll();
@@ -121,7 +121,7 @@ export const utility = {
       );
       return null;
     }
-     
+
     return {
       id: googleBook.id,
       selfLink: googleBook.selfLink,
@@ -198,33 +198,178 @@ export const utility = {
       return null;
     }
 
-    // Create a GoogleBook-like object from the NYT book data
+    let isbn10 = "";
+    let isbn13 = "";
+
+    if (nytBook.isbns && nytBook.isbns.length > 0) {
+      isbn10 = nytBook.isbns[0].isbn10 || "";
+      isbn13 = nytBook.isbns[0].isbn13 || "";
+    }
+
+    if (!isbn10 && nytBook.primary_isbn10) {
+      isbn10 = nytBook.primary_isbn10;
+    }
+    if (!isbn13 && nytBook.primary_isbn13) {
+      isbn13 = nytBook.primary_isbn13;
+    }
+
+    let infoLink = "";
+    let selfLink = "";
+
+    if (nytBook.buy_links && nytBook.buy_links.length > 0) {
+      const amazonLink = nytBook.buy_links.find(
+        (link) => link.name === "Amazon"
+      );
+      if (amazonLink) {
+        infoLink = amazonLink.url;
+        selfLink = amazonLink.url;
+      } else {
+        infoLink = nytBook.buy_links[0].url || "";
+        selfLink = nytBook.buy_links[0].url || "";
+      }
+    }
+
+    let authors = [];
+    if (nytBook.author) {
+      if (nytBook.author.includes(" and ")) {
+        authors = nytBook.author.split(" and ").map((a) => a.trim());
+      } else if (nytBook.author.includes(", ")) {
+        authors = nytBook.author.split(", ").map((a) => a.trim());
+      } else {
+        authors = [nytBook.author];
+      }
+    } else if (nytBook.contributor) {
+      authors = [nytBook.contributor];
+    } else {
+      authors = ["Unknown Author"];
+    }
+
+    let categories = [];
+    if (nytBook.category) {
+      categories.push(nytBook.category);
+    }
+    if (nytBook.list_name) {
+      categories.push(`NYT: ${nytBook.list_name}`);
+    }
+
+    const imageLinks = {};
+
+    if (nytBook.book_image) {
+      imageLinks.thumbnail = nytBook.book_image;
+    } else {
+      imageLinks.thumbnail = `https://place-hold.it/200x250?text="nyt%20thumbnail%20missing"&fontsize=16`;
+    }
+
+    const bookId = uuidv4();
+
     const gbookData = {
-      id: uuidv4(),
-      selfLink: nytBook.buy_links[0].url || "",
+      id: bookId,
+      selfLink: selfLink,
       volumeInfo: {
         title: nytBook.title || "Unknown Title",
-        authors: nytBook.author ? [nytBook.author] : ["Unknown Author"],
-        subject: nytBook.category ? [nytBook.category] : [],
+        authors: authors,
+        categories: categories,
         publisher: nytBook.publisher || "Unknown Publisher",
-        publishedDate: nytBook.published_date || "Unknown Date",
-        description: nytBook.description || "No description available.",
+        publishedDate:
+          nytBook.published_date || nytBook.created_date || "Unknown Date",
+        description:
+          nytBook.description || "No description available from NYT.",
         industryIdentifiers: [
-          { type: "ISBN_10", identifier: nytBook.primary_isbn10 || "" },
-          { type: "ISBN_13", identifier: nytBook.primary_isbn13 || "" },
-        ],
-        pageCount: 0,
-        printedPageCount: 0,
-        averageRating: 0,
-        ratingCount: 0,
+          { type: "ISBN_10", identifier: isbn10 },
+          { type: "ISBN_13", identifier: isbn13 },
+        ].filter((id) => id.identifier),
+        pageCount: nytBook.page_count || 0,
+        printedPageCount: nytBook.page_count || 0,
+        averageRating: nytBook.rank ? 5 - nytBook.rank * 0.2 : 0,
+        ratingCount: nytBook.rank ? 1 : 0,
         maturityRating: "NOT_MATURE",
-        infoLink: nytBook.buy_links[0].url || "",
-        imageLinks: {
-          thumbnail: nytBook.book_image || "",
+        imageLinks: imageLinks,
+        language: "en",
+        infoLink: infoLink,
+        canonicalVolumeLink: infoLink,
+      },
+    };
+
+    config.FMT_PRINT_DEBUG(
+      "utility::convertFromNytToGBook",
+      `Converted NYT book: ${nytBook.title} with ISBN13: ${isbn13}, ISBN10: ${isbn10}`
+    );
+
+    return new GoogleBook(gbookData);
+  },
+
+  packageUserDataObject() {
+    const search = useSearchStore();
+    const user = useUserStore();
+
+    const exportData = {
+      // this is the 'structure' of all of the user data
+      // were adding a version number incase I change the structure
+      // in the future.  This will basically export all user data combined
+      // into a single object.
+      version: "1.0.0",
+      exportDate: new Date().toISOString(),
+      appName: "The Book Burrow",
+      stores: {
+        user: {
+          bookshelfs: user.bookshelfs.map((bookshelf) =>
+            utility.getBookshelfForm(bookshelf)
+          ),
+          maxResults: user.maxResults,
+          maxPages: user.maxPages,
+          defaultLanguage: user.defaultLanguage,
+          isPrefsPanelOpen: user.isPrefsPanelOpen,
+        },
+        search: {
+          googleBookResults: search.googleBookResults.map((book) =>
+            utility.getGBookForm(book)
+          ),
+          resultPages: search.resultPages.map((page) => ({
+            index: page.index,
+            results: page.results.map((book) => utility.getGBookForm(book)),
+          })),
+          pageCount: search.pageCount,
+          basicQuery: search.basicQuery,
+          currentPageIndex: search.currentPageIndex,
+          minimizeApiRequests: search.minimizeApiRequests,
         },
       },
     };
 
-    return new GoogleBook(gbookData);
+    return exportData;
   },
-}
+  
+  exportUserDataStringifyJson(object)
+  {
+    return JSON.stringify(object);
+  },
+
+  exportUserDataBase64() {
+    try {
+      const exportData = this.packageUserDataObject();
+
+      // the way i am finding to do this seems to be deprecated (unescapte/encodeURIComponent)
+      // so i found another way to use btoa that seems to be
+      // the accepted way to do it now
+      const jsonString = JSON.stringify(exportData);
+      const encoder = new TextEncoder();
+      const dataBytes = encoder.encode(jsonString);
+
+      const base64String = btoa(String.fromCharCode.apply(null, dataBytes));
+
+      config.FMT_PRINT_DEBUG(
+        "utility::exportUserData",
+        `Exported ${jsonString.length} characters of user data as ${base64String.length} character base64 string`
+      );
+
+      return base64String;
+    } catch (error) {
+      config.FMT_PRINT_DEBUG(
+        "utility::exportUserData",
+        `Error exporting user data: ${error.message}`,
+        true
+      );
+      return null;
+    }
+  },
+};

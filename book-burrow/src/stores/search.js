@@ -153,6 +153,8 @@ export const useSearchStore = defineStore(
       const filters = formatFilterByOptions.value;
       const additionalOptions = formatAdditionalOptions.value;
 
+      basicQuery.value = words + filters;
+      
       if (words) {
         queryString += `${words}`;
       }
@@ -237,9 +239,12 @@ export const useSearchStore = defineStore(
       isLoading.value = false;
     }
 
-    async function queryApiISBN(isbn) {
+    async function queryApiISBN(isbn, updateQString = false ) {
       clearAll();
 
+      if( updateQString ) 
+        basicQuery.value = `isbn:${isbn}`;
+      
       isLoading.value = true;
 
       if (!isbn || isbn.trim() === "") {
@@ -310,8 +315,7 @@ export const useSearchStore = defineStore(
     async function queryApiAdvanced() {
       isLoading.value = true;
 
-      googleBookResults.value = [];
-      resultPages.value = [];
+      clearAll();
 
       const url = advancedQueryUrl.value;
 
@@ -507,7 +511,6 @@ export const useSearchStore = defineStore(
               true
             );
           }
-
         } else {
           const book = await queryForRecommended(isbn);
 

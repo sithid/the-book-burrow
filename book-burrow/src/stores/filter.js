@@ -116,7 +116,7 @@ export const useFilterStore = defineStore(
               errorMsg.value = "";
             }
           } else {
-            errorMsg.value = "You must text in at least one field!";
+            errorMsg.value = "You must have text in at least one field!";
           }
         }
       },
@@ -136,10 +136,12 @@ export const useFilterStore = defineStore(
       isbn,
 
       isPanelOpen,
+      anyFilterHasValue,
       errorMsg,
 
       clearAll,
       toggleFilterPanel,
+      isValidISBN,
     };
   },
   {

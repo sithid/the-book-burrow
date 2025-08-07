@@ -94,7 +94,7 @@
           id="book-isbn"
           name="isbn"
           type="text"
-          v-model="filter.isbn"
+          v-model="tmpIsbn"
           placeholder="Enter book isbn here..."
         />
       </div>
@@ -153,32 +153,33 @@
 <script setup>
 import { useFilterStore } from "@/stores/filter";
 import { useSearchStore } from "@/stores/search";
+import { config } from "../config.js";
+import { ref } from "vue";
 
 const search = useSearchStore();
 const filter = useFilterStore();
 
-async function queryApiAdvanced() {
-  if (
-    !filter.allWords &&
-    !filter.exactWords &&
-    !filter.atleastOneWord &&
-    !filter.withoutTheseWords &&
-    !filter.title &&
-    !filter.author &&
-    !filter.publisher &&
-    !filter.subject &&
-    !filter.isbn
-  ) {
-    filter.errorMsg =
-      "You must text in at least one field!";
-    return;
-  }
+const tmpIsbn = ref(filter.isbn);
 
-  if (filter.isbn !== "") {
-    if (filter.isbn.length >= 10 && filter.isbn.length <= 13)
-      await search.queryApiISBN(filter.isbn);
-    else filter.errorMsg = "The ISBN must be 10 or 13 digits.";
-  } else await search.queryApiAdvanced();
+async function queryApiAdvanced() {
+  if (!filter.anyFilterHasValue && !filter.isValidISBN(tmpIsbn.value)) {
+    config.FMT_PRINT_DEBUG(
+      "FilterPanelComponent::queryApiAdvanced",
+      `No filter values provided or invalid ISBN: ${tmpIsbn.value}`
+    );
+  } else if (filter.isValidISBN(tmpIsbn.value)) {
+    filter.toggleFilterPanel();
+    filter.clearAll();
+    filter.isbn = tmpIsbn.value;
+    await search.queryApiISBN(filter.isbn);
+
+  } else {
+    filter.toggleFilterPanel();
+    tmpIsbn.value = "";
+    filter.isbn = "";
+    
+    await search.queryApiAdvanced();
+  }
 }
 
 function cancelClick() {

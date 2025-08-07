@@ -40,20 +40,23 @@
     </div>
     <div class="pref-option">
       <label for="max-pages" id="max-pages-label">Pages</label>
-      <input
-        id="max-pages"
-        type="number"
-        min="1"
-        max="100"
-        v-model="maxPages"
-      />
+      <input id="max-pages" type="number" min="1" max="10" v-model="maxPages" />
     </div>
+    <hr />
+    <div class="pref-option">
+      <label for="minimize-usage-checkbox" id="minimize-usage-label"
+        >Minimize API Usage - Use NYT Data</label
+      >
+      <input id="minimize-usage-checkbox" type="checkbox" />
+    </div>
+    <hr />
     <div class="pref-option">
       <label for="clear-data-checkbox" id="clear-data-label"
         >Clear All Data</label
       >
       <input id="clear-data-checkbox" type="checkbox" />
     </div>
+    <hr />
     <button type="button" @click="applyClick" aria-label="Apply Changes">
       Apply Changes
     </button>
@@ -61,15 +64,18 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { utility } from "@/utility.js";
 import { useUserStore } from "@/stores/user.js";
+import { useSearchStore } from "@/stores/search.js";
 import { useRouter } from "vue-router";
 
 const user = useUserStore();
+const search = useSearchStore();
 const maxPages = ref(user.maxPages);
 const maxResults = ref(user.maxResults);
 const defaultLanguage = ref(user.defaultLanguage);
+const minizeApiUsage = ref(search.minimizeApiRequests);
 const router = useRouter();
 
 const applyClick = () => {
@@ -85,9 +91,23 @@ const applyClick = () => {
     utility.clearAllData();
   }
 
+  const minizeApiUsage = document.getElementById(
+    "minimize-usage-checkbox"
+  ).checked;
+
+  if (minizeApiUsage) {
+    search.minimizeApiRequests = true;
+  } else {
+    search.minimizeApiRequests = false;
+  }
   user.togglePrefsPanel();
   router.go(0);
 };
+
+onMounted(() => {
+  document.getElementById("minimize-usage-checkbox").checked =
+    minizeApiUsage.value;
+});
 </script>
 
 <style scoped>
@@ -126,10 +146,17 @@ const applyClick = () => {
   font-size: 0.7rem;
 }
 
+#minimize-usage-label,
 #clear-data-label {
   font-size: 0.7rem;
 }
 
+hr {
+  border: none;
+  border-top: 2px solid var(--color-offset);
+  width: 100%;
+  margin: 20px auto;
+}
 @media (min-width: 768px) {
   .user-preferences-panel {
     margin: 10px auto;

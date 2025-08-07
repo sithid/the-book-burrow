@@ -136,12 +136,6 @@ const viewFullList = async () => {
     font-size: 1.4rem;
   }
 
-  .books-preview h3 {
-    margin: 20px 0 15px 0;
-    color: var(--color-text);
-    font-size: 1.1rem;
-  }
-
   .book-item {
     display: flex;
     gap: 10px;

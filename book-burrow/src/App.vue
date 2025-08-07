@@ -29,6 +29,7 @@ import { RouterLink, RouterView } from "vue-router";
 import { useFilterStore } from "./stores/filter.js";
 import { useUserStore } from "./stores/user.js";
 import { config } from "@/config.js";
+import { utility } from "@/utility.js";
 import { onMounted } from "vue";
 
 const user = useUserStore();
@@ -44,6 +45,8 @@ const preferencesBtnOnClick = () => {
   }
 };
 
+onMounted(() => {
+});
 </script>
 
 <style scoped>

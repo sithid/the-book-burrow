@@ -122,7 +122,7 @@ export const useNytStore = defineStore(
         deserialize: (oldState) => {
           config.FMT_PRINT_DEBUG(
             "NYT Store",
-            `Deserializing state: ${oldState}`
+            `Deserializing state: ${oldState.substring(0, 200)}...`
           );
           
           const state = JSON.parse(oldState);
