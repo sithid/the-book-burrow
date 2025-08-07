@@ -1,4 +1,4 @@
-# The Book Burrow Overview  
+# The Book Burrow Overview
 
 The book burrow is a responsive web app that functions much like Google Books, utilizing the google books api. Users can search for books by either
 using the minimal serach box on the home page to do a broad search for books that have ANY properties which contain the keywords they are search for.
@@ -14,20 +14,20 @@ Additionally, users have what are called Bookshelfs. These bookshelfs allow user
 
 Users will also be able to save user preferences. There is no login required(or available for that matter), all usage is anonymous. All data intended to persist across multiple sessions
 and refresh will be stored using local storage. I am planning an export data feature, that will allow a user to export the json for their data (user preferences, bookshelfs) so they can import
-it on a different device and not have to build their bookshelfs all over again.  Currently this feature is not finished.
+it on a different device and not have to build their bookshelfs all over again. Currently this feature is not finished.
 
-## Tech Used  
+## Tech Used
 
 HTML, CSS, Javascript, Vu3
 
 I am using Vue3 Composition API with Pinia Stores and local storage to facilitate both reactivity and data persistence. I manage my local storage data with pinia and a plugin for pinia called
 pinia-plugin-persistedstate and its absolutely wonderful. I'm not sure how the plugin works under the hood specifically but once you set up the persist object, which contains a serializer object with serialize (save the current state of the pinia store) and deserialize (load the saved state of the store, custom objects require mapping) functions.
 
-# Images  
+# Images
 
 Webapp artwork is provided by [Unsplash](https://unsplash.com/). All images are free to use under the Unsplash License.
 
-## Run/Install:  
+## Run/Install:
 
 1. **Clone the repository**  
    Navigate to the directory where you want to clone the repository and run the following commands:
@@ -36,22 +36,25 @@ Webapp artwork is provided by [Unsplash](https://unsplash.com/). All images are 
    git clone https://github.com/sithid/the-book-burrow.git
    cd the-book-burrow/book-burrow
    ```
+
 2. **Install dependencies**  
-   Make sure you have [Node.js](https://nodejs.org/) installed. Then, run the following command to install the necessary dependencies:  
+   Make sure you have [Node.js](https://nodejs.org/) installed. Then, run the following command to install the necessary dependencies:
    ```bash
    npm install
    ```
 3. **Set up environment variables**  
    Next, create a `.env` file in the root of the project directory and add your API keys. You can use the following commands to create the file and add the keys:
+
    ```bash
    echo "VITE_GOOGLE_API_KEY=YOUR_GOOGLE_BOOKS_API_KEY_HERE" > .env
    echo "VITE_NYT_API_KEY=YOUR_NYT_API_KEY_HERE" >> .env
    ```
 
-   I will be providing API keys to the testers/reviewers who need them. If you are testing this project, please contact me for the API keys.  If you are a tester/reviewer, please
-   do not share the API keys with anyone else. The keys are provided for testing purposes only and should not be used in production environments.  When testing, you are free to
+   I will be providing API keys to the testers/reviewers who need them. If you are testing this project, please contact me for the API keys. If you are a tester/reviewer, please
+   do not share the API keys with anyone else. The keys are provided for testing purposes only and should not be used in production environments. When testing, you are free to
    test but please do not spam the 'view full results' button on the home page. The google books API has a limit of 1000 requests per day and I do not want to hit that limit while testing.
-   Until I can change the way the book information is stored from the NYT lists, whenever you view all results, it sends a request to the google books api for EACH book in the list. This is not ideal and I will be changing this in the future but may not have time before the deadline. 
+   Until I can change the way the book information is stored from the NYT lists, whenever you view all results, it sends a request to the google books api for EACH book in the list. This is not ideal and I will be changing this in the future but may not have time before the deadline.
+
 4. **Run the development server**  
    To start the development server, run the following command:
    ```bash
@@ -75,10 +78,9 @@ Webapp artwork is provided by [Unsplash](https://unsplash.com/). All images are 
 
 ## Misc Information
 
-From the user preferences panel, there is an option to enable/disable minimizing google api usage.  When this is enabled, instead of querying the google
-books api for every book on the NYT lists (using the ISBN returned from NYT), it will instead attempt to create a google book object from the data returned from the NYT API.  Sometimes there will be missing data, such as the genre or description, but this is a trade off to minimize the number of requests made to the google books api. This is not ideal but it works and should allow testers to stay within api quota limits. In the future, I will be adding a way for users to add their own google api key and then the app will use that key instead of the one hard coded in the .env file. To run it in its current state in full production you would need to request google increase your api quota up from 1000 requests per day, 100 requests per minute to something higher to avoid
+From the user preferences panel, there is an option to enable/disable minimizing google api usage. When this is enabled, instead of querying the google
+books api for every book on the NYT lists (using the ISBN returned from NYT), it will instead attempt to create a google book object from the data returned from the NYT API. Sometimes there will be missing data, such as the genre or description, but this is a trade off to minimize the number of requests made to the google books api. This is not ideal but it works and should allow testers to stay within api quota limits. In the future, I will be adding a way for users to add their own google api key and then the app will use that key instead of the one hard coded in the .env file. To run it in its current state in full production you would need to request google increase your api quota up from 1000 requests per day, 100 requests per minute to something higher to avoid
 someone purposly spamming the api and using up all the requests.
-
 
 ## Web Development Project Requirements
 
@@ -171,8 +173,8 @@ someone purposly spamming the api and using up all the requests.
  * Feature: Use a regular expression to validate user input and either prevent the invalid input or inform the user about it.
  * This function validates an ISBN number, allowing both 10-digit and 13-digit formats.
  */
- const isValidISBN = (value) => {
-  const cleanedValue = value.replace(/[- ]/g, "");
+const isValidISBN = (value) => {
+  const cleanedValue = value.replace(/[- ]/g, "").replace(/[a-zA-Z]/g, "");
   return /^\d{10}$|^\d{13}$/.test(cleanedValue);
- };
+};
 ```
