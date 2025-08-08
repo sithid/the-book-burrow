@@ -489,7 +489,7 @@ export const useSearchStore = defineStore(
           `Loading book with ISBN: ${isbn}`
         );
 
-        if (minimizeApiRequests.value) {
+        if (minimizeApiRequests.value || config.FORCE_ECO_MODE) {
           const nytBook = utility.convertFromNytToGBook(bookList.books[i]);
 
           if (nytBook) {

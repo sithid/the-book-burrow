@@ -10,7 +10,7 @@ export const useUserStore = defineStore(
     const bookshelfs = ref(getDefaultBookshelfs()); // requires hosting to work properly.
 
     const maxResults = ref(40);
-    const maxPages = ref(10);
+    const maxPages = ref(3); // 3 pages @ 40 results per page = 3 requests to the google api for 120 results total
     const defaultLanguage = ref("any");
 
     const isPrefsPanelOpen = ref(false);

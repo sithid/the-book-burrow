@@ -4,7 +4,7 @@
       <h1 id="user-preferences-header">User Preferences & Data</h1>
     </div>
     <div class="pref-option">
-      <label for="language-select" id="language-label">Language</label>
+      <label for="language-select" id="language-label">Default Language for Results</label>
       <select id="language-select" v-model="defaultLanguage">
         <option value="any">Any</option>
         <option value="en">English</option>
