@@ -12,8 +12,7 @@ The first group, Find Results, are inputs for broad searches (meaning, any field
 
 Additionally, users have what are called Bookshelfs. These bookshelfs allow users to organize and save different collections of books. Default options include 'To Be Read', 'Already Read', 'Already Owned', and 'To Be Owned'. An option for custom bookshelfs is planned but will not be implemented by the capstone due date.
 
-Users will also be able to save user preferences. There is no login required(or available for that matter), all usage is anonymous. All data intended to persist across multiple sessions
-and refresh will be stored using local storage. I am planning an export data feature, that will allow a user to export the json for their data (user preferences, bookshelfs) so they can import
+Users will also be able to save user preferences. There is no login required(or available for that matter), all usage is anonymous. All data intended to persist across multiple sessions and refresh will be stored using local storage. I am planning an export data feature, that will allow a user to export the json for their data (user preferences, bookshelfs) so they can import
 it on a different device and not have to build their bookshelfs all over again. Currently this feature is not finished.
 
 ## Tech Used
@@ -79,8 +78,11 @@ Webapp artwork is provided by [Unsplash](https://unsplash.com/). All images are 
 ## Misc Information
 
 From the user preferences panel, there is an option to enable/disable minimizing google api usage. When this is enabled, instead of querying the google
-books api for every book on the NYT lists (using the ISBN returned from NYT), it will instead attempt to create a google book object from the data returned from the NYT API. Sometimes there will be missing data, such as the genre or description, but this is a trade off to minimize the number of requests made to the google books api. This is not ideal but it works and should allow testers to stay within api quota limits. In the future, I will be adding a way for users to add their own google api key and then the app will use that key instead of the one hard coded in the .env file. To run it in its current state in full production you would need to request google increase your api quota up from 1000 requests per day, 100 requests per minute to something higher to avoid
-someone purposly spamming the api and using up all the requests.
+books api for every book on the NYT lists (using the ISBN returned from NYT), it will instead attempt to create a google book object from the data returned from the NYT API. Sometimes there will be missing data, such as the genre or description, but this is a trade off to minimize the number of requests made to the google books api. This is not ideal but it works and should allow testers to stay within api quota limits. In the future, I will be adding a way for users to add their own google api key and then the app will use that key instead of the one hard coded in the .env file. To run it in its current state in full production you would need to request google increase your api quota up from 1000 requests per day, 100 requests per minute to something higher to avoid someone purposly spamming the api and using up all the requests. I have also added an option to the config to 'FORCE_ECO_MODE' which is a backend override for the user toggled minimizeApiUsage.  This can be changed in config.js but for testing I have disabled the forced eco mode, testers can toggle minimizeApiUsage from the prefs menu located to the right of the SPA navigation header.  Once you apply changes, go back to home and then view all results for one of the NYT lists.  Click the search results thumbnail to see the book details and you will see the difference between the details being filled in by the NYT response verus details being filled in by google books.
+
+## Reviewer
+
+If you are reviewing this and the keys do not work, please contact me on slack or by email.
 
 ## Web Development Project Requirements
 
