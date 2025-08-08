@@ -84,6 +84,10 @@ books api for every book on the NYT lists (using the ISBN returned from NYT), it
 
 If you are reviewing this and the keys do not work, please contact me on slack or by email.
 
+## Thank You
+
+I want to give a big THANK YOU! to Code:You.  This is my second pathway (I also took the Software Developement pathway and the AWS Cloud Computing Workshop).  I really appreciate the oppurtunity provided by Code:You to learn and grow.  I have learned alot, met alot of nice people, and just overall had alot of fun.
+
 ## Web Development Project Requirements
 
 - Responsive Design:
